@@ -1,10 +1,9 @@
-import {configureStore} from "@reduxjs/toolkit";
-import exampleReducer from "../features/HomePage/store/exampleReducer";
-
+import { configureStore } from "@reduxjs/toolkit";
+import exampleReducer from "./exampleReducer";
 
 const store = configureStore({
     reducer: {
-        example: exampleReducer
+        example: exampleReducer,
     },
 });
 
