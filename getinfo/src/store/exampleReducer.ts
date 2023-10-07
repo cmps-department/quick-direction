@@ -1,19 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 interface sessionData {
-    isLoggedIn: boolean
+    isLoggedIn: boolean;
 }
 
 const initialState: sessionData = {
-    isLoggedIn: false
-}
+    isLoggedIn: false,
+};
 
 export const exampleReducer = createSlice({
-    name: 'mapReducer',
+    name: "mapReducer",
     initialState,
     reducers: {
         setIsLoggedIn: (state, action) => {
-            state.isLoggedIn = action.payload
+            state.isLoggedIn = action.payload;
         },
     },
 });
