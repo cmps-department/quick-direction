@@ -24,6 +24,7 @@ const config = {
     }
 }
 
+
 export default function App({ Component, pageProps }: AppProps) {
     const [queryClient] = useState(() => new QueryClient(config));
 
@@ -39,7 +40,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <Provider store={store}>
                     <QueryClientProvider client={queryClient}>
                         <Hydrate state={pageProps.dehydratedState}>
-                            <Component  {...pageProps} />
+                            <Component {...pageProps} />
                             <Devtools />
                         </Hydrate>
                     </QueryClientProvider>
