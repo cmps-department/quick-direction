@@ -8,6 +8,7 @@ const Footer: FC = () => {
   return (
     <footer>
       <div className={styles.footer}>
+        <div className={styles.footer_line}></div>
         <ul>
           <li>Контакти</li>
           <li>Соціальні мережі</li>
