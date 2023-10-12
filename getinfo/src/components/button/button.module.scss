@@ -3,4 +3,14 @@
     padding: 12px 32px;
     background-color: var(--light-color);
     color: var(--dark-color);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: background-color .5s ease;
+    font-size: 18px;
+    font-weight: 600;
+
+    &:hover {
+        background-color: #fafbfc87;
+    }
 }

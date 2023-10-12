@@ -6,10 +6,10 @@ const LayoutHF: FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <Header />
-      <main>
+      {/* <main>
         {children}
       </main>
-      <Footer />
+      <Footer /> */}
     </>
   )
 }
