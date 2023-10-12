@@ -1,0 +1,49 @@
+.header {
+    width: 95%;
+    margin: 30px auto;
+    min-height: 620px;
+    border-radius: 48px;
+    background-image: url(../../assets/images/header-photo.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding-inline: 24px;
+
+    .navbar {
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        >div {
+            flex: 1;
+        }
+
+        a {
+            color: var(--light-color);
+            cursor: pointer;
+        }
+
+        .navbarLeft {
+            a {
+                padding: 13px 24px;
+            }
+        }
+
+        .navbarLogo {
+            text-align: center;
+
+            a {
+                padding: 24px;
+                display: inline-block;
+            }
+        }
+
+        .navbarRight {
+            text-align: end;
+            a {
+                padding: 13px 24px;
+            }
+        }
+    }
+}

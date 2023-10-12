@@ -22,6 +22,7 @@ const Layout: FC<PropsWithChildren<ILayout>> = ({ children, title, isLogin = tru
         <div className={`${montserrat.className} ${className}`} >
             <Head>
                 <title>{getTitle(title)}</title>
+                <link rel="icon" href="/logo.svg" type="image.svg"/>
             </Head>
             {isLogin ?
                 <LayoutHF>
