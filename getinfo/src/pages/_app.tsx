@@ -1,6 +1,7 @@
 import "../styles/global.css";
 import "../utils/dayjs";
 import "@mantine/core/styles.css";
+import '@mantine/carousel/styles.css';
 
 import type { AppProps } from "next/app";
 import Head from "next/head";

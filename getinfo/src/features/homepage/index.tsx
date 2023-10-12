@@ -1,11 +1,13 @@
 import { FC } from "react"
 import Layout from "../../layouts/Layout"
-import Advantages from "./sections/advantages"
+import AdvantagesSection from "./sections/advantages"
+import GuideSection from "./sections/guide"
 
 const Home: FC = () => {
     return (
         <Layout title={"Home"} isLogin={true}>
-            <Advantages/>
+            <AdvantagesSection/>
+            <GuideSection/>
         </Layout>
     )
 }

@@ -10,6 +10,7 @@
 	--light-color: #FAFBFC;
 	--dark-color: #2A2A2A;
 	--accent-color: #02808F;
+	--green-color: #E4FDE0;
 }
 
 
@@ -43,4 +44,11 @@ body {
 
 a {
 	text-decoration: none;
+}
+
+
+.m-64f58e10 {
+    background-color: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
 }

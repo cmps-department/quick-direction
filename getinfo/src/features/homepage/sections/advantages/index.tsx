@@ -3,7 +3,7 @@ import { advantages } from "../../../../constants/homepage/homepage"
 import AdvantageCard from "../../../../components/advantage-card/AdvantageCard"
 import styles from './advantages.module.scss';
 
-const Advantages: FC = () => {
+const AdvantagesSection: FC = () => {
   return (
     <section>
       <div className={styles.advantages}>
@@ -18,4 +18,4 @@ const Advantages: FC = () => {
   )
 }
 
-export default Advantages
+export default AdvantagesSection
