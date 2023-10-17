@@ -1,13 +1,8 @@
 .footer {
     background-color: var(--accent-color);
     color: var(--light-color);
-    display: flex;
-    align-items: center;
-    padding: 130px 104px 50px;
     position: relative;
-    >* {
-        flex: 1;
-    }
+
 
     &_line {
         position: absolute;
@@ -17,5 +12,18 @@
         top: 0;
         left: 0;
         background-color: var(--light-color);
+    }
+
+    &_img {
+        text-align: center;
+    }
+
+    &_container {
+        display: flex;
+        align-items: center;
+        padding: 130px 0 50px;
+        >* {
+            flex: 1;
+        }
     }
 }

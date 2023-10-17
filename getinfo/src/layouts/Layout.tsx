@@ -19,7 +19,7 @@ const getTitle = (title: string | undefined) => title ? `${title} | QuickDirecti
 
 const Layout: FC<PropsWithChildren<ILayout>> = ({ children, title, isLogin = true, className = '' }) => {
     return (
-        <div className={`${montserrat.className} ${className}`} >
+        <div style={{maxWidth: '2000px', margin: '0 auto'}} className={`${montserrat.className} ${className} `} >
             <Head>
                 <title>{getTitle(title)}</title>
                 <link rel="icon" href="/logo.svg" type="image.svg"/>

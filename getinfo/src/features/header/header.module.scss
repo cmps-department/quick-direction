@@ -1,15 +1,17 @@
 .header {
-    width: 100vw;
-    min-height: 100vh;
+    width: 100%;
+    height: 100vh;
+    max-height: 1000px;
     padding-top: 30px;
     position: relative;
 
     .headerBg {
         width: 95%;
         margin: 0px auto;
-        min-height: 620px;
+        height: 70%;
+        max-height: 700px;
         border-radius: 48px;
-        background-image: url(../../assets/images/header-photo.jpg);
+        background-image: url(../../assets/images/header-photo.webp);
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
@@ -21,20 +23,22 @@
             align-items: center;
             justify-content: space-between;
 
-            >div {
-                flex: 1;
-            }
-
             a {
                 font-size: 18px;
                 color: var(--light-color);
                 cursor: pointer;
             }
+
             a:hover {
-                text-shadow: 0px 0px 10px var(--light-color);
+                text-decoration: underline;
             }
 
             .navbarLeft {
+                flex: 3;
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+
                 a {
                     padding: 13px 24px;
                 }
@@ -42,6 +46,7 @@
 
             .navbarLogo {
                 text-align: center;
+                flex: 1;
 
                 a {
                     padding: 24px;
@@ -49,30 +54,30 @@
                 }
             }
 
-            .navbarRight {
-                text-align: end;
-
-                a {
-                    padding: 13px 24px;
-                }
+            .flexBlock {
+                flex: 3;
             }
         }
     }
 
     .hBanner {
-        padding: 64px 0px;
         position: absolute;
         left: 0;
-        bottom: 0;
+        bottom: 5vh;
         left: 50%;
         transform: translate(-50%, 0);
-        width: 85%;
-        text-align: center;
-        background-color: var(--light-color);
-        border-radius: 24px;
-        box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.03), 0px 15px 15px 0px rgba(0, 0, 0, 0.03), 0px 34px 20px 0px rgba(0, 0, 0, 0.02), 0px 60px 24px 0px rgba(0, 0, 0, 0.00), 0px 93px 26px 0px rgba(0, 0, 0, 0.00);
+        width: 100%;
 
-        &_title, &_text {
+        &_container {
+            padding: 64px 0px;
+            text-align: center;
+            background-color: var(--light-color);
+            border-radius: 24px;
+            box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.03), 0px 15px 15px 0px rgba(0, 0, 0, 0.03), 0px 34px 20px 0px rgba(0, 0, 0, 0.02), 0px 60px 24px 0px rgba(0, 0, 0, 0.00), 0px 93px 26px 0px rgba(0, 0, 0, 0.00);
+        }
+
+        &_title,
+        &_text {
             color: var(--dark-color);
         }
 
@@ -80,13 +85,15 @@
             font-size: 28px;
             font-weight: 700;
             line-height: 36px;
+            margin-top: 0;
         }
 
-        &_text  {
+        &_text {
             width: 85%;
             margin: 24px auto;
             font-size: 16px;
             line-height: 24px;
+
             span {
                 font-weight: 600;
             }
@@ -95,11 +102,13 @@
         &_btn {
             background-color: var(--accent-color);
             color: var(--light-color);
+            border: 2px solid var(--accent-color);
             padding: 12px 120px;
         }
 
         &_btn:hover {
-            background-color: #02818fbc;
+            background-color: var(--light-color);
+            color: var(--accent-color);
         }
 
         &_line {
@@ -107,6 +116,59 @@
             margin: 0 auto;
             height: 4px;
             background-color: var(--accent-color);
+        }
+    }
+
+    @media (max-width: 1400px) {
+        .hBanner {
+            &_container {
+                padding: 34px 0;
+            }
+        }
+    }
+
+    @media (max-width: 1100px) {
+        .headerBg {
+            .navbar {
+                .flexBlock {
+                    flex: none;
+                }
+
+                .navbarLogo {
+                    text-align: end;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 700px) {
+        .headerBg {
+            .navbar {
+                flex-direction: column-reverse;
+
+                .navbarLeft {
+                    justify-content: center;
+                }
+            }
+        }
+
+        .hBanner {
+            &_text {
+                text-align: justify;
+            }
+        }
+    }
+
+    @media (max-width: 500px) {
+        .hBanner {
+            width: 90%;
+            &_btn {
+                background-color: var(--accent-color);
+                color: var(--light-color);
+                border: 2px solid var(--accent-color);
+                padding-inline: 0;
+                width: 95%;
+            }
         }
     }
 

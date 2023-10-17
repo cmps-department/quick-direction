@@ -1,4 +1,4 @@
-import "../styles/global.css";
+import "../styles/global.scss";
 import "../utils/dayjs";
 import "@mantine/core/styles.css";
 import '@mantine/carousel/styles.css';

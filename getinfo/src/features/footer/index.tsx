@@ -2,25 +2,30 @@ import { FC } from 'react'
 import styles from './footer.module.scss'
 import Image from 'next/image'
 
-import khpiImg from "../../assets/images/khpi-logo.svg"
+import khpiImg from "../../assets/images/khpi-logo.webp"
+import ContainerL from '../../layouts/ContainerL'
 
 const Footer: FC = () => {
   return (
     <footer>
       <div className={styles.footer}>
         <div className={styles.footer_line}></div>
-        <ul>
-          <li>Контакти</li>
-          <li>Соціальні мережі</li>
-          <li>Про нас</li>
-        </ul>
-        <Image
-          width={192}
-          height={192}
-          src={khpiImg}
-          alt="Logo"
-        />
-        <div></div>
+        <ContainerL className={styles.footer_container}>
+          <ul>
+            <li>Контакти</li>
+            <li>Соціальні мережі</li>
+            <li>Про нас</li>
+          </ul>
+          <div className={styles.footer_img}>
+            <Image
+              width={192}
+              height={192}
+              src={khpiImg}
+              alt="Logo"
+            />
+          </div>
+          <div></div>
+        </ContainerL>
       </div>
     </footer>
   )

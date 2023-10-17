@@ -1,13 +1,14 @@
 .help {
     color: var(--dark-color);
-    background-color: var(--light-color);
     padding-block: 88px;
     display: flex;
     justify-content: space-between;
-    padding-inline: 104px;
+    flex-wrap: wrap;
     gap: 30px;
 
     .helpCard {
+        min-width: 300px;
+        flex: 1;
         text-align: center;
         border-radius: 24px;
         padding: 24px 44px;
@@ -30,11 +31,12 @@
         
         &_btn {
             background-color: #FCECCA;
-            padding: 12px 70px;
+            border: 2px solid #FCECCA;
             font-weight: 600;
+            width: 100%;
 
             &:hover {
-                background-color: #d6c39d;
+                background-color: var(--light-color)
             }
         }
     }

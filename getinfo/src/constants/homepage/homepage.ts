@@ -1,7 +1,7 @@
-import speedometerImg from '../../assets/images/advantages/speedometer.png';
-import analyticImg from '../../assets/images/advantages/analytic.png';
-import locationImg from '../../assets/images/advantages/location.png';
-import trueFalseImg from '../../assets/images/advantages/true-false.png';
+import speedometerImg from '../../assets/images/advantages/speedometer.svg';
+import analyticImg from '../../assets/images/advantages/analytic.svg';
+import locationImg from '../../assets/images/advantages/location.svg';
+import trueFalseImg from '../../assets/images/advantages/trueFalse.svg';
 import { StaticImageData } from 'next/image';
 
 export interface IAdvantage {
@@ -9,6 +9,11 @@ export interface IAdvantage {
     title: string,
     description: string,
     image: StaticImageData
+}
+
+export interface IGuideSlide {
+    title: string,
+    list: string[]
 }
 
 
@@ -38,3 +43,34 @@ export const advantages: ReadonlyArray<IAdvantage> = [
         image: trueFalseImg
     },
 ]
+
+
+export const guideSlides: ReadonlyArray<IGuideSlide> = [
+    {
+        title: 'Заповнення та відправлення заявки або замовлення довідки:',
+        list: [
+            "Увійдіть на веб-сайт університету та перейдіть на сторінку для подачі заявок та довідок.",
+            "Виберіть тип заявки або довідки, яку вам необхідно подати (наприклад, 'Нарахування додаткових балів до стипендіального рейтингу').",
+            "Завантажте зразок оформлення заяви та бланк заяви або довідки на свій комп'ютер.",
+            "Відкрийте бланк у текстовому або графічному редакторі та заповніть його відповідно до ваших потреб і вимог університету.",
+            "Після заповнення бланку, збережіть файл на своєму комп'ютері."
+        ]
+    },
+    {
+        title: 'Подача заявки або замовлення довідки на веб-сайті:',
+        list: [
+            "Поверніться на сторінку для подачі заявок та довідок на веб-сайті університету.",
+            "Заповніть всі обов'язкові поля форми, такі як ваше ПІП та група.",
+            "Завантажте заповнений бланк заяви або довідки, який ви підготували раніше.",
+            'Натисніть кнопку "Відправити", щоб надіслати вашу заявку або довідку.'
+        ]
+    },
+    {
+        title: 'Відстеження статусу заявки: ',
+        list: [
+            "Після відправлення заявки, ви отримаєте листа на вашу електронну пошту з підтвердженням надходження.",
+            'Ви також отримаєте статус вашої заявки (наприклад, "виконано", "на розгляді", "відмовлено" або "необхідність редагування") через електронну пошту після обробки дирекцією.',
+            "Якщо у вас виникли питання або потрібно внести зміни до заявки, ви маєте змогу листування з адміністраторами системи за допомогою унікального ідентифікаційного номера вашої заявки."
+        ]
+    }
+] 
