@@ -1,16 +1,16 @@
 import { FC } from "react"
-import Layout from "../../layouts/Layout"
-import AdvantagesSection from "./sections/advantages"
-import GuideSection from "./sections/guide"
-import HelpSection from "./sections/help"
+import PageLayout from "../../layouts/PageLayout"
+import AdvantagesSection from "./containers/advantages"
+import GuideSection from "./containers/guide"
+import HelpSection from "./containers/help"
 
 const Home: FC = () => {
     return (
-        <Layout title={"Home"} isLogin={true}>
+        <PageLayout title={"Home"} isLogin={true}>
             <AdvantagesSection/>
             <GuideSection/>
             <HelpSection/>
-        </Layout>
+        </PageLayout>
     )
 }
 

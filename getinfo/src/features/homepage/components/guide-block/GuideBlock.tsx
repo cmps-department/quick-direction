@@ -1,5 +1,5 @@
 import styles from './guideBlock.module.scss'
-import ContainerL from "../../layouts/ContainerL"
+import Container from "../../../../components/container/Container"
 
 interface IGuideBlock {
     title: string,
@@ -9,7 +9,7 @@ interface IGuideBlock {
 
 const GuideBlock = ({title, list, index}: IGuideBlock) => {
     return (
-        <ContainerL>
+        <Container>
             <div className={styles.guideBlock}>
                 <div className={styles.guideBlock_info}>
                     <h3 className={styles.guideBlock_title}>{title}</h3>
@@ -21,7 +21,7 @@ const GuideBlock = ({title, list, index}: IGuideBlock) => {
                 </div>
                 <div className={styles.block}></div>
             </div>
-        </ContainerL>
+        </Container>
     )
 }
 

@@ -2,7 +2,7 @@ import { FC } from "react"
 import { Carousel, CarouselSlide } from '@mantine/carousel';
 import GuideBlock from "../guide-block/GuideBlock";
 import { IconArrow } from "../arrow/IconArrow";
-import { guideSlides } from "../../constants/homepage/homepage";
+import { guideSlides } from "../../constants/guideSlides";
 
 const CarouselC: FC = () => {
     return (

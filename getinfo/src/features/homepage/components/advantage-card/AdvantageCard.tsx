@@ -1,7 +1,7 @@
-import { IAdvantage } from '../../constants/homepage/homepage'
-import Image from 'next/image'
+import { IAdvantage } from '../../constants/advantages';
+import Image from 'next/image';
+import styles from './advCard.module.scss';
 
-import styles from './advCard.module.scss'
 
 const AdvantageCard = ({ advantage }: { advantage: IAdvantage }) => {
     return (
@@ -9,7 +9,7 @@ const AdvantageCard = ({ advantage }: { advantage: IAdvantage }) => {
             <Image
                 width={90}
                 height={90}
-                src={advantage.image.src}
+                src={advantage.image}
                 alt="Icon"
             />
             <div>

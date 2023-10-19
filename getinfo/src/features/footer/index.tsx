@@ -2,8 +2,7 @@ import { FC } from 'react'
 import styles from './footer.module.scss'
 import Image from 'next/image'
 
-import khpiImg from "../../assets/images/khpi-logo.webp"
-import ContainerL from '../../layouts/ContainerL'
+import ContainerL from '../../components/container/Container'
 
 const Footer: FC = () => {
   return (
@@ -20,7 +19,7 @@ const Footer: FC = () => {
             <Image
               width={192}
               height={192}
-              src={khpiImg}
+              src="/images/khpi-logo.webp"
               alt="Logo"
             />
           </div>
