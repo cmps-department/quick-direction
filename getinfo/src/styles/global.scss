@@ -6,7 +6,13 @@
 	--scroll-track-background: #f8f8f8;
 	--scroll-track-border-radius: 6px;
 	--scroll-width: 12px;
+
+	--light-color: #FAFBFC;
+	--dark-color: #2A2A2A;
+	--accent-color: #02808F;
+	--green-color: #E4FDE0;
 }
+
 
 html,
 body {
@@ -32,8 +38,42 @@ html ::-webkit-scrollbar-track {
 
 body {
 	overflow-x: hidden;
+	font-weight: 400;
+	background-color: var(--light-color) !important;
 }
 
 a {
 	text-decoration: none;
+}
+
+// Arrow
+.m-64f58e10 {
+    background-color: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+
+// Slide
+.mantine-Carousel-slide {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	> div {
+		width: 100%;
+	}
+}
+
+.mantine-Carousel-controls {
+	padding-inline: 20px !important;
+}
+
+@media (max-width: 500px) {
+	.m-64f58e10 img{
+		width: 40px !important;
+		height: 40px !important;
+	}
+
+	.mantine-Carousel-controls {
+		padding-inline: 3px !important;
+	}
 }

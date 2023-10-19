@@ -1,10 +1,6 @@
-import { Text } from "@mantine/core";
-import CenteredLayout from "../layouts/CenterLayout";
+import Home from "../features/homepage";
+
 
 export default function HomePage() {
-    return (
-        <CenteredLayout>
-            <Text>Welcome to GetInfo!</Text>
-        </CenteredLayout>
-  );
+    return <Home/>
 }

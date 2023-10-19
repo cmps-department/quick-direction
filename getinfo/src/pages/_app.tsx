@@ -1,6 +1,7 @@
-import "../styles/global.css";
+import "../styles/global.scss";
 import "../utils/dayjs";
 import "@mantine/core/styles.css";
+import '@mantine/carousel/styles.css';
 
 import type { AppProps } from "next/app";
 import Head from "next/head";
@@ -24,6 +25,7 @@ const config = {
     }
 }
 
+
 export default function App({ Component, pageProps }: AppProps) {
     const [queryClient] = useState(() => new QueryClient(config));
 
@@ -39,7 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <Provider store={store}>
                     <QueryClientProvider client={queryClient}>
                         <Hydrate state={pageProps.dehydratedState}>
-                            <Component  {...pageProps} />
+                            <Component {...pageProps} />
                             <Devtools />
                         </Hydrate>
                     </QueryClientProvider>
