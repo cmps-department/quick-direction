@@ -12,5 +12,8 @@ module.exports = {
                 hostname: "**",
             },
         ],
-    }   
+    },
+    rewrites: [
+        { source: '/api/:path*'}
+    ],
 }
