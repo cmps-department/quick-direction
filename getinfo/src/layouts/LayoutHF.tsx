@@ -1,11 +1,24 @@
-import React, { FC, PropsWithChildren } from 'react'
-import Header from '../features/header'
-import Footer from '../features/footer'
+import { FC, ReactNode } from 'react';
+import Header from '../features/header';
+import Footer from '../features/footer';
+import SimpleHeader from '../components/SimpleHeader';
 
-const LayoutHF: FC<PropsWithChildren> = ({ children }) => {
+const Headers = {
+    extended: Header,
+    simple: SimpleHeader
+}
+
+interface LayoutHFProps {
+    children: ReactNode;
+    headerType: keyof typeof Headers;
+}
+
+const LayoutHF: FC<LayoutHFProps> = ({ children, headerType }) => {
+    const PageHeader = Headers[headerType];
+
     return (
         <>
-            <Header />
+            <PageHeader />
                 <main>
                     {children}
                 </main>
@@ -14,4 +27,4 @@ const LayoutHF: FC<PropsWithChildren> = ({ children }) => {
     )
 }
 
-export default LayoutHF
+export default LayoutHF;

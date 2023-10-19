@@ -2,7 +2,7 @@ import { FC } from 'react'
 import styles from './footer.module.scss'
 import Image from 'next/image'
 
-import ContainerL from '../../components/container/Container'
+import ContainerL from '../../components/Container/Container'
 
 const Footer: FC = () => {
   return (

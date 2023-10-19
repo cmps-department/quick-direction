@@ -1,6 +1,14 @@
-import Home from "../features/homepage";
+import HomePageView from "../features/HomePageView";
+import LayoutHF from "../layouts/LayoutHF";
+import PageLayout from "../layouts/PageLayout";
 
 
 export default function HomePage() {
-    return <Home/>
+    return (
+        <PageLayout title={"Home"}>
+            <LayoutHF headerType="extended"> 
+                <HomePageView />
+            </LayoutHF>
+        </PageLayout>
+    )
 }

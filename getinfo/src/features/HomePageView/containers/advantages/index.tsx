@@ -2,7 +2,7 @@ import { FC } from "react";
 import { advantages } from "../../constants/advantages";
 import AdvantageCard from "../../components/advantage-card/AdvantageCard";
 import styles from './advantages.module.scss';
-import Container from "../../../../components/container/Container";
+import Container from "../../../../components/Container/Container";
 
 const AdvantagesSection: FC = () => {
     return (

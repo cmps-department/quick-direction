@@ -1,5 +1,5 @@
 import styles from './guideBlock.module.scss'
-import Container from "../../../../components/container/Container"
+import Container from "../../../../components/Container/Container"
 
 interface IGuideBlock {
     title: string,

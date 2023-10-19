@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import styles from './guide.module.scss'
 import CarouselC from '../../components/carousel/Carousel';
-import ContainerL from '../../../../components/container/Container';
+import ContainerL from '../../../../components/Container/Container';
 
 const GuideSection: FC = () => {
   return (
