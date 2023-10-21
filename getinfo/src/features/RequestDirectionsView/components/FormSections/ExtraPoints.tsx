@@ -1,6 +1,7 @@
 import { Group, Flex, Text, Image, Stack } from "@mantine/core";
-import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import OutlineButton from "../../../../components/OutlineButton/OutlineButton";
+import { Icon } from "@iconify/react";
 
 
 const ExtraPoints = () => {
@@ -28,7 +29,7 @@ const ExtraPoints = () => {
                     onDrop={(files) => console.log('accepted files', files)}
                     onReject={(files) => console.log('rejected files', files)}
                     maxSize={3 * 1024 ** 2}
-                    accept={IMAGE_MIME_TYPE}
+                    accept={[MIME_TYPES.doc, MIME_TYPES.docx, MIME_TYPES.pdf]}
                     styles={{
                         root: {
                             border: "2px dashed #02808F",
@@ -38,16 +39,10 @@ const ExtraPoints = () => {
                 >
                     <Stack justify="center" align="center" mih={188} style={{ pointerEvents: 'none' }}>
                         <Dropzone.Accept>
-                        {/*<IconUpload
-                            style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-blue-6)' }}
-                            stroke={1.5}
-                        />*/}
+                            <Icon width={72} height={72} color="#E4FDE0" icon="clarity:success-standard-solid" />
                         </Dropzone.Accept>
                         <Dropzone.Reject>
-                        {/*<IconX
-                            style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-red-6)' }}
-                            stroke={1.5}
-                        />*/}
+                            <Icon width={72} height={72} color="red" icon="ic:sharp-error" />
                         </Dropzone.Reject>
                         <Dropzone.Idle>
                             <Image
@@ -56,7 +51,6 @@ const ExtraPoints = () => {
                                 src="/images/Plus.png"
                             />
                         </Dropzone.Idle>
-
                         <div>
                             <Text fw={500} size="sm" c="dimmed" inline mt={7}>
                                 Завантажити
