@@ -3,8 +3,8 @@ import Image from 'next/image'
 import styles from './header.module.scss'
 
 import Link from "next/link"
-import CustomButton from "../../components/button/CustomButton"
-import Container from "../../components/container/Container"
+import CustomButton from "../../components/CustomButton/CustomButton"
+import Container from "../../components/Container/Container"
 
 
 const Header: FC = () => {
@@ -40,7 +40,7 @@ const Header: FC = () => {
                         <div className={styles.hBanner_line}></div>
                         <p className={styles.hBanner_text}><span>Quick Direction</span> - це сервіс для легкого спілкування студентів з дирекцією. З нами ваша заявка точно не загубиться: заповнену форму одразу буде скеровано до спеціальних відділів дирекції НТУ “ХПІ” відповідно до обраного вами запиту.</p>
                         <CustomButton className={styles.hBanner_btn} onClick={() => { }} >
-                        Подати заявку
+                            Подати заявку
                         </CustomButton>
                     </Container>
                 </div>
