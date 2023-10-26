@@ -1,10 +1,14 @@
-import { Text } from "@mantine/core";
-import CenteredLayout from "../layouts/CenterLayout";
+import HomePageView from "../features/HomePageView";
+import LayoutHF from "../layouts/LayoutHF";
+import PageLayout from "../layouts/PageLayout";
+
 
 export default function HomePage() {
     return (
-        <CenteredLayout>
-            <Text>Welcome to GetInfo!</Text>
-        </CenteredLayout>
-  );
+        <PageLayout title={"Home"}>
+            <LayoutHF headerType="extended"> 
+                <HomePageView />
+            </LayoutHF>
+        </PageLayout>
+    )
 }
