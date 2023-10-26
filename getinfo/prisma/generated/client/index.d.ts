@@ -18,6 +18,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * 
  */
 export type Directions = $Result.DefaultSelection<Prisma.$DirectionsPayload>
+/**
+ * Model SubDirections
+ * 
+ */
+export type SubDirections = $Result.DefaultSelection<Prisma.$SubDirectionsPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -76,6 +81,52 @@ export class PrismaClient<
   $use(cb: Prisma.Middleware): void
 
 /**
+   * Executes a prepared raw query and returns the number of affected rows.
+   * @example
+   * ```
+   * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
+   * ```
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
+
+  /**
+   * Executes a raw query and returns the number of affected rows.
+   * Susceptible to SQL injections, see documentation.
+   * @example
+   * ```
+   * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
+   * ```
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
+
+  /**
+   * Performs a prepared raw query and returns the `SELECT` data.
+   * @example
+   * ```
+   * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
+   * ```
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
+
+  /**
+   * Performs a raw query and returns the `SELECT` data.
+   * Susceptible to SQL injections, see documentation.
+   * @example
+   * ```
+   * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
+   * ```
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
+
+  /**
    * Allows the running of a sequence of read/write operations that are guaranteed to either succeed or fail as a whole.
    * @example
    * ```
@@ -88,24 +139,10 @@ export class PrismaClient<
    * 
    * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
    */
-  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P]): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
-  $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number }): $Utils.JsPromise<R>
+  $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
 
-  /**
-   * Executes a raw MongoDB command and returns the result of it.
-   * @example
-   * ```
-   * const user = await prisma.$runCommandRaw({
-   *   aggregate: 'User',
-   *   pipeline: [{ $match: { name: 'Bob' } }, { $project: { email: true, _id: false } }],
-   *   explain: false,
-   * })
-   * ```
-   * 
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
-   */
-  $runCommandRaw(command: Prisma.InputJsonObject): Prisma.PrismaPromise<Prisma.JsonObject>
 
   $extends: $Extensions.ExtendsHook<'extends', Prisma.TypeMapCb, ExtArgs>
 
@@ -118,6 +155,16 @@ export class PrismaClient<
     * ```
     */
   get directions(): Prisma.DirectionsDelegate<ExtArgs>;
+
+  /**
+   * `prisma.subDirections`: Exposes CRUD operations for the **SubDirections** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SubDirections
+    * const subDirections = await prisma.subDirections.findMany()
+    * ```
+    */
+  get subDirections(): Prisma.SubDirectionsDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -588,7 +635,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Directions: 'Directions'
+    Directions: 'Directions',
+    SubDirections: 'SubDirections'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -605,8 +653,8 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'directions'
-      txIsolationLevel: never
+      modelProps: 'directions' | 'subDirections'
+      txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
       Directions: {
@@ -669,17 +717,75 @@ export namespace Prisma {
             args: Prisma.DirectionsGroupByArgs<ExtArgs>,
             result: $Utils.Optional<DirectionsGroupByOutputType>[]
           }
-          findRaw: {
-            args: Prisma.DirectionsFindRawArgs<ExtArgs>,
-            result: Prisma.JsonObject
-          }
-          aggregateRaw: {
-            args: Prisma.DirectionsAggregateRawArgs<ExtArgs>,
-            result: Prisma.JsonObject
-          }
           count: {
             args: Prisma.DirectionsCountArgs<ExtArgs>,
             result: $Utils.Optional<DirectionsCountAggregateOutputType> | number
+          }
+        }
+      }
+      SubDirections: {
+        payload: Prisma.$SubDirectionsPayload<ExtArgs>
+        fields: Prisma.SubDirectionsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SubDirectionsFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$SubDirectionsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SubDirectionsFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$SubDirectionsPayload>
+          }
+          findFirst: {
+            args: Prisma.SubDirectionsFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$SubDirectionsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SubDirectionsFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$SubDirectionsPayload>
+          }
+          findMany: {
+            args: Prisma.SubDirectionsFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$SubDirectionsPayload>[]
+          }
+          create: {
+            args: Prisma.SubDirectionsCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$SubDirectionsPayload>
+          }
+          createMany: {
+            args: Prisma.SubDirectionsCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.SubDirectionsDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$SubDirectionsPayload>
+          }
+          update: {
+            args: Prisma.SubDirectionsUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$SubDirectionsPayload>
+          }
+          deleteMany: {
+            args: Prisma.SubDirectionsDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SubDirectionsUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.SubDirectionsUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$SubDirectionsPayload>
+          }
+          aggregate: {
+            args: Prisma.SubDirectionsAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateSubDirections>
+          }
+          groupBy: {
+            args: Prisma.SubDirectionsGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<SubDirectionsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SubDirectionsCountArgs<ExtArgs>,
+            result: $Utils.Optional<SubDirectionsCountAggregateOutputType> | number
           }
         }
       }
@@ -688,9 +794,21 @@ export namespace Prisma {
     other: {
       payload: any
       operations: {
-        $runCommandRaw: {
-          args: Prisma.InputJsonObject,
-          result: Prisma.JsonObject
+        $executeRawUnsafe: {
+          args: [query: string, ...values: any[]],
+          result: any
+        }
+        $executeRaw: {
+          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
+          result: any
+        }
+        $queryRawUnsafe: {
+          args: [query: string, ...values: any[]],
+          result: any
+        }
+        $queryRaw: {
+          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
+          result: any
         }
       }
     }
@@ -815,6 +933,39 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type DirectionsCountOutputType
+   */
+
+  export type DirectionsCountOutputType = {
+    subDirections: number
+  }
+
+  export type DirectionsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    subDirections?: boolean | DirectionsCountOutputTypeCountSubDirectionsArgs
+  }
+
+  // Custom InputTypes
+
+  /**
+   * DirectionsCountOutputType without action
+   */
+  export type DirectionsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DirectionsCountOutputType
+     */
+    select?: DirectionsCountOutputTypeSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * DirectionsCountOutputType without action
+   */
+  export type DirectionsCountOutputTypeCountSubDirectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubDirectionsWhereInput
+  }
+
+
 
   /**
    * Models
@@ -826,26 +977,32 @@ export namespace Prisma {
 
   export type AggregateDirections = {
     _count: DirectionsCountAggregateOutputType | null
+    _avg: DirectionsAvgAggregateOutputType | null
+    _sum: DirectionsSumAggregateOutputType | null
     _min: DirectionsMinAggregateOutputType | null
     _max: DirectionsMaxAggregateOutputType | null
   }
 
+  export type DirectionsAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type DirectionsSumAggregateOutputType = {
+    id: number | null
+  }
+
   export type DirectionsMinAggregateOutputType = {
-    id: string | null
+    id: number | null
     name: string | null
     description: string | null
-    examplelink: string | null
-    additionallink: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type DirectionsMaxAggregateOutputType = {
-    id: string | null
+    id: number | null
     name: string | null
     description: string | null
-    examplelink: string | null
-    additionallink: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -855,20 +1012,24 @@ export namespace Prisma {
     name: number
     description: number
     professors: number
-    examplelink: number
-    additionallink: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
+  export type DirectionsAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type DirectionsSumAggregateInputType = {
+    id?: true
+  }
+
   export type DirectionsMinAggregateInputType = {
     id?: true
     name?: true
     description?: true
-    examplelink?: true
-    additionallink?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -877,8 +1038,6 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
-    examplelink?: true
-    additionallink?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -888,8 +1047,6 @@ export namespace Prisma {
     name?: true
     description?: true
     professors?: true
-    examplelink?: true
-    additionallink?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -933,6 +1090,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: DirectionsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DirectionsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: DirectionsMinAggregateInputType
@@ -963,20 +1132,22 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: DirectionsCountAggregateInputType | true
+    _avg?: DirectionsAvgAggregateInputType
+    _sum?: DirectionsSumAggregateInputType
     _min?: DirectionsMinAggregateInputType
     _max?: DirectionsMaxAggregateInputType
   }
 
   export type DirectionsGroupByOutputType = {
-    id: string
+    id: number
     name: string
     description: string
     professors: string[]
-    examplelink: string
-    additionallink: string
     createdAt: Date
     updatedAt: Date
     _count: DirectionsCountAggregateOutputType | null
+    _avg: DirectionsAvgAggregateOutputType | null
+    _sum: DirectionsSumAggregateOutputType | null
     _min: DirectionsMinAggregateOutputType | null
     _max: DirectionsMaxAggregateOutputType | null
   }
@@ -1000,10 +1171,10 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     professors?: boolean
-    examplelink?: boolean
-    additionallink?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    subDirections?: boolean | Directions$subDirectionsArgs<ExtArgs>
+    _count?: boolean | DirectionsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["directions"]>
 
   export type DirectionsSelectScalar = {
@@ -1011,23 +1182,26 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     professors?: boolean
-    examplelink?: boolean
-    additionallink?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+  }
+
+  export type DirectionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    subDirections?: boolean | Directions$subDirectionsArgs<ExtArgs>
+    _count?: boolean | DirectionsCountOutputTypeDefaultArgs<ExtArgs>
   }
 
 
   export type $DirectionsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Directions"
-    objects: {}
+    objects: {
+      subDirections: Prisma.$SubDirectionsPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
-      id: string
+      id: number
       name: string
       description: string
       professors: string[]
-      examplelink: string
-      additionallink: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["directions"]>
@@ -1256,33 +1430,6 @@ export namespace Prisma {
     ): Prisma__DirectionsClient<$Result.GetResult<Prisma.$DirectionsPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
 
     /**
-     * Find zero or more Directions that matches the filter.
-     * @param {DirectionsFindRawArgs} args - Select which filters you would like to apply.
-     * @example
-     * const directions = await prisma.directions.findRaw({
-     *   filter: { age: { $gt: 25 } } 
-     * })
-    **/
-    findRaw(
-      args?: DirectionsFindRawArgs
-    ): Prisma.PrismaPromise<JsonObject>
-
-    /**
-     * Perform aggregation operations on a Directions.
-     * @param {DirectionsAggregateRawArgs} args - Select which aggregations you would like to apply.
-     * @example
-     * const directions = await prisma.directions.aggregateRaw({
-     *   pipeline: [
-     *     { $match: { status: "registered" } },
-     *     { $group: { _id: "$country", total: { $sum: 1 } } }
-     *   ]
-     * })
-    **/
-    aggregateRaw(
-      args?: DirectionsAggregateRawArgs
-    ): Prisma.PrismaPromise<JsonObject>
-
-    /**
      * Count the number of Directions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
@@ -1422,6 +1569,7 @@ export namespace Prisma {
   export interface Prisma__DirectionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
+    subDirections<T extends Directions$subDirectionsArgs<ExtArgs> = {}>(args?: Subset<T, Directions$subDirectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubDirectionsPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1451,12 +1599,10 @@ export namespace Prisma {
    * Fields of the Directions model
    */ 
   interface DirectionsFieldRefs {
-    readonly id: FieldRef<"Directions", 'String'>
+    readonly id: FieldRef<"Directions", 'Int'>
     readonly name: FieldRef<"Directions", 'String'>
     readonly description: FieldRef<"Directions", 'String'>
     readonly professors: FieldRef<"Directions", 'String[]'>
-    readonly examplelink: FieldRef<"Directions", 'String'>
-    readonly additionallink: FieldRef<"Directions", 'String'>
     readonly createdAt: FieldRef<"Directions", 'DateTime'>
     readonly updatedAt: FieldRef<"Directions", 'DateTime'>
   }
@@ -1473,6 +1619,10 @@ export namespace Prisma {
      */
     select?: DirectionsSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectionsInclude<ExtArgs> | null
+    /**
      * Filter, which Directions to fetch.
      */
     where: DirectionsWhereUniqueInput
@@ -1488,6 +1638,10 @@ export namespace Prisma {
      */
     select?: DirectionsSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectionsInclude<ExtArgs> | null
+    /**
      * Filter, which Directions to fetch.
      */
     where: DirectionsWhereUniqueInput
@@ -1502,6 +1656,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Directions
      */
     select?: DirectionsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectionsInclude<ExtArgs> | null
     /**
      * Filter, which Directions to fetch.
      */
@@ -1548,6 +1706,10 @@ export namespace Prisma {
      */
     select?: DirectionsSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectionsInclude<ExtArgs> | null
+    /**
      * Filter, which Directions to fetch.
      */
     where?: DirectionsWhereInput
@@ -1593,6 +1755,10 @@ export namespace Prisma {
      */
     select?: DirectionsSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectionsInclude<ExtArgs> | null
+    /**
      * Filter, which Directions to fetch.
      */
     where?: DirectionsWhereInput
@@ -1633,6 +1799,10 @@ export namespace Prisma {
      */
     select?: DirectionsSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectionsInclude<ExtArgs> | null
+    /**
      * The data needed to create a Directions.
      */
     data: XOR<DirectionsCreateInput, DirectionsUncheckedCreateInput>
@@ -1647,6 +1817,7 @@ export namespace Prisma {
      * The data used to create many Directions.
      */
     data: DirectionsCreateManyInput | DirectionsCreateManyInput[]
+    skipDuplicates?: boolean
   }
 
 
@@ -1658,6 +1829,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Directions
      */
     select?: DirectionsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectionsInclude<ExtArgs> | null
     /**
      * The data needed to update a Directions.
      */
@@ -1693,6 +1868,10 @@ export namespace Prisma {
      */
     select?: DirectionsSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectionsInclude<ExtArgs> | null
+    /**
      * The filter to search for the Directions to update in case it exists.
      */
     where: DirectionsWhereUniqueInput
@@ -1716,6 +1895,10 @@ export namespace Prisma {
      */
     select?: DirectionsSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectionsInclude<ExtArgs> | null
+    /**
      * Filter which Directions to delete.
      */
     where: DirectionsWhereUniqueInput
@@ -1734,32 +1917,23 @@ export namespace Prisma {
 
 
   /**
-   * Directions findRaw
+   * Directions.subDirections
    */
-  export type DirectionsFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Directions$subDirectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     * Select specific fields to fetch from the SubDirections
      */
-    filter?: InputJsonValue
+    select?: SubDirectionsSelect<ExtArgs> | null
     /**
-     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     * Choose, which related nodes to fetch as well.
      */
-    options?: InputJsonValue
-  }
-
-
-  /**
-   * Directions aggregateRaw
-   */
-  export type DirectionsAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
-     */
-    pipeline?: InputJsonValue[]
-    /**
-     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
-     */
-    options?: InputJsonValue
+    include?: SubDirectionsInclude<ExtArgs> | null
+    where?: SubDirectionsWhereInput
+    orderBy?: SubDirectionsOrderByWithRelationInput | SubDirectionsOrderByWithRelationInput[]
+    cursor?: SubDirectionsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SubDirectionsScalarFieldEnum | SubDirectionsScalarFieldEnum[]
   }
 
 
@@ -1771,6 +1945,1010 @@ export namespace Prisma {
      * Select specific fields to fetch from the Directions
      */
     select?: DirectionsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectionsInclude<ExtArgs> | null
+  }
+
+
+
+  /**
+   * Model SubDirections
+   */
+
+  export type AggregateSubDirections = {
+    _count: SubDirectionsCountAggregateOutputType | null
+    _avg: SubDirectionsAvgAggregateOutputType | null
+    _sum: SubDirectionsSumAggregateOutputType | null
+    _min: SubDirectionsMinAggregateOutputType | null
+    _max: SubDirectionsMaxAggregateOutputType | null
+  }
+
+  export type SubDirectionsAvgAggregateOutputType = {
+    id: number | null
+    directionId: number | null
+  }
+
+  export type SubDirectionsSumAggregateOutputType = {
+    id: number | null
+    directionId: number | null
+  }
+
+  export type SubDirectionsMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    additionalInfo: string | null
+    examplelink: string | null
+    additionallink: string | null
+    validationField: string | null
+    directionId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SubDirectionsMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    additionalInfo: string | null
+    examplelink: string | null
+    additionallink: string | null
+    validationField: string | null
+    directionId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SubDirectionsCountAggregateOutputType = {
+    id: number
+    name: number
+    additionalInfo: number
+    examplelink: number
+    additionallink: number
+    validationField: number
+    directionId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SubDirectionsAvgAggregateInputType = {
+    id?: true
+    directionId?: true
+  }
+
+  export type SubDirectionsSumAggregateInputType = {
+    id?: true
+    directionId?: true
+  }
+
+  export type SubDirectionsMinAggregateInputType = {
+    id?: true
+    name?: true
+    additionalInfo?: true
+    examplelink?: true
+    additionallink?: true
+    validationField?: true
+    directionId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SubDirectionsMaxAggregateInputType = {
+    id?: true
+    name?: true
+    additionalInfo?: true
+    examplelink?: true
+    additionallink?: true
+    validationField?: true
+    directionId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SubDirectionsCountAggregateInputType = {
+    id?: true
+    name?: true
+    additionalInfo?: true
+    examplelink?: true
+    additionallink?: true
+    validationField?: true
+    directionId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SubDirectionsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SubDirections to aggregate.
+     */
+    where?: SubDirectionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubDirections to fetch.
+     */
+    orderBy?: SubDirectionsOrderByWithRelationInput | SubDirectionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SubDirectionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubDirections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubDirections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SubDirections
+    **/
+    _count?: true | SubDirectionsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SubDirectionsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SubDirectionsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SubDirectionsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SubDirectionsMaxAggregateInputType
+  }
+
+  export type GetSubDirectionsAggregateType<T extends SubDirectionsAggregateArgs> = {
+        [P in keyof T & keyof AggregateSubDirections]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSubDirections[P]>
+      : GetScalarType<T[P], AggregateSubDirections[P]>
+  }
+
+
+
+
+  export type SubDirectionsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubDirectionsWhereInput
+    orderBy?: SubDirectionsOrderByWithAggregationInput | SubDirectionsOrderByWithAggregationInput[]
+    by: SubDirectionsScalarFieldEnum[] | SubDirectionsScalarFieldEnum
+    having?: SubDirectionsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SubDirectionsCountAggregateInputType | true
+    _avg?: SubDirectionsAvgAggregateInputType
+    _sum?: SubDirectionsSumAggregateInputType
+    _min?: SubDirectionsMinAggregateInputType
+    _max?: SubDirectionsMaxAggregateInputType
+  }
+
+  export type SubDirectionsGroupByOutputType = {
+    id: number
+    name: string
+    additionalInfo: string
+    examplelink: string
+    additionallink: string
+    validationField: string
+    directionId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: SubDirectionsCountAggregateOutputType | null
+    _avg: SubDirectionsAvgAggregateOutputType | null
+    _sum: SubDirectionsSumAggregateOutputType | null
+    _min: SubDirectionsMinAggregateOutputType | null
+    _max: SubDirectionsMaxAggregateOutputType | null
+  }
+
+  type GetSubDirectionsGroupByPayload<T extends SubDirectionsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SubDirectionsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SubDirectionsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SubDirectionsGroupByOutputType[P]>
+            : GetScalarType<T[P], SubDirectionsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SubDirectionsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    additionalInfo?: boolean
+    examplelink?: boolean
+    additionallink?: boolean
+    validationField?: boolean
+    directionId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    directions?: boolean | DirectionsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["subDirections"]>
+
+  export type SubDirectionsSelectScalar = {
+    id?: boolean
+    name?: boolean
+    additionalInfo?: boolean
+    examplelink?: boolean
+    additionallink?: boolean
+    validationField?: boolean
+    directionId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SubDirectionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    directions?: boolean | DirectionsDefaultArgs<ExtArgs>
+  }
+
+
+  export type $SubDirectionsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SubDirections"
+    objects: {
+      directions: Prisma.$DirectionsPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      additionalInfo: string
+      examplelink: string
+      additionallink: string
+      validationField: string
+      directionId: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["subDirections"]>
+    composites: {}
+  }
+
+
+  type SubDirectionsGetPayload<S extends boolean | null | undefined | SubDirectionsDefaultArgs> = $Result.GetResult<Prisma.$SubDirectionsPayload, S>
+
+  type SubDirectionsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SubDirectionsFindManyArgs, 'select' | 'include'> & {
+      select?: SubDirectionsCountAggregateInputType | true
+    }
+
+  export interface SubDirectionsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SubDirections'], meta: { name: 'SubDirections' } }
+    /**
+     * Find zero or one SubDirections that matches the filter.
+     * @param {SubDirectionsFindUniqueArgs} args - Arguments to find a SubDirections
+     * @example
+     * // Get one SubDirections
+     * const subDirections = await prisma.subDirections.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends SubDirectionsFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, SubDirectionsFindUniqueArgs<ExtArgs>>
+    ): Prisma__SubDirectionsClient<$Result.GetResult<Prisma.$SubDirectionsPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one SubDirections that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {SubDirectionsFindUniqueOrThrowArgs} args - Arguments to find a SubDirections
+     * @example
+     * // Get one SubDirections
+     * const subDirections = await prisma.subDirections.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends SubDirectionsFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, SubDirectionsFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__SubDirectionsClient<$Result.GetResult<Prisma.$SubDirectionsPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first SubDirections that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubDirectionsFindFirstArgs} args - Arguments to find a SubDirections
+     * @example
+     * // Get one SubDirections
+     * const subDirections = await prisma.subDirections.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends SubDirectionsFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, SubDirectionsFindFirstArgs<ExtArgs>>
+    ): Prisma__SubDirectionsClient<$Result.GetResult<Prisma.$SubDirectionsPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first SubDirections that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubDirectionsFindFirstOrThrowArgs} args - Arguments to find a SubDirections
+     * @example
+     * // Get one SubDirections
+     * const subDirections = await prisma.subDirections.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends SubDirectionsFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, SubDirectionsFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__SubDirectionsClient<$Result.GetResult<Prisma.$SubDirectionsPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more SubDirections that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubDirectionsFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SubDirections
+     * const subDirections = await prisma.subDirections.findMany()
+     * 
+     * // Get first 10 SubDirections
+     * const subDirections = await prisma.subDirections.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const subDirectionsWithIdOnly = await prisma.subDirections.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends SubDirectionsFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, SubDirectionsFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubDirectionsPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a SubDirections.
+     * @param {SubDirectionsCreateArgs} args - Arguments to create a SubDirections.
+     * @example
+     * // Create one SubDirections
+     * const SubDirections = await prisma.subDirections.create({
+     *   data: {
+     *     // ... data to create a SubDirections
+     *   }
+     * })
+     * 
+    **/
+    create<T extends SubDirectionsCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, SubDirectionsCreateArgs<ExtArgs>>
+    ): Prisma__SubDirectionsClient<$Result.GetResult<Prisma.$SubDirectionsPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many SubDirections.
+     *     @param {SubDirectionsCreateManyArgs} args - Arguments to create many SubDirections.
+     *     @example
+     *     // Create many SubDirections
+     *     const subDirections = await prisma.subDirections.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends SubDirectionsCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, SubDirectionsCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a SubDirections.
+     * @param {SubDirectionsDeleteArgs} args - Arguments to delete one SubDirections.
+     * @example
+     * // Delete one SubDirections
+     * const SubDirections = await prisma.subDirections.delete({
+     *   where: {
+     *     // ... filter to delete one SubDirections
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends SubDirectionsDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, SubDirectionsDeleteArgs<ExtArgs>>
+    ): Prisma__SubDirectionsClient<$Result.GetResult<Prisma.$SubDirectionsPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one SubDirections.
+     * @param {SubDirectionsUpdateArgs} args - Arguments to update one SubDirections.
+     * @example
+     * // Update one SubDirections
+     * const subDirections = await prisma.subDirections.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends SubDirectionsUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, SubDirectionsUpdateArgs<ExtArgs>>
+    ): Prisma__SubDirectionsClient<$Result.GetResult<Prisma.$SubDirectionsPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more SubDirections.
+     * @param {SubDirectionsDeleteManyArgs} args - Arguments to filter SubDirections to delete.
+     * @example
+     * // Delete a few SubDirections
+     * const { count } = await prisma.subDirections.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends SubDirectionsDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, SubDirectionsDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SubDirections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubDirectionsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SubDirections
+     * const subDirections = await prisma.subDirections.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends SubDirectionsUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, SubDirectionsUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SubDirections.
+     * @param {SubDirectionsUpsertArgs} args - Arguments to update or create a SubDirections.
+     * @example
+     * // Update or create a SubDirections
+     * const subDirections = await prisma.subDirections.upsert({
+     *   create: {
+     *     // ... data to create a SubDirections
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SubDirections we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends SubDirectionsUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, SubDirectionsUpsertArgs<ExtArgs>>
+    ): Prisma__SubDirectionsClient<$Result.GetResult<Prisma.$SubDirectionsPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of SubDirections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubDirectionsCountArgs} args - Arguments to filter SubDirections to count.
+     * @example
+     * // Count the number of SubDirections
+     * const count = await prisma.subDirections.count({
+     *   where: {
+     *     // ... the filter for the SubDirections we want to count
+     *   }
+     * })
+    **/
+    count<T extends SubDirectionsCountArgs>(
+      args?: Subset<T, SubDirectionsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SubDirectionsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SubDirections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubDirectionsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SubDirectionsAggregateArgs>(args: Subset<T, SubDirectionsAggregateArgs>): Prisma.PrismaPromise<GetSubDirectionsAggregateType<T>>
+
+    /**
+     * Group by SubDirections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubDirectionsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SubDirectionsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SubDirectionsGroupByArgs['orderBy'] }
+        : { orderBy?: SubDirectionsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SubDirectionsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubDirectionsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SubDirections model
+   */
+  readonly fields: SubDirectionsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SubDirections.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SubDirectionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    directions<T extends DirectionsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DirectionsDefaultArgs<ExtArgs>>): Prisma__DirectionsClient<$Result.GetResult<Prisma.$DirectionsPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the SubDirections model
+   */ 
+  interface SubDirectionsFieldRefs {
+    readonly id: FieldRef<"SubDirections", 'Int'>
+    readonly name: FieldRef<"SubDirections", 'String'>
+    readonly additionalInfo: FieldRef<"SubDirections", 'String'>
+    readonly examplelink: FieldRef<"SubDirections", 'String'>
+    readonly additionallink: FieldRef<"SubDirections", 'String'>
+    readonly validationField: FieldRef<"SubDirections", 'String'>
+    readonly directionId: FieldRef<"SubDirections", 'Int'>
+    readonly createdAt: FieldRef<"SubDirections", 'DateTime'>
+    readonly updatedAt: FieldRef<"SubDirections", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * SubDirections findUnique
+   */
+  export type SubDirectionsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubDirections
+     */
+    select?: SubDirectionsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubDirectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which SubDirections to fetch.
+     */
+    where: SubDirectionsWhereUniqueInput
+  }
+
+
+  /**
+   * SubDirections findUniqueOrThrow
+   */
+  export type SubDirectionsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubDirections
+     */
+    select?: SubDirectionsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubDirectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which SubDirections to fetch.
+     */
+    where: SubDirectionsWhereUniqueInput
+  }
+
+
+  /**
+   * SubDirections findFirst
+   */
+  export type SubDirectionsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubDirections
+     */
+    select?: SubDirectionsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubDirectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which SubDirections to fetch.
+     */
+    where?: SubDirectionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubDirections to fetch.
+     */
+    orderBy?: SubDirectionsOrderByWithRelationInput | SubDirectionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SubDirections.
+     */
+    cursor?: SubDirectionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubDirections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubDirections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SubDirections.
+     */
+    distinct?: SubDirectionsScalarFieldEnum | SubDirectionsScalarFieldEnum[]
+  }
+
+
+  /**
+   * SubDirections findFirstOrThrow
+   */
+  export type SubDirectionsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubDirections
+     */
+    select?: SubDirectionsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubDirectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which SubDirections to fetch.
+     */
+    where?: SubDirectionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubDirections to fetch.
+     */
+    orderBy?: SubDirectionsOrderByWithRelationInput | SubDirectionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SubDirections.
+     */
+    cursor?: SubDirectionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubDirections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubDirections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SubDirections.
+     */
+    distinct?: SubDirectionsScalarFieldEnum | SubDirectionsScalarFieldEnum[]
+  }
+
+
+  /**
+   * SubDirections findMany
+   */
+  export type SubDirectionsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubDirections
+     */
+    select?: SubDirectionsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubDirectionsInclude<ExtArgs> | null
+    /**
+     * Filter, which SubDirections to fetch.
+     */
+    where?: SubDirectionsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubDirections to fetch.
+     */
+    orderBy?: SubDirectionsOrderByWithRelationInput | SubDirectionsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SubDirections.
+     */
+    cursor?: SubDirectionsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubDirections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubDirections.
+     */
+    skip?: number
+    distinct?: SubDirectionsScalarFieldEnum | SubDirectionsScalarFieldEnum[]
+  }
+
+
+  /**
+   * SubDirections create
+   */
+  export type SubDirectionsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubDirections
+     */
+    select?: SubDirectionsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubDirectionsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SubDirections.
+     */
+    data: XOR<SubDirectionsCreateInput, SubDirectionsUncheckedCreateInput>
+  }
+
+
+  /**
+   * SubDirections createMany
+   */
+  export type SubDirectionsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SubDirections.
+     */
+    data: SubDirectionsCreateManyInput | SubDirectionsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * SubDirections update
+   */
+  export type SubDirectionsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubDirections
+     */
+    select?: SubDirectionsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubDirectionsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SubDirections.
+     */
+    data: XOR<SubDirectionsUpdateInput, SubDirectionsUncheckedUpdateInput>
+    /**
+     * Choose, which SubDirections to update.
+     */
+    where: SubDirectionsWhereUniqueInput
+  }
+
+
+  /**
+   * SubDirections updateMany
+   */
+  export type SubDirectionsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SubDirections.
+     */
+    data: XOR<SubDirectionsUpdateManyMutationInput, SubDirectionsUncheckedUpdateManyInput>
+    /**
+     * Filter which SubDirections to update
+     */
+    where?: SubDirectionsWhereInput
+  }
+
+
+  /**
+   * SubDirections upsert
+   */
+  export type SubDirectionsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubDirections
+     */
+    select?: SubDirectionsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubDirectionsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SubDirections to update in case it exists.
+     */
+    where: SubDirectionsWhereUniqueInput
+    /**
+     * In case the SubDirections found by the `where` argument doesn't exist, create a new SubDirections with this data.
+     */
+    create: XOR<SubDirectionsCreateInput, SubDirectionsUncheckedCreateInput>
+    /**
+     * In case the SubDirections was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SubDirectionsUpdateInput, SubDirectionsUncheckedUpdateInput>
+  }
+
+
+  /**
+   * SubDirections delete
+   */
+  export type SubDirectionsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubDirections
+     */
+    select?: SubDirectionsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubDirectionsInclude<ExtArgs> | null
+    /**
+     * Filter which SubDirections to delete.
+     */
+    where: SubDirectionsWhereUniqueInput
+  }
+
+
+  /**
+   * SubDirections deleteMany
+   */
+  export type SubDirectionsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SubDirections to delete
+     */
+    where?: SubDirectionsWhereInput
+  }
+
+
+  /**
+   * SubDirections without action
+   */
+  export type SubDirectionsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubDirections
+     */
+    select?: SubDirectionsSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubDirectionsInclude<ExtArgs> | null
   }
 
 
@@ -1779,18 +2957,41 @@ export namespace Prisma {
    * Enums
    */
 
+  export const TransactionIsolationLevel: {
+    ReadUncommitted: 'ReadUncommitted',
+    ReadCommitted: 'ReadCommitted',
+    RepeatableRead: 'RepeatableRead',
+    Serializable: 'Serializable'
+  };
+
+  export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
   export const DirectionsScalarFieldEnum: {
     id: 'id',
     name: 'name',
     description: 'description',
     professors: 'professors',
-    examplelink: 'examplelink',
-    additionallink: 'additionallink',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type DirectionsScalarFieldEnum = (typeof DirectionsScalarFieldEnum)[keyof typeof DirectionsScalarFieldEnum]
+
+
+  export const SubDirectionsScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    additionalInfo: 'additionalInfo',
+    examplelink: 'examplelink',
+    additionallink: 'additionallink',
+    validationField: 'validationField',
+    directionId: 'directionId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SubDirectionsScalarFieldEnum = (typeof SubDirectionsScalarFieldEnum)[keyof typeof SubDirectionsScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -1812,6 +3013,20 @@ export namespace Prisma {
   /**
    * Field references 
    */
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
 
 
   /**
@@ -1843,16 +3058,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
+   * Reference to a field of type 'Float'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
 
 
   /**
-   * Reference to a field of type 'Int[]'
+   * Reference to a field of type 'Float[]'
    */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -1863,14 +3078,13 @@ export namespace Prisma {
     AND?: DirectionsWhereInput | DirectionsWhereInput[]
     OR?: DirectionsWhereInput[]
     NOT?: DirectionsWhereInput | DirectionsWhereInput[]
-    id?: StringFilter<"Directions"> | string
+    id?: IntFilter<"Directions"> | number
     name?: StringFilter<"Directions"> | string
     description?: StringFilter<"Directions"> | string
     professors?: StringNullableListFilter<"Directions">
-    examplelink?: StringFilter<"Directions"> | string
-    additionallink?: StringFilter<"Directions"> | string
     createdAt?: DateTimeFilter<"Directions"> | Date | string
     updatedAt?: DateTimeFilter<"Directions"> | Date | string
+    subDirections?: SubDirectionsListRelationFilter
   }
 
   export type DirectionsOrderByWithRelationInput = {
@@ -1878,24 +3092,22 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     professors?: SortOrder
-    examplelink?: SortOrder
-    additionallink?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    subDirections?: SubDirectionsOrderByRelationAggregateInput
   }
 
   export type DirectionsWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
+    id?: number
     AND?: DirectionsWhereInput | DirectionsWhereInput[]
     OR?: DirectionsWhereInput[]
     NOT?: DirectionsWhereInput | DirectionsWhereInput[]
     name?: StringFilter<"Directions"> | string
     description?: StringFilter<"Directions"> | string
     professors?: StringNullableListFilter<"Directions">
-    examplelink?: StringFilter<"Directions"> | string
-    additionallink?: StringFilter<"Directions"> | string
     createdAt?: DateTimeFilter<"Directions"> | Date | string
     updatedAt?: DateTimeFilter<"Directions"> | Date | string
+    subDirections?: SubDirectionsListRelationFilter
   }, "id">
 
   export type DirectionsOrderByWithAggregationInput = {
@@ -1903,78 +3115,147 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     professors?: SortOrder
-    examplelink?: SortOrder
-    additionallink?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: DirectionsCountOrderByAggregateInput
+    _avg?: DirectionsAvgOrderByAggregateInput
     _max?: DirectionsMaxOrderByAggregateInput
     _min?: DirectionsMinOrderByAggregateInput
+    _sum?: DirectionsSumOrderByAggregateInput
   }
 
   export type DirectionsScalarWhereWithAggregatesInput = {
     AND?: DirectionsScalarWhereWithAggregatesInput | DirectionsScalarWhereWithAggregatesInput[]
     OR?: DirectionsScalarWhereWithAggregatesInput[]
     NOT?: DirectionsScalarWhereWithAggregatesInput | DirectionsScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Directions"> | string
+    id?: IntWithAggregatesFilter<"Directions"> | number
     name?: StringWithAggregatesFilter<"Directions"> | string
     description?: StringWithAggregatesFilter<"Directions"> | string
     professors?: StringNullableListFilter<"Directions">
-    examplelink?: StringWithAggregatesFilter<"Directions"> | string
-    additionallink?: StringWithAggregatesFilter<"Directions"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Directions"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Directions"> | Date | string
   }
 
+  export type SubDirectionsWhereInput = {
+    AND?: SubDirectionsWhereInput | SubDirectionsWhereInput[]
+    OR?: SubDirectionsWhereInput[]
+    NOT?: SubDirectionsWhereInput | SubDirectionsWhereInput[]
+    id?: IntFilter<"SubDirections"> | number
+    name?: StringFilter<"SubDirections"> | string
+    additionalInfo?: StringFilter<"SubDirections"> | string
+    examplelink?: StringFilter<"SubDirections"> | string
+    additionallink?: StringFilter<"SubDirections"> | string
+    validationField?: StringFilter<"SubDirections"> | string
+    directionId?: IntFilter<"SubDirections"> | number
+    createdAt?: DateTimeFilter<"SubDirections"> | Date | string
+    updatedAt?: DateTimeFilter<"SubDirections"> | Date | string
+    directions?: XOR<DirectionsRelationFilter, DirectionsWhereInput>
+  }
+
+  export type SubDirectionsOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    additionalInfo?: SortOrder
+    examplelink?: SortOrder
+    additionallink?: SortOrder
+    validationField?: SortOrder
+    directionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    directions?: DirectionsOrderByWithRelationInput
+  }
+
+  export type SubDirectionsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: SubDirectionsWhereInput | SubDirectionsWhereInput[]
+    OR?: SubDirectionsWhereInput[]
+    NOT?: SubDirectionsWhereInput | SubDirectionsWhereInput[]
+    name?: StringFilter<"SubDirections"> | string
+    additionalInfo?: StringFilter<"SubDirections"> | string
+    examplelink?: StringFilter<"SubDirections"> | string
+    additionallink?: StringFilter<"SubDirections"> | string
+    validationField?: StringFilter<"SubDirections"> | string
+    directionId?: IntFilter<"SubDirections"> | number
+    createdAt?: DateTimeFilter<"SubDirections"> | Date | string
+    updatedAt?: DateTimeFilter<"SubDirections"> | Date | string
+    directions?: XOR<DirectionsRelationFilter, DirectionsWhereInput>
+  }, "id">
+
+  export type SubDirectionsOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    additionalInfo?: SortOrder
+    examplelink?: SortOrder
+    additionallink?: SortOrder
+    validationField?: SortOrder
+    directionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SubDirectionsCountOrderByAggregateInput
+    _avg?: SubDirectionsAvgOrderByAggregateInput
+    _max?: SubDirectionsMaxOrderByAggregateInput
+    _min?: SubDirectionsMinOrderByAggregateInput
+    _sum?: SubDirectionsSumOrderByAggregateInput
+  }
+
+  export type SubDirectionsScalarWhereWithAggregatesInput = {
+    AND?: SubDirectionsScalarWhereWithAggregatesInput | SubDirectionsScalarWhereWithAggregatesInput[]
+    OR?: SubDirectionsScalarWhereWithAggregatesInput[]
+    NOT?: SubDirectionsScalarWhereWithAggregatesInput | SubDirectionsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SubDirections"> | number
+    name?: StringWithAggregatesFilter<"SubDirections"> | string
+    additionalInfo?: StringWithAggregatesFilter<"SubDirections"> | string
+    examplelink?: StringWithAggregatesFilter<"SubDirections"> | string
+    additionallink?: StringWithAggregatesFilter<"SubDirections"> | string
+    validationField?: StringWithAggregatesFilter<"SubDirections"> | string
+    directionId?: IntWithAggregatesFilter<"SubDirections"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"SubDirections"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SubDirections"> | Date | string
+  }
+
   export type DirectionsCreateInput = {
-    id?: string
     name: string
     description: string
     professors?: DirectionsCreateprofessorsInput | string[]
-    examplelink: string
-    additionallink: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    subDirections?: SubDirectionsCreateNestedManyWithoutDirectionsInput
   }
 
   export type DirectionsUncheckedCreateInput = {
-    id?: string
+    id?: number
     name: string
     description: string
     professors?: DirectionsCreateprofessorsInput | string[]
-    examplelink: string
-    additionallink: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    subDirections?: SubDirectionsUncheckedCreateNestedManyWithoutDirectionsInput
   }
 
   export type DirectionsUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     professors?: DirectionsUpdateprofessorsInput | string[]
-    examplelink?: StringFieldUpdateOperationsInput | string
-    additionallink?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subDirections?: SubDirectionsUpdateManyWithoutDirectionsNestedInput
   }
 
   export type DirectionsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     professors?: DirectionsUpdateprofessorsInput | string[]
-    examplelink?: StringFieldUpdateOperationsInput | string
-    additionallink?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subDirections?: SubDirectionsUncheckedUpdateManyWithoutDirectionsNestedInput
   }
 
   export type DirectionsCreateManyInput = {
-    id?: string
+    id?: number
     name: string
     description: string
     professors?: DirectionsCreateprofessorsInput | string[]
-    examplelink: string
-    additionallink: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -1983,20 +3264,108 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     professors?: DirectionsUpdateprofessorsInput | string[]
-    examplelink?: StringFieldUpdateOperationsInput | string
-    additionallink?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DirectionsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     professors?: DirectionsUpdateprofessorsInput | string[]
-    examplelink?: StringFieldUpdateOperationsInput | string
-    additionallink?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubDirectionsCreateInput = {
+    name: string
+    additionalInfo: string
+    examplelink: string
+    additionallink: string
+    validationField: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    directions: DirectionsCreateNestedOneWithoutSubDirectionsInput
+  }
+
+  export type SubDirectionsUncheckedCreateInput = {
+    id?: number
+    name: string
+    additionalInfo: string
+    examplelink: string
+    additionallink: string
+    validationField: string
+    directionId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubDirectionsUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    additionalInfo?: StringFieldUpdateOperationsInput | string
+    examplelink?: StringFieldUpdateOperationsInput | string
+    additionallink?: StringFieldUpdateOperationsInput | string
+    validationField?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    directions?: DirectionsUpdateOneRequiredWithoutSubDirectionsNestedInput
+  }
+
+  export type SubDirectionsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    additionalInfo?: StringFieldUpdateOperationsInput | string
+    examplelink?: StringFieldUpdateOperationsInput | string
+    additionallink?: StringFieldUpdateOperationsInput | string
+    validationField?: StringFieldUpdateOperationsInput | string
+    directionId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubDirectionsCreateManyInput = {
+    id?: number
+    name: string
+    additionalInfo: string
+    examplelink: string
+    additionallink: string
+    validationField: string
+    directionId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubDirectionsUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    additionalInfo?: StringFieldUpdateOperationsInput | string
+    examplelink?: StringFieldUpdateOperationsInput | string
+    additionallink?: StringFieldUpdateOperationsInput | string
+    validationField?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubDirectionsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    additionalInfo?: StringFieldUpdateOperationsInput | string
+    examplelink?: StringFieldUpdateOperationsInput | string
+    additionallink?: StringFieldUpdateOperationsInput | string
+    validationField?: StringFieldUpdateOperationsInput | string
+    directionId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2033,23 +3402,33 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type SubDirectionsListRelationFilter = {
+    every?: SubDirectionsWhereInput
+    some?: SubDirectionsWhereInput
+    none?: SubDirectionsWhereInput
+  }
+
+  export type SubDirectionsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type DirectionsCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
     professors?: SortOrder
-    examplelink?: SortOrder
-    additionallink?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type DirectionsAvgOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type DirectionsMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    examplelink?: SortOrder
-    additionallink?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2058,10 +3437,28 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    examplelink?: SortOrder
-    additionallink?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type DirectionsSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2096,8 +3493,73 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type DirectionsRelationFilter = {
+    is?: DirectionsWhereInput
+    isNot?: DirectionsWhereInput
+  }
+
+  export type SubDirectionsCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    additionalInfo?: SortOrder
+    examplelink?: SortOrder
+    additionallink?: SortOrder
+    validationField?: SortOrder
+    directionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubDirectionsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    directionId?: SortOrder
+  }
+
+  export type SubDirectionsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    additionalInfo?: SortOrder
+    examplelink?: SortOrder
+    additionallink?: SortOrder
+    validationField?: SortOrder
+    directionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubDirectionsMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    additionalInfo?: SortOrder
+    examplelink?: SortOrder
+    additionallink?: SortOrder
+    validationField?: SortOrder
+    directionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubDirectionsSumOrderByAggregateInput = {
+    id?: SortOrder
+    directionId?: SortOrder
+  }
+
   export type DirectionsCreateprofessorsInput = {
     set: string[]
+  }
+
+  export type SubDirectionsCreateNestedManyWithoutDirectionsInput = {
+    create?: XOR<SubDirectionsCreateWithoutDirectionsInput, SubDirectionsUncheckedCreateWithoutDirectionsInput> | SubDirectionsCreateWithoutDirectionsInput[] | SubDirectionsUncheckedCreateWithoutDirectionsInput[]
+    connectOrCreate?: SubDirectionsCreateOrConnectWithoutDirectionsInput | SubDirectionsCreateOrConnectWithoutDirectionsInput[]
+    createMany?: SubDirectionsCreateManyDirectionsInputEnvelope
+    connect?: SubDirectionsWhereUniqueInput | SubDirectionsWhereUniqueInput[]
+  }
+
+  export type SubDirectionsUncheckedCreateNestedManyWithoutDirectionsInput = {
+    create?: XOR<SubDirectionsCreateWithoutDirectionsInput, SubDirectionsUncheckedCreateWithoutDirectionsInput> | SubDirectionsCreateWithoutDirectionsInput[] | SubDirectionsUncheckedCreateWithoutDirectionsInput[]
+    connectOrCreate?: SubDirectionsCreateOrConnectWithoutDirectionsInput | SubDirectionsCreateOrConnectWithoutDirectionsInput[]
+    createMany?: SubDirectionsCreateManyDirectionsInputEnvelope
+    connect?: SubDirectionsWhereUniqueInput | SubDirectionsWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -2111,6 +3573,67 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type SubDirectionsUpdateManyWithoutDirectionsNestedInput = {
+    create?: XOR<SubDirectionsCreateWithoutDirectionsInput, SubDirectionsUncheckedCreateWithoutDirectionsInput> | SubDirectionsCreateWithoutDirectionsInput[] | SubDirectionsUncheckedCreateWithoutDirectionsInput[]
+    connectOrCreate?: SubDirectionsCreateOrConnectWithoutDirectionsInput | SubDirectionsCreateOrConnectWithoutDirectionsInput[]
+    upsert?: SubDirectionsUpsertWithWhereUniqueWithoutDirectionsInput | SubDirectionsUpsertWithWhereUniqueWithoutDirectionsInput[]
+    createMany?: SubDirectionsCreateManyDirectionsInputEnvelope
+    set?: SubDirectionsWhereUniqueInput | SubDirectionsWhereUniqueInput[]
+    disconnect?: SubDirectionsWhereUniqueInput | SubDirectionsWhereUniqueInput[]
+    delete?: SubDirectionsWhereUniqueInput | SubDirectionsWhereUniqueInput[]
+    connect?: SubDirectionsWhereUniqueInput | SubDirectionsWhereUniqueInput[]
+    update?: SubDirectionsUpdateWithWhereUniqueWithoutDirectionsInput | SubDirectionsUpdateWithWhereUniqueWithoutDirectionsInput[]
+    updateMany?: SubDirectionsUpdateManyWithWhereWithoutDirectionsInput | SubDirectionsUpdateManyWithWhereWithoutDirectionsInput[]
+    deleteMany?: SubDirectionsScalarWhereInput | SubDirectionsScalarWhereInput[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type SubDirectionsUncheckedUpdateManyWithoutDirectionsNestedInput = {
+    create?: XOR<SubDirectionsCreateWithoutDirectionsInput, SubDirectionsUncheckedCreateWithoutDirectionsInput> | SubDirectionsCreateWithoutDirectionsInput[] | SubDirectionsUncheckedCreateWithoutDirectionsInput[]
+    connectOrCreate?: SubDirectionsCreateOrConnectWithoutDirectionsInput | SubDirectionsCreateOrConnectWithoutDirectionsInput[]
+    upsert?: SubDirectionsUpsertWithWhereUniqueWithoutDirectionsInput | SubDirectionsUpsertWithWhereUniqueWithoutDirectionsInput[]
+    createMany?: SubDirectionsCreateManyDirectionsInputEnvelope
+    set?: SubDirectionsWhereUniqueInput | SubDirectionsWhereUniqueInput[]
+    disconnect?: SubDirectionsWhereUniqueInput | SubDirectionsWhereUniqueInput[]
+    delete?: SubDirectionsWhereUniqueInput | SubDirectionsWhereUniqueInput[]
+    connect?: SubDirectionsWhereUniqueInput | SubDirectionsWhereUniqueInput[]
+    update?: SubDirectionsUpdateWithWhereUniqueWithoutDirectionsInput | SubDirectionsUpdateWithWhereUniqueWithoutDirectionsInput[]
+    updateMany?: SubDirectionsUpdateManyWithWhereWithoutDirectionsInput | SubDirectionsUpdateManyWithWhereWithoutDirectionsInput[]
+    deleteMany?: SubDirectionsScalarWhereInput | SubDirectionsScalarWhereInput[]
+  }
+
+  export type DirectionsCreateNestedOneWithoutSubDirectionsInput = {
+    create?: XOR<DirectionsCreateWithoutSubDirectionsInput, DirectionsUncheckedCreateWithoutSubDirectionsInput>
+    connectOrCreate?: DirectionsCreateOrConnectWithoutSubDirectionsInput
+    connect?: DirectionsWhereUniqueInput
+  }
+
+  export type DirectionsUpdateOneRequiredWithoutSubDirectionsNestedInput = {
+    create?: XOR<DirectionsCreateWithoutSubDirectionsInput, DirectionsUncheckedCreateWithoutSubDirectionsInput>
+    connectOrCreate?: DirectionsCreateOrConnectWithoutSubDirectionsInput
+    upsert?: DirectionsUpsertWithoutSubDirectionsInput
+    connect?: DirectionsWhereUniqueInput
+    update?: XOR<XOR<DirectionsUpdateToOneWithWhereWithoutSubDirectionsInput, DirectionsUpdateWithoutSubDirectionsInput>, DirectionsUncheckedUpdateWithoutSubDirectionsInput>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2138,6 +3661,33 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -2155,17 +3705,6 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -2180,15 +3719,178 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type SubDirectionsCreateWithoutDirectionsInput = {
+    name: string
+    additionalInfo: string
+    examplelink: string
+    additionallink: string
+    validationField: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubDirectionsUncheckedCreateWithoutDirectionsInput = {
+    id?: number
+    name: string
+    additionalInfo: string
+    examplelink: string
+    additionallink: string
+    validationField: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubDirectionsCreateOrConnectWithoutDirectionsInput = {
+    where: SubDirectionsWhereUniqueInput
+    create: XOR<SubDirectionsCreateWithoutDirectionsInput, SubDirectionsUncheckedCreateWithoutDirectionsInput>
+  }
+
+  export type SubDirectionsCreateManyDirectionsInputEnvelope = {
+    data: SubDirectionsCreateManyDirectionsInput | SubDirectionsCreateManyDirectionsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SubDirectionsUpsertWithWhereUniqueWithoutDirectionsInput = {
+    where: SubDirectionsWhereUniqueInput
+    update: XOR<SubDirectionsUpdateWithoutDirectionsInput, SubDirectionsUncheckedUpdateWithoutDirectionsInput>
+    create: XOR<SubDirectionsCreateWithoutDirectionsInput, SubDirectionsUncheckedCreateWithoutDirectionsInput>
+  }
+
+  export type SubDirectionsUpdateWithWhereUniqueWithoutDirectionsInput = {
+    where: SubDirectionsWhereUniqueInput
+    data: XOR<SubDirectionsUpdateWithoutDirectionsInput, SubDirectionsUncheckedUpdateWithoutDirectionsInput>
+  }
+
+  export type SubDirectionsUpdateManyWithWhereWithoutDirectionsInput = {
+    where: SubDirectionsScalarWhereInput
+    data: XOR<SubDirectionsUpdateManyMutationInput, SubDirectionsUncheckedUpdateManyWithoutDirectionsInput>
+  }
+
+  export type SubDirectionsScalarWhereInput = {
+    AND?: SubDirectionsScalarWhereInput | SubDirectionsScalarWhereInput[]
+    OR?: SubDirectionsScalarWhereInput[]
+    NOT?: SubDirectionsScalarWhereInput | SubDirectionsScalarWhereInput[]
+    id?: IntFilter<"SubDirections"> | number
+    name?: StringFilter<"SubDirections"> | string
+    additionalInfo?: StringFilter<"SubDirections"> | string
+    examplelink?: StringFilter<"SubDirections"> | string
+    additionallink?: StringFilter<"SubDirections"> | string
+    validationField?: StringFilter<"SubDirections"> | string
+    directionId?: IntFilter<"SubDirections"> | number
+    createdAt?: DateTimeFilter<"SubDirections"> | Date | string
+    updatedAt?: DateTimeFilter<"SubDirections"> | Date | string
+  }
+
+  export type DirectionsCreateWithoutSubDirectionsInput = {
+    name: string
+    description: string
+    professors?: DirectionsCreateprofessorsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DirectionsUncheckedCreateWithoutSubDirectionsInput = {
+    id?: number
+    name: string
+    description: string
+    professors?: DirectionsCreateprofessorsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DirectionsCreateOrConnectWithoutSubDirectionsInput = {
+    where: DirectionsWhereUniqueInput
+    create: XOR<DirectionsCreateWithoutSubDirectionsInput, DirectionsUncheckedCreateWithoutSubDirectionsInput>
+  }
+
+  export type DirectionsUpsertWithoutSubDirectionsInput = {
+    update: XOR<DirectionsUpdateWithoutSubDirectionsInput, DirectionsUncheckedUpdateWithoutSubDirectionsInput>
+    create: XOR<DirectionsCreateWithoutSubDirectionsInput, DirectionsUncheckedCreateWithoutSubDirectionsInput>
+    where?: DirectionsWhereInput
+  }
+
+  export type DirectionsUpdateToOneWithWhereWithoutSubDirectionsInput = {
+    where?: DirectionsWhereInput
+    data: XOR<DirectionsUpdateWithoutSubDirectionsInput, DirectionsUncheckedUpdateWithoutSubDirectionsInput>
+  }
+
+  export type DirectionsUpdateWithoutSubDirectionsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    professors?: DirectionsUpdateprofessorsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DirectionsUncheckedUpdateWithoutSubDirectionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    professors?: DirectionsUpdateprofessorsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubDirectionsCreateManyDirectionsInput = {
+    id?: number
+    name: string
+    additionalInfo: string
+    examplelink: string
+    additionallink: string
+    validationField: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubDirectionsUpdateWithoutDirectionsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    additionalInfo?: StringFieldUpdateOperationsInput | string
+    examplelink?: StringFieldUpdateOperationsInput | string
+    additionallink?: StringFieldUpdateOperationsInput | string
+    validationField?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubDirectionsUncheckedUpdateWithoutDirectionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    additionalInfo?: StringFieldUpdateOperationsInput | string
+    examplelink?: StringFieldUpdateOperationsInput | string
+    additionallink?: StringFieldUpdateOperationsInput | string
+    validationField?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubDirectionsUncheckedUpdateManyWithoutDirectionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    additionalInfo?: StringFieldUpdateOperationsInput | string
+    examplelink?: StringFieldUpdateOperationsInput | string
+    additionallink?: StringFieldUpdateOperationsInput | string
+    validationField?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
    * Aliases for legacy arg types
    */
     /**
+     * @deprecated Use DirectionsCountOutputTypeDefaultArgs instead
+     */
+    export type DirectionsCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DirectionsCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use DirectionsDefaultArgs instead
      */
     export type DirectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DirectionsDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SubDirectionsDefaultArgs instead
+     */
+    export type SubDirectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SubDirectionsDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

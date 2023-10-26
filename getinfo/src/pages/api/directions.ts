@@ -1,3 +1,4 @@
+import { log } from 'console';
 import { PrismaClient } from '../../../prisma/generated/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -6,17 +7,27 @@ const prisma = new PrismaClient();
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         try {
-          const { name, description, professors, examplelink, additionallink } = req.body;
+          const { name, description, professors,  subDirectionName, additionalInfo, exampleLink, additionallink, validationField} = req.body;
     
           const newDirection = await prisma.directions.create({
             data: {
                 name,
                 description, 
-                professors, 
-                examplelink, 
-                additionallink 
+                professors,
+                subDirections:{
+                  create:[
+                    {
+                      name: subDirectionName,
+                      additionalInfo: additionalInfo,
+                      examplelink: exampleLink,
+                      additionallink: additionallink,
+                      validationField: validationField
+                    }
+                  ]
+                }
             },
           });
+
     
           res.status(201).json(newDirection);
 
@@ -25,7 +36,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           res.status(500).json({ error: "An error occurred while creating the direction." });
         }
       }else if(req.method === "GET"){
-        const allDirections = await prisma.directions.findMany()
+        const allDirections = await prisma.directions.findMany({
+          include: {subDirections: true}
+        })
 
         if(allDirections){
 
@@ -42,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           return;
         }
   
-        if (typeof id !== 'string') {
+        if (typeof id !== 'number') {
           res.status(400).json({ error: "Invalid ID format" });
           return;
         }
@@ -59,40 +72,51 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           res.status(500).json({message: "There is no directions"})
         }
       }else if(req.method === "PUT"){
-
-        const {id} = req.query
-        const { name, description, professors, examplelink, additionallink } = req.body;
+        const { id, name, description, professors, additionallink, subDirectionName, additionalInfo, exampleLink, validationField } = req.body;
 
         if (Array.isArray(id)) {
           res.status(400).json({ error: "Multiple IDs are not supported" });
           return;
         }
   
-        if (typeof id !== 'string') {
+        if (isNaN(id)) {
           res.status(400).json({ error: "Invalid ID format" });
           return;
         }
-
-        const updatedPost = await prisma.directions.update({
-          where:{
-            id: id,
+        try {
+          const updatedDirections= await prisma.directions.update({
+            where:{
+              id: id,
+            },
+            data: {
+              name,
+              description, 
+              professors,
           },
-          data: {
-            name,
-            description, 
-            professors, 
-            examplelink, 
-            additionallink 
-          },
-        });
-
-        if(updatedPost){
-
-          res.status(201).json(updatedPost)
-        }else{
-
-          res.status(500).json({error: "There is no directions"})
+          });
+  
+          const newSubdirection = await prisma.subDirections.create({
+            data:{
+              name: subDirectionName,
+              additionalInfo: additionalInfo,
+              examplelink: exampleLink,
+              additionallink: additionallink,
+              validationField: validationField,
+              directionId: id
+            }
+          })
+  
+          if(updatedDirections){
+            res.status(201).json(updatedDirections)
+          }else{
+  
+            res.status(500).json({error: "There is no directions"})
+          }
+        } catch (error) {
+          console.log(error);
+          
         }
+        
       }else {
         res.status(405).end(); // Method Not Allowed
       }

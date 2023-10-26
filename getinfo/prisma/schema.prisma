@@ -4,17 +4,29 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Directions {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  description String
-  professors String[]
-  examplelink String
-  additionallink String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              Int      @id @default(autoincrement())
+  name            String
+  description     String
+  professors      String[]
+  subDirections   SubDirections[] 
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model SubDirections {
+  id              Int        @id @default(autoincrement())
+  name            String
+  additionalInfo  String
+  examplelink     String
+  additionallink  String
+  validationField String
+  directionId     Int
+  directions      Directions @relation(fields: [directionId], references: [id])
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
 }

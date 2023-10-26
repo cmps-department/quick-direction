@@ -100,13 +100,30 @@ Prisma.NullTypes = {
  * Enums
  */
 
+exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
+  Serializable: 'Serializable'
+});
+
 exports.Prisma.DirectionsScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
   professors: 'professors',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SubDirectionsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  additionalInfo: 'additionalInfo',
   examplelink: 'examplelink',
   additionallink: 'additionallink',
+  validationField: 'validationField',
+  directionId: 'directionId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -123,7 +140,8 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  Directions: 'Directions'
+  Directions: 'Directions',
+  SubDirections: 'SubDirections'
 };
 
 /**
