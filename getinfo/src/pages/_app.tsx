@@ -6,6 +6,7 @@ import '@mantine/carousel/styles.css';
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { Fragment, useState } from "react";
+import { SessionProvider } from "next-auth/react"
 import { MantineProvider } from "@mantine/core";
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Devtools from "../components/Devtools";
@@ -26,7 +27,7 @@ const config = {
 }
 
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     const [queryClient] = useState(() => new QueryClient(config));
 
     return (
@@ -37,16 +38,18 @@ export default function App({ Component, pageProps }: AppProps) {
                 <link rel="icon" href="/icon.png" type="image.png" />
             </Head>
 
-            <MantineProvider theme={theme}>
-                <Provider store={store}>
-                    <QueryClientProvider client={queryClient}>
-                        <Hydrate state={pageProps.dehydratedState}>
-                            <Component {...pageProps} />
-                            <Devtools />
-                        </Hydrate>
-                    </QueryClientProvider>
-                </Provider>
-            </MantineProvider>
+            <SessionProvider session={session}>
+                <MantineProvider theme={theme}>
+                    <Provider store={store}>
+                        <QueryClientProvider client={queryClient}>
+                            <Hydrate state={pageProps.dehydratedState}>
+                                <Component {...pageProps} />
+                                <Devtools />
+                            </Hydrate>
+                        </QueryClientProvider>
+                    </Provider>
+                </MantineProvider>
+            </SessionProvider>
       </Fragment>
   );
 }

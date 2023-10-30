@@ -23,13 +23,13 @@
             align-items: center;
             justify-content: space-between;
 
-            a {
+            a, button {
                 font-size: 18px;
                 color: var(--light-color);
                 cursor: pointer;
             }
 
-            a:hover {
+            a:hover, button:hover {
                 text-decoration: underline;
             }
 
@@ -56,6 +56,14 @@
 
             .flexBlock {
                 flex: 3;
+                display: flex;
+                justify-content: right;
+                align-items: center;
+                flex-wrap: wrap;
+
+                a, button {
+                    padding: 13px 24px;
+                }
             }
         }
     }

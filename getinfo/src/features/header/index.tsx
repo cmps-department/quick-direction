@@ -1,13 +1,17 @@
-import { FC } from "react"
-import Image from 'next/image'
-import styles from './header.module.scss'
+import { FC } from "react";
+import Image from 'next/image';
+import styles from './header.module.scss';
 
-import Link from "next/link"
-import CustomButton from "../../components/CustomButton/CustomButton"
-import Container from "../../components/Container/Container"
+import Link from "next/link";
+import CustomButton from "../../components/CustomButton/CustomButton";
+import Container from "../../components/Container/Container";
+import { UnstyledButton } from "@mantine/core";
 
+interface HeaderProps {
+    login: () => any;
+}
 
-const Header: FC = () => {
+const Header: FC<HeaderProps> = ({ login }) => {
     return (
         <header>
             <div className={styles.header}>
@@ -29,7 +33,11 @@ const Header: FC = () => {
                                     />
                                 </Link>
                             </div>
-                            <div className={styles.flexBlock}></div>
+                            <div className={styles.flexBlock}>
+                                <UnstyledButton onClick={login}>
+                                    Увійти
+                                </UnstyledButton>
+                            </div>
                         </div>
                     </nav>
                 </div>
