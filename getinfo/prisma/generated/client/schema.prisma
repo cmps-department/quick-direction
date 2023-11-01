@@ -13,7 +13,7 @@ model Directions {
   name            String
   description     String
   professors      String[]
-  subDirections   SubDirections[]
+  subDirections   SubDirections[] 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
@@ -25,8 +25,8 @@ model SubDirections {
   examplelink     String
   additionallink  String
   validationField String
-  directionId     Int        @unique 
-  directions      Directions @relation(fields: [directionId], references: [id])
+  directionId     Int
+  directions      Directions @relation(fields: [directionId], references: [id], onDelete: Cascade)
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
 }

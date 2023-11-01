@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         try {
-          const { name, description, professors,  subDirectionName, additionalInfo, exampleLink, additionallink, validationField} = req.body;
+          const { name, description, professors,  subDirections} = req.body;
     
           const newDirection = await prisma.directions.create({
             data: {
@@ -15,15 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 description, 
                 professors,
                 subDirections:{
-                  create:[
-                    {
-                      name: subDirectionName,
-                      additionalInfo: additionalInfo,
-                      examplelink: exampleLink,
-                      additionallink: additionallink,
-                      validationField: validationField
-                    }
-                  ]
+                  create: subDirections
                 }
             },
           });
@@ -48,14 +40,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           res.status(500).json({error: "There is no directions"})
         }
       }else if(req.method === "DELETE"){
-        const {id} = req.query
+        const id = Number(req.query.id)
 
-        if (Array.isArray(id)) {
-          res.status(400).json({ error: "Multiple IDs are not supported" });
-          return;
-        }
-  
-        if (typeof id !== 'number') {
+        if (isNaN(id)) {
           res.status(400).json({ error: "Invalid ID format" });
           return;
         }
