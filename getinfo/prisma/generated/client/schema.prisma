@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Directions {
+  id              Int      @id @default(autoincrement())
+  name            String
+  description     String
+  professors      String[]
+  subDirections   SubDirections[] 
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model SubDirections {
+  id              Int        @id @default(autoincrement())
+  name            String
+  additionalInfo  String
+  examplelink     String
+  additionallink  String
+  validationField String
+  directionId     Int
+  directions      Directions @relation(fields: [directionId], references: [id], onDelete: Cascade)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}

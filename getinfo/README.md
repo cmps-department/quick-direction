@@ -1,5 +1,17 @@
-# Mantine Next Template
+Як запустити проект
 
-Get started with the template by clicking `Use this template` button on the top of the page.
-
-[Documentation](https://mantine.dev/guides/next/)
+```shell 
+cd getinfo
+```
+```shell
+docker compose up -d
+```
+```shell
+npm install
+```
+```shell
+npx prisma migrate dev
+```
+```shell
+npm run dev
+```
