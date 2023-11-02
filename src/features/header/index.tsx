@@ -56,7 +56,7 @@ const Header = () => {
                         <h2 className={styles.hBanner_title}>Що це таке?</h2>
                         <div className={styles.hBanner_line}></div>
                         <p className={styles.hBanner_text}><span>Quick Direction</span> - це сервіс для легкого спілкування студентів з дирекцією. З нами ваша заявка точно не загубиться: заповнену форму одразу буде скеровано до спеціальних відділів дирекції НТУ “ХПІ” відповідно до обраного вами запиту.</p>
-                        <CustomButton className={styles.hBanner_btn} onClick={() => router.push("/request-directions")} >
+                        <CustomButton className={styles.hBanner_btn} onClick={() => session ? router.push("/request-directions") : signIn("keycloak", { callbackUrl: "/request-directions" })} >
                             Подати заявку
                         </CustomButton>
                     </Container>
