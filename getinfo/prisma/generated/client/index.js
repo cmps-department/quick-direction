@@ -134,7 +134,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/mborodin/projects/getinfo/getinfo/prisma/generated/client",
+      "value": "C:\\Users\\Vacuu\\OneDrive\\Документы\\GitHub\\getinfo\\getinfo\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -143,7 +143,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "windows",
         "native": true
       }
     ],
@@ -169,8 +169,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "Z2VuZXJhdG9yIGNsaWVudCB7CiAgcHJvdmlkZXIgPSAicHJpc21hLWNsaWVudC1qcyIKICBvdXRwdXQgICA9ICIuL2dlbmVyYXRlZC9jbGllbnQiCn0KCmRhdGFzb3VyY2UgZGIgewogIHByb3ZpZGVyID0gInBvc3RncmVzcWwiCiAgdXJsICAgICAgPSBlbnYoIkRBVEFCQVNFX1VSTCIpCn0KCm1vZGVsIERpcmVjdGlvbnMgewogIGlkICAgICAgICAgICAgICBJbnQgICAgICBAaWQgQGRlZmF1bHQoYXV0b2luY3JlbWVudCgpKQogIG5hbWUgICAgICAgICAgICBTdHJpbmcKICBkZXNjcmlwdGlvbiAgICAgU3RyaW5nCiAgcHJvZmVzc29ycyAgICAgIFN0cmluZ1tdCiAgc3ViRGlyZWN0aW9ucyAgIFN1YkRpcmVjdGlvbnNbXSAKICBjcmVhdGVkQXQgICAgICAgRGF0ZVRpbWUgQGRlZmF1bHQobm93KCkpCiAgdXBkYXRlZEF0ICAgICAgIERhdGVUaW1lIEB1cGRhdGVkQXQKfQoKbW9kZWwgU3ViRGlyZWN0aW9ucyB7CiAgaWQgICAgICAgICAgICAgIEludCAgICAgICAgQGlkIEBkZWZhdWx0KGF1dG9pbmNyZW1lbnQoKSkKICBuYW1lICAgICAgICAgICAgU3RyaW5nCiAgYWRkaXRpb25hbEluZm8gIFN0cmluZwogIGV4YW1wbGVsaW5rICAgICBTdHJpbmcKICBhZGRpdGlvbmFsbGluayAgU3RyaW5nCiAgdmFsaWRhdGlvbkZpZWxkIFN0cmluZwogIGRpcmVjdGlvbklkICAgICBJbnQKICBkaXJlY3Rpb25zICAgICAgRGlyZWN0aW9ucyBAcmVsYXRpb24oZmllbGRzOiBbZGlyZWN0aW9uSWRdLCByZWZlcmVuY2VzOiBbaWRdLCBvbkRlbGV0ZTogQ2FzY2FkZSkKICBjcmVhdGVkQXQgICAgICAgRGF0ZVRpbWUgICBAZGVmYXVsdChub3coKSkKICB1cGRhdGVkQXQgICAgICAgRGF0ZVRpbWUgICBAdXBkYXRlZEF0Cn0K",
-  "inlineSchemaHash": "0912be95fc713a5e86e7440b3ebce3709157c08800d1259683ecba9b8cae8348"
+  "inlineSchema": "Z2VuZXJhdG9yIGNsaWVudCB7DQogIHByb3ZpZGVyID0gInByaXNtYS1jbGllbnQtanMiDQogIG91dHB1dCAgID0gIi4vZ2VuZXJhdGVkL2NsaWVudCINCn0NCg0KZGF0YXNvdXJjZSBkYiB7DQogIHByb3ZpZGVyID0gInBvc3RncmVzcWwiDQogIHVybCAgICAgID0gZW52KCJEQVRBQkFTRV9VUkwiKQ0KfQ0KDQptb2RlbCBEaXJlY3Rpb25zIHsNCiAgaWQgICAgICAgICAgICAgIEludCAgICAgIEBpZCBAZGVmYXVsdChhdXRvaW5jcmVtZW50KCkpDQogIG5hbWUgICAgICAgICAgICBTdHJpbmcNCiAgZGVzY3JpcHRpb24gICAgIFN0cmluZw0KICBwcm9mZXNzb3JzICAgICAgU3RyaW5nW10NCiAgc3ViRGlyZWN0aW9ucyAgIFN1YkRpcmVjdGlvbnNbXSANCiAgY3JlYXRlZEF0ICAgICAgIERhdGVUaW1lIEBkZWZhdWx0KG5vdygpKQ0KICB1cGRhdGVkQXQgICAgICAgRGF0ZVRpbWUgQHVwZGF0ZWRBdA0KfQ0KDQptb2RlbCBTdWJEaXJlY3Rpb25zIHsNCiAgaWQgICAgICAgICAgICAgIEludCAgICAgICAgQGlkIEBkZWZhdWx0KGF1dG9pbmNyZW1lbnQoKSkNCiAgbmFtZSAgICAgICAgICAgIFN0cmluZw0KICBhZGRpdGlvbmFsSW5mbyAgU3RyaW5nDQogIGV4YW1wbGVsaW5rICAgICBTdHJpbmcNCiAgYWRkaXRpb25hbGxpbmsgIFN0cmluZw0KICB2YWxpZGF0aW9uRmllbGQgU3RyaW5nDQogIGRpcmVjdGlvbklkICAgICBJbnQNCiAgZGlyZWN0aW9ucyAgICAgIERpcmVjdGlvbnMgQHJlbGF0aW9uKGZpZWxkczogW2RpcmVjdGlvbklkXSwgcmVmZXJlbmNlczogW2lkXSwgb25EZWxldGU6IENhc2NhZGUpDQogIGNyZWF0ZWRBdCAgICAgICBEYXRlVGltZSAgIEBkZWZhdWx0KG5vdygpKQ0KICB1cGRhdGVkQXQgICAgICAgRGF0ZVRpbWUgICBAdXBkYXRlZEF0DQp9DQo=",
+  "inlineSchemaHash": "b5d36f9441bf35d3f4e58a5dbe726afdac39c381ff75696cb66257c116d3a5ed"
 }
 
 const fs = require('fs')
@@ -207,8 +207,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
-path.join(process.cwd(), "prisma/generated/client/libquery_engine-darwin-arm64.dylib.node")
+path.join(__dirname, "query_engine-windows.dll.node");
+path.join(process.cwd(), "prisma/generated/client/query_engine-windows.dll.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "prisma/generated/client/schema.prisma")
