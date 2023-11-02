@@ -11,15 +11,14 @@ const Headers = {
 interface LayoutHFProps {
     children: ReactNode;
     headerType: keyof typeof Headers;
-    login: () => any
 }
 
-const LayoutHF: FC<LayoutHFProps> = ({ children, headerType, login }) => {
+const LayoutHF: FC<LayoutHFProps> = ({ children, headerType }) => {
     const PageHeader = Headers[headerType];
 
     return (
         <>
-            <PageHeader login={login} />
+            <PageHeader />
                 <main>
                     {children}
                 </main>

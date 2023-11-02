@@ -29,7 +29,7 @@
                 cursor: pointer;
             }
 
-            a:hover, button:hover {
+            a:hover {
                 text-decoration: underline;
             }
 
@@ -61,7 +61,7 @@
                 align-items: center;
                 flex-wrap: wrap;
 
-                a, button {
+                a {
                     padding: 13px 24px;
                 }
             }

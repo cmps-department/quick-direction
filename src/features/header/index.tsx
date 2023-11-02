@@ -1,17 +1,19 @@
-import { FC } from "react";
 import Image from 'next/image';
 import styles from './header.module.scss';
 
 import Link from "next/link";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import Container from "../../components/Container/Container";
-import { UnstyledButton } from "@mantine/core";
+import { Button } from "@mantine/core";
 
-interface HeaderProps {
-    login: () => any;
-}
+import { useSession, signIn, signOut } from 'next-auth/react';
 
-const Header: FC<HeaderProps> = ({ login }) => {
+import { useRouter } from 'next/navigation';
+
+const Header = () => {
+    const { data: session } = useSession();
+    const router = useRouter();
+
     return (
         <header>
             <div className={styles.header}>
@@ -34,9 +36,16 @@ const Header: FC<HeaderProps> = ({ login }) => {
                                 </Link>
                             </div>
                             <div className={styles.flexBlock}>
-                                <UnstyledButton onClick={login}>
-                                    Увійти
-                                </UnstyledButton>
+                                {session ? (
+                                    <Button radius="xl" h={48} w={128} color='#fff' style={{color: "#000"}} onClick={() => signOut({ callbackUrl: "/" })}>
+                                        Вихід
+                                    </Button>
+                                ): (
+                                    <Button radius="xl" h={48} w={128} color='#fff' style={{color: "#000"}} onClick={() => signIn("keycloak")}>
+                                        Увійти
+                                    </Button>
+                                )
+                            }
                             </div>
                         </div>
                     </nav>
@@ -47,7 +56,7 @@ const Header: FC<HeaderProps> = ({ login }) => {
                         <h2 className={styles.hBanner_title}>Що це таке?</h2>
                         <div className={styles.hBanner_line}></div>
                         <p className={styles.hBanner_text}><span>Quick Direction</span> - це сервіс для легкого спілкування студентів з дирекцією. З нами ваша заявка точно не загубиться: заповнену форму одразу буде скеровано до спеціальних відділів дирекції НТУ “ХПІ” відповідно до обраного вами запиту.</p>
-                        <CustomButton className={styles.hBanner_btn} onClick={() => { }} >
+                        <CustomButton className={styles.hBanner_btn} onClick={() => router.push("/request-directions")} >
                             Подати заявку
                         </CustomButton>
                     </Container>

@@ -1,5 +1,5 @@
 import { Text } from "@mantine/core";
-import Textarea from "../../../../components/Textarea/TextArea";
+import Textarea from "../../../../components/Textarea/Textarea";
 
 const WrittenRequest = () => {
     return (
