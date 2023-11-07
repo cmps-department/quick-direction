@@ -1,14 +1,16 @@
 import React, { FC, PropsWithChildren } from "react"
 import styles from './button.module.scss'
+import { Button } from "@mantine/core"
 
 interface IButton {
   onClick: React.MouseEventHandler,
-  className?: string
+  className?: string,
+  style?: React.CSSProperties
 }
 
-const CustomButton: FC<PropsWithChildren<IButton>> = ({ children, onClick, className = '' }) => {
+const CustomButton: FC<PropsWithChildren<IButton>> = ({ children, onClick, className = '', style }) => {
   return (
-    <button className={`${styles.customBtn} ${className}`} onClick={onClick}>{children}</button>
+    <Button className={`${styles.customBtn} ${className}`} style={style} onClick={onClick}>{children}</Button>
   )
 }
 

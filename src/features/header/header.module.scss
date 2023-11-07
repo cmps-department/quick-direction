@@ -16,56 +16,6 @@
         background-position: center;
         background-size: cover;
         padding-inline: 24px;
-
-        .navbar {
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            a, button {
-                font-size: 18px;
-                color: var(--light-color);
-                cursor: pointer;
-            }
-
-            a:hover {
-                text-decoration: underline;
-            }
-
-            .navbarLeft {
-                flex: 3;
-                display: flex;
-                align-items: center;
-                flex-wrap: wrap;
-
-                a {
-                    padding: 13px 24px;
-                }
-            }
-
-            .navbarLogo {
-                text-align: center;
-                flex: 1;
-
-                a {
-                    padding: 24px;
-                    display: inline-block;
-                }
-            }
-
-            .flexBlock {
-                flex: 3;
-                display: flex;
-                justify-content: right;
-                align-items: center;
-                flex-wrap: wrap;
-
-                a {
-                    padding: 13px 24px;
-                }
-            }
-        }
     }
 
     .hBanner {
@@ -77,11 +27,9 @@
         width: 100%;
 
         &_container {
-            padding: 64px 0px;
             text-align: center;
+            padding: 64px 0px;
             background-color: var(--light-color);
-            border-radius: 24px;
-            box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.03), 0px 15px 15px 0px rgba(0, 0, 0, 0.03), 0px 34px 20px 0px rgba(0, 0, 0, 0.02), 0px 60px 24px 0px rgba(0, 0, 0, 0.00), 0px 93px 26px 0px rgba(0, 0, 0, 0.00);
         }
 
         &_title,
@@ -135,31 +83,7 @@
         }
     }
 
-    @media (max-width: 1100px) {
-        .headerBg {
-            .navbar {
-                .flexBlock {
-                    flex: none;
-                }
-
-                .navbarLogo {
-                    text-align: end;
-                }
-            }
-        }
-    }
-
     @media (max-width: 700px) {
-        .headerBg {
-            .navbar {
-                flex-direction: column-reverse;
-
-                .navbarLeft {
-                    justify-content: center;
-                }
-            }
-        }
-
         .hBanner {
             &_text {
                 text-align: justify;
@@ -170,6 +94,7 @@
     @media (max-width: 500px) {
         .hBanner {
             width: 90%;
+
             &_btn {
                 background-color: var(--accent-color);
                 color: var(--light-color);
