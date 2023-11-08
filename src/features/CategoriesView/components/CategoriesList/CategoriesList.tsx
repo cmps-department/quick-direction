@@ -11,7 +11,7 @@ const CategoriesList = ({ categories }: { categories: [] | IGetCategory[] }) => 
             {categories?.length ?
                 <Stack mt={24}>
                     {categories.map((category, index) =>
-                        <Category key={category.id} category={category} index={index}/>
+                        <Category key={category.id} category={category} index={index + 1}/>
                     )}
                 </Stack> :
                 <Text style={{ textAlign: 'center' }} mt={40} p={'50px 0'} fz={22} fw={500}>Категорій поки що немає!</Text>

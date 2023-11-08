@@ -26,11 +26,6 @@
         }
     }
 
-    .checkboxGroup {
-        * {
-            cursor: pointer;
-        }
-    }
 }
 
 .navbar {
@@ -38,4 +33,29 @@
     border-radius: 68px;
     margin: 30px;
     padding-inline: 24px;
+}
+
+.inputNumber {
+    width: 150px;
+    cursor: auto !important;
+
+    input {
+        cursor: auto !important;
+        background-color: transparent !important;
+        width: 100%;
+        height: 48px;
+        border: 2px solid #D9D9D9;
+    }
+}
+
+
+.colorInput {
+    input {
+        cursor: pointer;
+        padding-block: 5px;
+        height: fit-content;
+        &:focus {
+            outline: 2px solid #02808F;
+        }
+    }
 }

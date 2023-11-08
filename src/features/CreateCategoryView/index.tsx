@@ -1,11 +1,10 @@
 import React, { FC, useState } from 'react';
+import { useForm } from 'react-hook-form'
 import PageLayout from '../../layouts/PageLayout';
 import Frame from '../../components/Frame/Frame';
-import { Flex, Group, Stack, Text } from '@mantine/core';
-import TextInput from '../../components/TextInput/TextInput';
+import { Flex, NumberInput, Stack, Text, ColorInput, Space, Divider, Box } from '@mantine/core';
 import Textarea from '../../components/Textarea/Textarea';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import Checkbox from '../../components/Checkbox/Checkbox';
 import { useDisclosure } from '@mantine/hooks';
 import SuccessModal from './components/SuccessModal/SuccessModal';
 import DeleteModal from './components/DeleteModal/DeleteModal';
@@ -13,64 +12,55 @@ import Container from '../../components/Container/Container';
 
 import styles from './createC.module.scss';
 import Navbar from '../header/components/Navbar/Navbar';
-import axios from 'axios';
-import { ICategory, ISubCategory } from '../../interfaces/category.interface';
+import TextInput from '../../components/TextInput/TextInput';
+import ArrowButtons from './components/ArrowButtons/ArrowButtons';
+import SubCategory from './components/SubCategory/SubCategory';
+import useCreateCategory from './hooks/useCreateCategory';
 import { useRouter } from 'next/router';
+import { ICategory } from '../../interfaces/category.interface';
 
-
-export const getCategories = async ({ name, description, professor, color, subDirections }: ICategory) => {
-  try {
-    const response = await axios.post('/api/directions',
-      {
-        name,
-        description,
-        professor,
-        color,
-        subDirections
-      });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching categories:', error);
-    throw error;
-  }
-}
 
 const CreateCategoryView: FC = () => {
-
-  const [direction, useDirection] = useState<ICategory>({
-    name: 'Г',
-    description: 'Description',
-    professor: 'Proffessor',
-    color: 'blue',
-    subDirections: []
-  });
-
-  const [subDirections, setSubDirections] = useState<ISubCategory>({
-    name: 'subDirections',
-    additionalInfo: 'Info',
-    additionallink: 'http://',
-    examplelink: 'examplelink',
-    validationField: 'validationField',
-    directionId: 1
-  })
-
   const [isSuccessModalOpen, { open: openSuccessModal, close: closeSuccessModal }] = useDisclosure(false);
   const [isDeleteModalOpen, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
 
-  const { push } = useRouter();
+  const [color, setColor] = useState('#0000ff');
+  const [amountSub, setAmountSub] = useState<number>(1);
+  
+  const createCategory = useCreateCategory();
+  const {push, reload} = useRouter();
 
-  const createCategories = async () => {
-    try {
-      const data = await getCategories(direction);
-      if(data) {
-        openSuccessModal();
-        console.log(data);
-        setTimeout(() => push('/admin/categories'), 1500);
-      }
-    } catch (error) {
-      console.error('Error fetching categories:', error);
+  const {
+    register,
+    formState: {
+      isValid
+    },
+    handleSubmit,
+    reset
+  } = useForm({
+    mode: "all"
+  })
+  
+  const handleAdd = async (data: any) => {
+    const createData: ICategory = {
+      name: data.nameD,
+      description: data.descriptionD,
+      professor: data.professorMail,
+      color: color,
+      subDirections: []
     }
-  };
+    try {
+      const result = await createCategory.mutateAsync(createData);
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      openSuccessModal();
+      setTimeout(() => {
+        push('/admin/categories')
+      }, 1500);
+    }
+  }
 
   return (
     <PageLayout title={"Create category"}>
@@ -78,21 +68,52 @@ const CreateCategoryView: FC = () => {
       <main>
         <Container>
           <Frame className={styles.frame}>
-            <form>
+            <form onSubmit={handleSubmit(handleAdd)}>
               <Stack gap={24}>
-
-                <Text fz={28} fw={700}>
-                  Нова (редагування) категорія (-ї)
-                </Text>
+                <Flex align={'center'} justify={'space-between'}>
+                  <Text fz={28} fw={700}>
+                    Нова (редагування) категорія (-ї)
+                  </Text>
+                  <ColorInput
+                    value={color}
+                    onChange={setColor}
+                    className={styles.colorInput}
+                    defaultValue='#0000ff'
+                    radius="xl"
+                    placeholder="Колір категорії"
+                  />
+                </Flex>
 
                 <Text fz={20} fw={700}>Назва категорії <Text fz={20} fw={700} span c="red">*</Text></Text>
                 <TextInput
+                  req={register('nameD', {
+                    required: "Поле обов'язкове до заповнення!",
+                    minLength: {
+                      value: 2,
+                      message: 'Мінімум 2 символи!'
+                    },
+                    maxLength: {
+                      value: 50,
+                      message: 'Максимум 50 символів!'
+                    },
+                  })}
                   placeholder="Введіть назву категорії"
                   withAsterisk
                 />
 
                 <Text fz={20} fw={700}>Опис <Text fz={20} fw={700} span c="red">*</Text></Text>
                 <Textarea
+                  req={register('descriptionD', {
+                    required: "Поле обов'язкове до заповнення!",
+                    minLength: {
+                      value: 2,
+                      message: 'Мінімум 2 символи!'
+                    },
+                    maxLength: {
+                      value: 50,
+                      message: 'Максимум 50 символів!'
+                    },
+                  })}
                   styles={{
                     input: {
                       minHeight: "160px"
@@ -103,65 +124,53 @@ const CreateCategoryView: FC = () => {
                 />
 
                 <Text fz={20} fw={700}>Відповідальний викладач <Text fz={20} fw={700} span c="red">*</Text></Text>
-                <Group grow>
-                  <TextInput
-                    label="ФІО викладача"
-                    placeholder="ФІО"
-                  />
-                  <TextInput
-                    label="Кафедра"
-                    placeholder="Кафедра"
-                  />
-                </Group>
                 <TextInput
+                  req={register('professorMail', {
+                    required: true,
+                    minLength: {
+                      value: 2,
+                      message: 'Мінімум 2 символи!'
+                    },
+                    maxLength: {
+                      value: 50,
+                      message: 'Максимум 50 символів!'
+                    },
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: 'Поле не відповідає формату email!'
+                    }
+                  })}
                   label="Пошта"
                   placeholder="Введіть пошту"
                 />
 
                 <Text fz={20} fw={700}>Підкатегорії <Text fz={20} fw={700} span c="red">*</Text></Text>
-                <TextInput placeholder="Кількість" type='number' w={'fit-content'} />
-
-                <Text fz={20} fw={700}>Назва підкатегорії <Text fz={20} fw={700} span c="red">*</Text></Text>
-                <TextInput placeholder="Введіть назву підкатегорії" />
-
-                <Text fz={20} fw={700}>Опис <Text fz={20} fw={700} span c="red">*</Text></Text>
-                <Textarea
-                  styles={{
-                    input: {
-                      minHeight: "160px"
-                    }
-                  }}
-                  placeholder="Введіть опис..."
-                  withAsterisk
+                <NumberInput
+                  className={styles.inputNumber}
+                  value={amountSub}
+                  onChange={e => setAmountSub(e === '' ? 1 : +e)}
+                  rightSection={<ArrowButtons setAmountSub={setAmountSub} />}
+                  placeholder="Кількість"
+                  clampBehavior="strict"
+                  radius={'xl'}
+                  min={1}
+                  max={10}
                 />
 
-                <Text fz={20} fw={700}>Посилання на зразок</Text>
-                <TextInput
-                  placeholder="https://"
-                />
-
-                <Text fz={20} fw={700}>Інструкція / додаткова інформація</Text>
-                <Textarea
-                  styles={{
-                    input: {
-                      minHeight: "160px"
-                    }
-                  }}
-                  placeholder="Введіть текст..."
-                  withAsterisk
-                />
-
-                <Text fz={20} fw={700}>Звернення</Text>
-                <Flex className={styles.checkboxGroup} wrap={'wrap'} gap={64} align={'center'}>
-                  <Checkbox label={'Завантажити файл'} />
-                  <Checkbox label={'Текстове поле'} />
-                </Flex>
+                {Array.from({ length: amountSub }, (_, index) => (
+                  <Stack gap={24} key={index}>
+                    <Space h="xl" />
+                    <SubCategory register={register} />
+                    <Space h="sm" />
+                    <Divider my="sm" />
+                  </Stack>
+                ))}
 
                 <Flex justify="end" wrap={'wrap'} gap={15}>
                   <CustomButton onClick={openDeleteModal} className={styles.deleteBtn}>
                     Видалити
                   </CustomButton>
-                  <CustomButton onClick={createCategories} className={styles.successBtn}>
+                  <CustomButton type='submit' disabled={!isValid} onClick={() => { console.log(1) }} className={styles.successBtn}>
                     Зберегти
                   </CustomButton>
                   <SuccessModal opened={isSuccessModalOpen} close={closeSuccessModal} />

@@ -1,8 +1,12 @@
 import { CheckboxProps, Checkbox as CheckboxC } from '@mantine/core';
 import React, { FC, useState } from 'react';
 
+interface IReg {
+  req?: any
+}
 
-const Checkbox: FC<CheckboxProps> = ({ label }) => {
+
+const Checkbox: FC<CheckboxProps & IReg> = ({ label, req }) => {
 
   const [checked, setChecked] = useState(false);
   const accentColor = checked ? 'var(--accent-color)' : '#000';
@@ -35,7 +39,7 @@ const Checkbox: FC<CheckboxProps> = ({ label }) => {
 
   }}
     onChange={(event) => setChecked(event.currentTarget.checked)}
-    label={label} />
+    label={label}  {...req}/>
 }
 
 export default Checkbox

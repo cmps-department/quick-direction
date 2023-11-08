@@ -3,12 +3,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+
     a,
     button {
         font-size: 18px;
-        color: var(--light-color);
         cursor: pointer;
+    }
+
+    a {
+        color: var(--light-color);
     }
 
     a:hover {

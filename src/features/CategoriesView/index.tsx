@@ -20,21 +20,23 @@ import styles from './categories.module.scss';
 const CategoriesView: FC = () => {
   const { push } = useRouter();
   const [categories, setCategories] = useState<IGetCategory[] | []>([]);
-  const [allCategories, setAllCategories] = useState<IGetCategory[] | []>([]);
 
-  const {data, error, isLoading} = useGetCategories()
+  const {data, error, isLoading, refetch} = useGetCategories();
 
   useEffect(() => {
     if(data?.length) {
       setCategories(data);
-      setAllCategories(data);
     }
   }, [data]);
+
+  useEffect(() => {
+    refetch();
+  }, [])
 
   return (
     <PageLayout title={"Categories"}>
       <Navbar className={styles.navbar}>
-        <CustomButton style={{ margin: '1rem', padding: '14px 32px', color: 'var(--dark-color) ' }} onClick={() => { push('/admin/categories/create') }}>
+        <CustomButton style={{ margin: '1rem', padding: '14px 32px', color: 'var(--dark-color)' }} onClick={() => { push('/admin/categories/create') }}>
           Нова категорія
         </CustomButton>
       </Navbar>
@@ -48,7 +50,7 @@ const CategoriesView: FC = () => {
                 </Text>
               </Box>
               <Box>
-                <Sortings allCategories={allCategories} setCategories={setCategories}/>
+                <Sortings allCategories={data} setCategories={setCategories}/>
               </Box>
             </Flex>
             <Loading visible={isLoading}/>
