@@ -1,26 +1,44 @@
-import React, { FC } from 'react'
-import PageLayout from '../../layouts/PageLayout'
-import Navbar from '../header/components/Navbar/Navbar'
-import Footer from '../footer'
+import React, { FC, useEffect, useState } from 'react';
+import { Box, Flex,Text } from '@mantine/core';
+import { useRouter } from 'next/router';
 
-import styles from './categories.module.scss'
-import { Box, Button, Flex, Text } from '@mantine/core'
-import Container from '../../components/Container/Container'
-import Frame from '../../components/Frame/Frame'
-import CustomButton from '../../components/CustomButton/CustomButton'
-import { useRouter } from 'next/router'
+import PageLayout from '../../layouts/PageLayout';
+import Navbar from '../header/components/Navbar/Navbar';
+import Footer from '../footer';
+import Container from '../../components/Container/Container';
+import Frame from '../../components/Frame/Frame';
+import CustomButton from '../../components/CustomButton/CustomButton';
+import CategoriesList from './components/CategoriesList/CategoriesList';
+import { IGetCategory } from '../../interfaces/category.interface';
+import Loading from '../../components/Loading/Loading';
+import Sortings from './components/Sortings/Sortings';
+import useGetCategories from './hooks/useGetCategories';
+
+import styles from './categories.module.scss';
+
 
 const CategoriesView: FC = () => {
   const { push } = useRouter();
+  const [categories, setCategories] = useState<IGetCategory[] | []>([]);
+  const [allCategories, setAllCategories] = useState<IGetCategory[] | []>([]);
+
+  const {data, error, isLoading} = useGetCategories()
+
+  useEffect(() => {
+    if(data?.length) {
+      setCategories(data);
+      setAllCategories(data);
+    }
+  }, [data]);
 
   return (
     <PageLayout title={"Categories"}>
       <Navbar className={styles.navbar}>
-        <CustomButton style={{ margin: '1rem', padding: '14px 32px', color: 'var(--dark-color) '}} onClick={() => { push('/admin/categories/create') }}>
+        <CustomButton style={{ margin: '1rem', padding: '14px 32px', color: 'var(--dark-color) ' }} onClick={() => { push('/admin/categories/create') }}>
           Нова категорія
         </CustomButton>
       </Navbar>
-      <main>
+      <main style={{ minHeight: '60vh' }}>
         <Container>
           <Frame className={styles.frame}>
             <Flex align={'center'} justify={'space-between'}>
@@ -30,14 +48,11 @@ const CategoriesView: FC = () => {
                 </Text>
               </Box>
               <Box>
-                <Button style={{ border: 'none' }} bg={'transparent'} variant='default' fz={18} fw={600} mr={24}>
-                  Фільтр
-                </Button>
-                <Button style={{ border: 'none' }} bg={'transparent'} variant='default' fz={18} fw={600}>
-                  Сортування
-                </Button>
+                <Sortings allCategories={allCategories} setCategories={setCategories}/>
               </Box>
             </Flex>
+            <Loading visible={isLoading}/>
+            <CategoriesList categories={categories} />
           </Frame>
         </Container>
       </main>
@@ -47,3 +62,4 @@ const CategoriesView: FC = () => {
 }
 
 export default CategoriesView
+

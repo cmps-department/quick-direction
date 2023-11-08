@@ -15,6 +15,7 @@ const SuccessModal: FC<ISuccessModal> = ({ opened, close }) => {
             opened={opened}
             onClose={close}
             withCloseButton={false}
+            closeOnClickOutside={false}
             styles={{
                 content: {
                     minWidth: "600px",

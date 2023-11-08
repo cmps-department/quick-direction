@@ -1,0 +1,7 @@
+.category {
+    background-color: var(--light-color);
+    border-radius: 71px;
+    &:hover{
+        background-color: var(--green-color);
+    }
+}

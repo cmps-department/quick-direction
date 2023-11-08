@@ -1,11 +1,9 @@
 import React, { FC, useState } from 'react';
 import PageLayout from '../../layouts/PageLayout';
 import Frame from '../../components/Frame/Frame';
-import LayoutHF from '../../layouts/LayoutHF';
 import { Flex, Group, Stack, Text } from '@mantine/core';
 import TextInput from '../../components/TextInput/TextInput';
 import Textarea from '../../components/Textarea/Textarea';
-import OutlineButton from '../../components/OutlineButton/OutlineButton';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import { useDisclosure } from '@mantine/hooks';
@@ -15,35 +13,64 @@ import Container from '../../components/Container/Container';
 
 import styles from './createC.module.scss';
 import Navbar from '../header/components/Navbar/Navbar';
+import axios from 'axios';
+import { ICategory, ISubCategory } from '../../interfaces/category.interface';
+import { useRouter } from 'next/router';
 
-interface IDirection {
-  name: string,
-  description: string,
-  professors: string[],
-  subDirection: SubDirection[]
-}
 
-interface SubDirection {
-  name: string,
-  additionalInfo: string,
-  examplelink: string,
-  additionallink: string,
-  validationField: string,
-  directionId: number
+export const getCategories = async ({ name, description, professor, color, subDirections }: ICategory) => {
+  try {
+    const response = await axios.post('/api/directions',
+      {
+        name,
+        description,
+        professor,
+        color,
+        subDirections
+      });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    throw error;
+  }
 }
 
 const CreateCategoryView: FC = () => {
 
-  const [direction, useDirection] = useState<IDirection>({
-    name: '',
-    description: '',
-    professors: [],
-    subDirection: []
+  const [direction, useDirection] = useState<ICategory>({
+    name: 'Г',
+    description: 'Description',
+    professor: 'Proffessor',
+    color: 'blue',
+    subDirections: []
   });
+
+  const [subDirections, setSubDirections] = useState<ISubCategory>({
+    name: 'subDirections',
+    additionalInfo: 'Info',
+    additionallink: 'http://',
+    examplelink: 'examplelink',
+    validationField: 'validationField',
+    directionId: 1
+  })
 
   const [isSuccessModalOpen, { open: openSuccessModal, close: closeSuccessModal }] = useDisclosure(false);
   const [isDeleteModalOpen, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
 
+  const { push } = useRouter();
+
+  const createCategories = async () => {
+    try {
+      const data = await getCategories(direction);
+      if(data) {
+        openSuccessModal();
+        console.log(data);
+        setTimeout(() => push('/admin/categories'), 1500);
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
 
   return (
     <PageLayout title={"Create category"}>
@@ -53,14 +80,17 @@ const CreateCategoryView: FC = () => {
           <Frame className={styles.frame}>
             <form>
               <Stack gap={24}>
+
                 <Text fz={28} fw={700}>
                   Нова (редагування) категорія (-ї)
                 </Text>
+
                 <Text fz={20} fw={700}>Назва категорії <Text fz={20} fw={700} span c="red">*</Text></Text>
                 <TextInput
                   placeholder="Введіть назву категорії"
                   withAsterisk
                 />
+
                 <Text fz={20} fw={700}>Опис <Text fz={20} fw={700} span c="red">*</Text></Text>
                 <Textarea
                   styles={{
@@ -69,7 +99,9 @@ const CreateCategoryView: FC = () => {
                     }
                   }}
                   placeholder="Введіть опис..."
-                  withAsterisk />
+                  withAsterisk
+                />
+
                 <Text fz={20} fw={700}>Відповідальний викладач <Text fz={20} fw={700} span c="red">*</Text></Text>
                 <Group grow>
                   <TextInput
@@ -85,10 +117,29 @@ const CreateCategoryView: FC = () => {
                   label="Пошта"
                   placeholder="Введіть пошту"
                 />
+
+                <Text fz={20} fw={700}>Підкатегорії <Text fz={20} fw={700} span c="red">*</Text></Text>
+                <TextInput placeholder="Кількість" type='number' w={'fit-content'} />
+
+                <Text fz={20} fw={700}>Назва підкатегорії <Text fz={20} fw={700} span c="red">*</Text></Text>
+                <TextInput placeholder="Введіть назву підкатегорії" />
+
+                <Text fz={20} fw={700}>Опис <Text fz={20} fw={700} span c="red">*</Text></Text>
+                <Textarea
+                  styles={{
+                    input: {
+                      minHeight: "160px"
+                    }
+                  }}
+                  placeholder="Введіть опис..."
+                  withAsterisk
+                />
+
                 <Text fz={20} fw={700}>Посилання на зразок</Text>
                 <TextInput
                   placeholder="https://"
                 />
+
                 <Text fz={20} fw={700}>Інструкція / додаткова інформація</Text>
                 <Textarea
                   styles={{
@@ -99,16 +150,18 @@ const CreateCategoryView: FC = () => {
                   placeholder="Введіть текст..."
                   withAsterisk
                 />
+
                 <Text fz={20} fw={700}>Звернення</Text>
                 <Flex className={styles.checkboxGroup} wrap={'wrap'} gap={64} align={'center'}>
                   <Checkbox label={'Завантажити файл'} />
                   <Checkbox label={'Текстове поле'} />
                 </Flex>
+
                 <Flex justify="end" wrap={'wrap'} gap={15}>
                   <CustomButton onClick={openDeleteModal} className={styles.deleteBtn}>
                     Видалити
                   </CustomButton>
-                  <CustomButton onClick={openSuccessModal} className={styles.successBtn}>
+                  <CustomButton onClick={createCategories} className={styles.successBtn}>
                     Зберегти
                   </CustomButton>
                   <SuccessModal opened={isSuccessModalOpen} close={closeSuccessModal} />
