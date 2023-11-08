@@ -28,7 +28,7 @@ const CreateCategoryView: FC = () => {
   const [amountSub, setAmountSub] = useState<number>(1);
   
   const createCategory = useCreateCategory();
-  const {push, reload} = useRouter();
+  const {push} = useRouter();
 
   const {
     register,
@@ -60,6 +60,10 @@ const CreateCategoryView: FC = () => {
         push('/admin/categories')
       }, 1500);
     }
+  }
+
+  const handleDelete = (answer: boolean) => {
+    console.log(answer)
   }
 
   return (
@@ -174,7 +178,7 @@ const CreateCategoryView: FC = () => {
                     Зберегти
                   </CustomButton>
                   <SuccessModal opened={isSuccessModalOpen} close={closeSuccessModal} />
-                  <DeleteModal opened={isDeleteModalOpen} close={closeDeleteModal} />
+                  <DeleteModal setAnswer={handleDelete} opened={isDeleteModalOpen} close={closeDeleteModal} />
                 </Flex>
               </Stack>
             </form>

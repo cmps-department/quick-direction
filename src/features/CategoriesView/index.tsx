@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Box, Flex,Text } from '@mantine/core';
+import { Box, Flex, Text } from '@mantine/core';
 import { useRouter } from 'next/router';
 
 import PageLayout from '../../layouts/PageLayout';
@@ -20,18 +20,13 @@ import styles from './categories.module.scss';
 const CategoriesView: FC = () => {
   const { push } = useRouter();
   const [categories, setCategories] = useState<IGetCategory[] | []>([]);
-
-  const {data, error, isLoading, refetch} = useGetCategories();
+  const { data, error, isLoading, refetch } = useGetCategories();
 
   useEffect(() => {
-    if(data?.length) {
+    if (data?.length >= 0) {
       setCategories(data);
     }
   }, [data]);
-
-  useEffect(() => {
-    refetch();
-  }, [])
 
   return (
     <PageLayout title={"Categories"}>
@@ -50,10 +45,10 @@ const CategoriesView: FC = () => {
                 </Text>
               </Box>
               <Box>
-                <Sortings allCategories={data} setCategories={setCategories}/>
+                <Sortings allCategories={data} setCategories={setCategories} />
               </Box>
             </Flex>
-            <Loading visible={isLoading}/>
+            <Loading visible={isLoading} />
             <CategoriesList categories={categories} />
           </Frame>
         </Container>

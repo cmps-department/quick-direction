@@ -8,9 +8,10 @@ import styles from './delete.module.scss';
 interface IDeleteModal {
   opened: boolean;
   close: () => void;
+  setAnswer: (ans: boolean) => void;
 }
 
-const DeleteModal: FC<IDeleteModal> = ({ opened, close }) => {
+const DeleteModal: FC<IDeleteModal> = ({ opened, close, setAnswer }) => {
   return (
     <Modal
       shadow='xl'
@@ -35,8 +36,8 @@ const DeleteModal: FC<IDeleteModal> = ({ opened, close }) => {
         />
         <Text c={'var(--red-color)'} fz={20} fw={700}>Видалити?</Text>
         <Group>
-          <CustomButton className={styles.cancelBtn} onClick={() => {}}>Відміна</CustomButton>
-          <CustomButton className={styles.yesBtn} onClick={() => {}}>Так</CustomButton>
+          <CustomButton className={styles.cancelBtn} onClick={() => {setAnswer(false)}}>Відміна</CustomButton>
+          <CustomButton className={styles.yesBtn} onClick={() => {setAnswer(true)}}>Так</CustomButton>
         </Group>
       </Stack>
     </Modal>

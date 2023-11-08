@@ -1,15 +1,16 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "axios";
 
 const useGetCategories = () => {
+
     return useQuery(
-        ['categories'],
+        ["categories"],
         () => {
             return axios.get('/api/directions');
         },
         {
             select: ({data}) => data,
-            enabled: false
+            // enabled: false
         }
     )
 }
