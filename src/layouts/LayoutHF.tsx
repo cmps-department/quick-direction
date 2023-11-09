@@ -2,10 +2,11 @@ import { FC, ReactNode } from 'react';
 import Header from '../features/header';
 import Footer from '../features/footer';
 import SimpleHeader from '../components/SimpleHeader';
+import Navbar from '../features/header/components/Navbar/Navbar';
 
 const Headers = {
     extended: Header,
-    simple: SimpleHeader
+    simple: SimpleHeader,
 }
 
 interface LayoutHFProps {

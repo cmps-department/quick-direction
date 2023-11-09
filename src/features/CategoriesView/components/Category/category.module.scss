@@ -1,0 +1,19 @@
+.category {
+    background-color: var(--light-color);
+    border-radius: 71px;
+    &:hover{
+        background-color: var(--green-color);
+    }
+}
+
+.deleteBtn {
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--red-color);
+    padding: 10px;
+    position: absolute;
+
+    &:hover {
+        opacity: .8;
+    }
+}

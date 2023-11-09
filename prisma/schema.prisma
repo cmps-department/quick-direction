@@ -12,8 +12,9 @@ model Directions {
   id              Int      @id @default(autoincrement())
   name            String
   description     String
-  professors      String[]
-  subDirections   SubDirections[] 
+  professor       String
+  color           String
+  subDirections   SubDirections[]
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
