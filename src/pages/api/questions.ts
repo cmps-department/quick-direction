@@ -6,37 +6,35 @@ const prisma = new PrismaClient();
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         try {
-          const { name, description, professors,  subDirections} = req.body;
+          const { name, surname, email, text, status} = req.body;
     
-          const newDirection = await prisma.directions.create({
+          const newQuestion = await prisma.questions.create({
             data: {
                 name,
-                description, 
-                professors,
-                subDirections:{
-                  create: subDirections
-                }
+                surname, 
+                email,
+                text,
+                status
             },
           });
 
     
-          res.status(201).json(newDirection);
+          res.status(201).json(newQuestion);
 
         } catch (error) {
           console.error(error);
-          res.status(500).json({ error: "An error occurred while creating the direction." });
+          res.status(500).json({ error: "An error occurred while creating the question." });
         }
       }else if(req.method === "GET"){
-        const allDirections = await prisma.directions.findMany({
-          include: {subDirections: true}
+        const allQuestions = await prisma.questions.findMany({
+          include: {document: true}
         })
 
-        if(allDirections){
-
-          res.status(201).json(allDirections)
+        if(allQuestions){
+          res.status(201).json(allQuestions)
         }else{
 
-          res.status(500).json({error: "There is no directions"})
+          res.status(500).json({error: "There is no questions"})
         }
       }else if(req.method === "DELETE"){
         const id = Number(req.query.id)
@@ -46,19 +44,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           return;
         }
 
-        const allDirections = await prisma.directions.delete({
+        const question = await prisma.questions.delete({
           where:{
             id: id,
           }
         })
 
-        if(allDirections){
+        if(question){
           res.status(201).json({message: "Succesfuly deleted"})
         }else{
           res.status(500).json({message: "There is no directions"})
         }
       }else if(req.method === "PUT"){
-        const { id, name, description, professors, additionallink, subDirectionName, additionalInfo, exampleLink, validationField } = req.body;
+        const { id, name, surname, email, text, status } = req.body;
 
         if (Array.isArray(id)) {
           res.status(400).json({ error: "Multiple IDs are not supported" });
@@ -70,30 +68,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           return;
         }
         try {
-          const updatedDirections= await prisma.directions.update({
+          const updatedQuestion = await prisma.questions.update({
             where:{
               id: id,
             },
             data: {
               name,
-              description, 
-              professors,
+              surname,
+              email, 
+              text,
+              status,
           },
           });
   
-          const newSubdirection = await prisma.subDirections.create({
-            data:{
-              name: subDirectionName,
-              additionalInfo: additionalInfo,
-              examplelink: exampleLink,
-              additionallink: additionallink,
-              validationField: validationField,
-              directionId: id
-            }
-          })
-  
-          if(updatedDirections){
-            res.status(201).json(updatedDirections)
+          if(updatedQuestion){
+            res.status(201).json(updatedQuestion)
           }else{
   
             res.status(500).json({error: "There is no directions"})
