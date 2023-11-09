@@ -26,16 +26,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           res.status(500).json({ error: "An error occurred while creating the question." });
         }
       }else if(req.method === "GET"){
-        const allQuestions = await prisma.questions.findMany({
-          include: {document: true}
-        })
+        const id = Number(req.query.id)
 
-        if(allQuestions){
-          res.status(201).json(allQuestions)
+        if(!id){
+            const allQuestions = await prisma.questions.findMany({
+                include: {document: true}
+              })
+      
+              if(allQuestions){
+                res.status(201).json(allQuestions)
+              }else{
+      
+                res.status(500).json({error: "There is no questions"})
+              }
         }else{
-
-          res.status(500).json({error: "There is no questions"})
-        }
+            const allQuestions = await prisma.questions.findUnique({
+                where: {
+                    id: id,
+                },
+              })
+      
+              if(allQuestions){
+                res.status(201).json(allQuestions)
+              }else{
+      
+                res.status(500).json({error: "There is no questions"})
+              }
+        }  
       }else if(req.method === "DELETE"){
         const id = Number(req.query.id)
 
