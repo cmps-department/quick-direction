@@ -12,12 +12,12 @@ import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
 const data = [
-    { link: '/', label: 'Головна', icon: "mdi:university-outline" },
-    { link: '/faq', label: 'Часті питання', icon: "wpf:faq" },
-    { link: '/about-us', label: 'Про нас', icon: "mdi:about-circle-outline" },
-    { link: '/request-directions', label: 'Подати заявку', icon: "carbon:request-quote" },
-    { link: '/admin/categories', label: 'Керування напрямками', icon: "eos-icons:content-lifecycle-management" },
-    { link: '/request-processing', label: 'Опрацювання запитів', icon: "mdi:chat-processing-outline" },
+    { id: 1, link: '/', label: 'Головна', icon: "mdi:university-outline" },
+    { id: 2, link: '/faq', label: 'Часті питання', icon: "wpf:faq" },
+    { id: 3, link: '/about-us', label: 'Про нас', icon: "mdi:about-circle-outline" },
+    { id: 4, link: '/request-directions', label: 'Подати заявку', icon: "carbon:request-quote" },
+    { id: 5, link: '/admin/categories', label: 'Керування напрямками', icon: "eos-icons:content-lifecycle-management" },
+    { id: 6, link: '/request-processing', label: 'Опрацювання запитів', icon: "mdi:chat-processing-outline" },
 ];
 
 export function Navbar() {
@@ -41,7 +41,7 @@ export function Navbar() {
     if (!isOpened) return null;
 
     const links = data.map(link => (
-        <UnstyledButton className={classes.link} onClick={() => handleNavigate(link.link)}>
+        <UnstyledButton key={link.id} className={classes.link} onClick={() => handleNavigate(link.link)}>
             <Flex gap={15}>
                 <Icon width={22} height={22} icon={link.icon} />
                 <Text>{link.label}</Text>
