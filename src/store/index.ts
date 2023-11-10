@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import exampleReducer from "./exampleReducer";
+import navbarReducer from "./navbarReducer";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 const store = configureStore({
     reducer: {
-        example: exampleReducer,
+        navbar: navbarReducer
     },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 export default store;

@@ -1,56 +1,74 @@
-import Image from 'next/image';
-import styles from './header.module.scss';
+import { CSSProperties, FC } from "react";
 
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useAppSelector } from "../../store";
+import { useDispatch } from "react-redux";
+import { toggle } from "../../store/navbarReducer";
+
+import { Burger, Button, Flex, Text } from "@mantine/core";
+import Image from "next/image";
 import Link from "next/link";
-import CustomButton from "../../components/CustomButton/CustomButton";
-import Container from "../../components/Container/Container";
-import { Button } from "@mantine/core";
 
-import { useSession, signIn, signOut } from 'next-auth/react';
+import styles from "./styles.module.scss";
 
-import { useRouter } from 'next/navigation';
-import Navbar from './components/Navbar/Navbar';
-import Frame from '../../components/Frame/Frame';
+interface HeaderProps {
+    color: CSSProperties["backgroundColor"]
+    margin?: CSSProperties["margin"]
+}
 
-const Header = () => {
+const Header: FC<HeaderProps> = ({color, margin = "30px 30px 60px 30px"}) => {
     const { data: session } = useSession();
-    const router = useRouter();
+    const { isOpened } = useAppSelector(state => state.navbar);
+    const dispatch = useDispatch();
 
     return (
-        <header>
-            <div className={styles.header}>
-                <div className={styles.headerBg}>
-                    <Navbar>
-                        <Link href={'/admin/categories'}>Керування категоріями</Link>
-                        {session ? (
-                            <Button radius="xl" h={48} w={128} color='#fff' style={{ color: "#000" }} onClick={() => signOut({ callbackUrl: "/" })}>
-                                Вихід
-                            </Button>
-                        ) : (
-                            <Button radius="xl" h={48} w={128} color='#fff' style={{ color: "#000" }} onClick={() => signIn("keycloak")}>
-                                Увійти
-                            </Button>
-                        )
-                        }
-                    </Navbar>
-                </div>
+        <header className={styles.header} style={{ backgroundColor: color, margin: margin }}>
+            <Flex gap={60} align="center">
+                {
+                    session ? (
+                        <Burger color="white" opened={isOpened} onClick={() => dispatch(toggle())}/>
+                    ) : null
+                }
+                <Link className={styles.link} href="/">
+                    Головна
+                </Link>
+                <Link className={styles.link} href="/faq">
+                    Часті питання
+                </Link>
+                <Link className={styles.link} href="/about-us">
+                    Про нас
+                </Link>
+            </Flex>
 
-                <div className={styles.hBanner}>
-                    <Container>
-                        <Frame className={styles.hBanner_container}>
-                            <h2 className={styles.hBanner_title}>Що це таке?</h2>
-                            <div className={styles.hBanner_line}></div>
-                            <p className={styles.hBanner_text}><span>Quick Direction</span> - це сервіс для легкого спілкування студентів з дирекцією. З нами ваша заявка точно не загубиться: заповнену форму одразу буде скеровано до спеціальних відділів дирекції НТУ “ХПІ” відповідно до обраного вами запиту.</p>
-                            <CustomButton className={styles.hBanner_btn} onClick={() => session ? router.push("/request-directions") : signIn("keycloak", { callbackUrl: "/request-directions" })} >
-                                Подати заявку
-                            </CustomButton>
-                        </Frame>
-                    </Container>
-                </div>
+            <Link href={'/'}>
+                <Image
+                    width={75}
+                    height={34}
+                    src="/images/logo.webp"
+                    alt="Logo"
+                />
+            </Link>
 
-            </div>
+            <Flex gap={32} align="center" justify="flex-end">
+                {
+                    session ? (
+                        <Text c="white" fw={600} fz={18}>{session.user.email}</Text>
+                    ) : null
+                }
+                {
+                    session ? (
+                        <Button variant="outline" radius="xl" h={48} w={128} color='#fff' onClick={() => signOut({ callbackUrl: "/" })}>
+                            <Text c="white" fz={18} fw={600}>Вихід</Text>
+                        </Button>
+                    ) : (
+                        <Button radius="xl" h={48} w={128} color='#fff' onClick={() => signIn("keycloak")}>
+                            <Text c="black" fz={18} fw={600}>Увійти</Text>
+                        </Button>
+                    )
+                }
+            </Flex>
         </header>
     )
 }
 
-export default Header
+export default Header;

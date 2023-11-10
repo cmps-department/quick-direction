@@ -11,13 +11,13 @@ import DeleteModal from './components/DeleteModal/DeleteModal';
 import Container from '../../components/Container/Container';
 
 import styles from './createC.module.scss';
-import Navbar from '../header/components/Navbar/Navbar';
 import TextInput from '../../components/TextInput/TextInput';
 import ArrowButtons from './components/ArrowButtons/ArrowButtons';
 import SubCategory from './components/SubCategory/SubCategory';
 import useCreateCategory from './hooks/useCreateCategory';
 import { useRouter } from 'next/router';
 import { ICategory } from '../../interfaces/category.interface';
+import Header from '../Header';
 
 
 const CreateCategoryView: FC = () => {
@@ -67,125 +67,120 @@ const CreateCategoryView: FC = () => {
   }
 
   return (
-    <PageLayout title={"Create category"}>
-      <Navbar className={styles.navbar} />
-      <main>
-        <Container>
-          <Frame className={styles.frame}>
-            <form onSubmit={handleSubmit(handleAdd)}>
-              <Stack gap={24}>
-                <Flex align={'center'} justify={'space-between'}>
-                  <Text fz={28} fw={700}>
-                    Нова (редагування) категорія (-ї)
-                  </Text>
-                  <ColorInput
-                    value={color}
-                    onChange={setColor}
-                    className={styles.colorInput}
-                    defaultValue='#0000ff'
-                    radius="xl"
-                    placeholder="Колір категорії"
-                  />
-                </Flex>
-
-                <Text fz={20} fw={700}>Назва категорії <Text fz={20} fw={700} span c="red">*</Text></Text>
-                <TextInput
-                  req={register('nameD', {
-                    required: "Поле обов'язкове до заповнення!",
-                    minLength: {
-                      value: 2,
-                      message: 'Мінімум 2 символи!'
-                    },
-                    maxLength: {
-                      value: 50,
-                      message: 'Максимум 50 символів!'
-                    },
-                  })}
-                  placeholder="Введіть назву категорії"
-                  withAsterisk
+    <Container>
+        <Frame className={styles.frame}>
+        <form onSubmit={handleSubmit(handleAdd)}>
+            <Stack gap={24}>
+            <Flex align={'center'} justify={'space-between'}>
+                <Text fz={28} fw={700}>
+                Нова (редагування) категорія (-ї)
+                </Text>
+                <ColorInput
+                value={color}
+                onChange={setColor}
+                className={styles.colorInput}
+                defaultValue='#0000ff'
+                radius="xl"
+                placeholder="Колір категорії"
                 />
+            </Flex>
 
-                <Text fz={20} fw={700}>Опис <Text fz={20} fw={700} span c="red">*</Text></Text>
-                <Textarea
-                  req={register('descriptionD', {
-                    required: "Поле обов'язкове до заповнення!",
-                    minLength: {
-                      value: 2,
-                      message: 'Мінімум 2 символи!'
-                    },
-                    maxLength: {
-                      value: 50,
-                      message: 'Максимум 50 символів!'
-                    },
-                  })}
-                  styles={{
-                    input: {
-                      minHeight: "160px"
-                    }
-                  }}
-                  placeholder="Введіть опис..."
-                  withAsterisk
-                />
+            <Text fz={20} fw={700}>Назва категорії <Text fz={20} fw={700} span c="red">*</Text></Text>
+            <TextInput
+                req={register('nameD', {
+                required: "Поле обов'язкове до заповнення!",
+                minLength: {
+                    value: 2,
+                    message: 'Мінімум 2 символи!'
+                },
+                maxLength: {
+                    value: 50,
+                    message: 'Максимум 50 символів!'
+                },
+                })}
+                placeholder="Введіть назву категорії"
+                withAsterisk
+            />
 
-                <Text fz={20} fw={700}>Відповідальний викладач <Text fz={20} fw={700} span c="red">*</Text></Text>
-                <TextInput
-                  req={register('professorMail', {
-                    required: true,
-                    minLength: {
-                      value: 2,
-                      message: 'Мінімум 2 символи!'
-                    },
-                    maxLength: {
-                      value: 50,
-                      message: 'Максимум 50 символів!'
-                    },
-                    pattern: {
-                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                      message: 'Поле не відповідає формату email!'
-                    }
-                  })}
-                  label="Пошта"
-                  placeholder="Введіть пошту"
-                />
+            <Text fz={20} fw={700}>Опис <Text fz={20} fw={700} span c="red">*</Text></Text>
+            <Textarea
+                req={register('descriptionD', {
+                required: "Поле обов'язкове до заповнення!",
+                minLength: {
+                    value: 2,
+                    message: 'Мінімум 2 символи!'
+                },
+                maxLength: {
+                    value: 50,
+                    message: 'Максимум 50 символів!'
+                },
+                })}
+                styles={{
+                input: {
+                    minHeight: "160px"
+                }
+                }}
+                placeholder="Введіть опис..."
+                withAsterisk
+            />
 
-                <Text fz={20} fw={700}>Підкатегорії <Text fz={20} fw={700} span c="red">*</Text></Text>
-                <NumberInput
-                  className={styles.inputNumber}
-                  value={amountSub}
-                  onChange={e => setAmountSub(e === '' ? 1 : +e)}
-                  rightSection={<ArrowButtons setAmountSub={setAmountSub} />}
-                  placeholder="Кількість"
-                  clampBehavior="strict"
-                  radius={'xl'}
-                  min={1}
-                  max={10}
-                />
+            <Text fz={20} fw={700}>Відповідальний викладач <Text fz={20} fw={700} span c="red">*</Text></Text>
+            <TextInput
+                req={register('professorMail', {
+                required: true,
+                minLength: {
+                    value: 2,
+                    message: 'Мінімум 2 символи!'
+                },
+                maxLength: {
+                    value: 50,
+                    message: 'Максимум 50 символів!'
+                },
+                pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: 'Поле не відповідає формату email!'
+                }
+                })}
+                label="Пошта"
+                placeholder="Введіть пошту"
+            />
 
-                {Array.from({ length: amountSub }, (_, index) => (
-                  <Stack gap={24} key={index}>
-                    <Space h="xl" />
-                    <SubCategory register={register} />
-                    <Space h="sm" />
-                    <Divider my="sm" />
-                  </Stack>
-                ))}
+            <Text fz={20} fw={700}>Підкатегорії <Text fz={20} fw={700} span c="red">*</Text></Text>
+            <NumberInput
+                className={styles.inputNumber}
+                value={amountSub}
+                onChange={e => setAmountSub(e === '' ? 1 : +e)}
+                rightSection={<ArrowButtons setAmountSub={setAmountSub} />}
+                placeholder="Кількість"
+                clampBehavior="strict"
+                radius={'xl'}
+                min={1}
+                max={10}
+            />
 
-                <Flex justify="end" wrap={'wrap'} gap={15}>
-                  <CustomButton onClick={openDeleteModal} className={styles.deleteBtn}>
-                    Видалити
-                  </CustomButton>
-                  <CustomButton type='submit' disabled={!isValid} onClick={() => { console.log(1) }} className={styles.successBtn}>
-                    Зберегти
-                  </CustomButton>
-                  <SuccessModal opened={isSuccessModalOpen} close={closeSuccessModal} />
-                  <DeleteModal setAnswer={handleDelete} opened={isDeleteModalOpen} close={closeDeleteModal} />
-                </Flex>
-              </Stack>
-            </form>
-          </Frame>
-        </Container>
-      </main>
-    </PageLayout >
+            {Array.from({ length: amountSub }, (_, index) => (
+                <Stack gap={24} key={index}>
+                <Space h="xl" />
+                <SubCategory register={register} />
+                <Space h="sm" />
+                <Divider my="sm" />
+                </Stack>
+            ))}
+
+            <Flex justify="end" wrap={'wrap'} gap={15}>
+                <CustomButton onClick={openDeleteModal} className={styles.deleteBtn}>
+                Видалити
+                </CustomButton>
+                <CustomButton type='submit' disabled={!isValid} onClick={() => { console.log(1) }} className={styles.successBtn}>
+                Зберегти
+                </CustomButton>
+                <SuccessModal opened={isSuccessModalOpen} close={closeSuccessModal} />
+                <DeleteModal setAnswer={handleDelete} opened={isDeleteModalOpen} close={closeDeleteModal} />
+            </Flex>
+            </Stack>
+        </form>
+        </Frame>
+    </Container>
   )
 }
 
