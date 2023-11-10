@@ -44,7 +44,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
                         <QueryClientProvider client={queryClient}>
                             <Hydrate state={pageProps.dehydratedState}>
                                 <Component {...pageProps} />
-                                <Devtools />
+                                {/*<Devtools />*/}
                             </Hydrate>
                         </QueryClientProvider>
                     </Provider>
