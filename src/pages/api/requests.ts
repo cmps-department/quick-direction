@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         try {
           const { name, surname, email, text, status, directions} = req.body;
     
-          const newQuestion = await prisma.questions.create({
+          const newRequest = await prisma.request.create({
             data: {
                 name,
                 surname, 
@@ -20,38 +20,38 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           });
 
     
-          res.status(201).json(newQuestion);
+          res.status(201).json(newRequest);
 
         } catch (error) {
           console.error(error);
-          res.status(500).json({ error: "An error occurred while creating the question." });
+          res.status(500).json({ error: "An error occurred while creating the request." });
         }
       }else if(req.method === "GET"){
         const id = Number(req.query.id)
 
         if(!id){
-            const allQuestions = await prisma.questions.findMany({
+            const allRequests = await prisma.request.findMany({
                 include: {document: true}
               })
       
-              if(allQuestions){
-                res.status(201).json(allQuestions)
+              if(allRequests){
+                res.status(201).json(allRequests)
               }else{
       
-                res.status(500).json({error: "There is no questions"})
+                res.status(500).json({error: "There is no request"})
               }
         }else{
-            const allQuestions = await prisma.questions.findUnique({
+            const allRequests = await prisma.request.findUnique({
                 where: {
                     id: id,
                 },
               })
       
-              if(allQuestions){
-                res.status(201).json(allQuestions)
+              if(allRequests){
+                res.status(201).json(allRequests)
               }else{
       
-                res.status(500).json({error: "There is no questions"})
+                res.status(500).json({error: "There is no request"})
               }
         }  
       }else if(req.method === "DELETE"){
@@ -62,13 +62,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           return;
         }
 
-        const question = await prisma.questions.delete({
+        const request = await prisma.request.delete({
           where:{
             id: id,
           }
         })
 
-        if(question){
+        if(request){
           res.status(201).json({message: "Succesfuly deleted"})
         }else{
           res.status(500).json({message: "There is no directions"})
@@ -86,7 +86,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           return;
         }
         try {
-          const updatedQuestion = await prisma.questions.update({
+          const updatedRequest = await prisma.request.update({
             where:{
               id: id,
             },
@@ -99,8 +99,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
           });
   
-          if(updatedQuestion){
-            res.status(201).json(updatedQuestion)
+          if(updatedRequest){
+            res.status(201).json(updatedRequest)
           }else{
   
             res.status(500).json({error: "There is no directions"})

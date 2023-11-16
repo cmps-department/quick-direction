@@ -14,7 +14,7 @@ model Directions {
   description     String
   professors      String[]
   subDirections   SubDirections[] 
-  questions       Questions[] 
+  requests        Request[] 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
@@ -33,7 +33,7 @@ model SubDirections {
 }
 
 
-model Questions {
+model Request {
   id              Int      @id @default(autoincrement())
   name            String
   surname         String
@@ -48,11 +48,11 @@ model Questions {
 }
 
 model Document {
-  id         Int       @id @default(autoincrement())
-  questionId Int       @unique
-  question   Questions @relation(fields: [questionId], references: [id])
-  filename   String
-  filepath   String
+  id              Int       @id @default(autoincrement())
+  questionId      Int       @unique
+  question        Request @relation(fields: [questionId], references: [id])
+  filename        String
+  filepath        String
 }
 
 enum Status {
