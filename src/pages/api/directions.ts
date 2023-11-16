@@ -1,4 +1,3 @@
-import { log } from 'console';
 import { PrismaClient } from '../../../prisma/generated/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -16,11 +15,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           professor,
           color,
           subDirections: {
-            create: subDirections
+            create: subDirections.map((subDir:any) => ({
+              ...subDir,
+            })),
           }
         },
+        include: {
+          subDirections: true
+        }
       });
-
 
       res.status(201).json(newDirection);
 
@@ -34,7 +37,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     })
 
     if (allDirections) {
-
       res.status(201).json(allDirections)
     } else {
 
@@ -60,12 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(500).json({ message: "There is no directions" })
     }
   } else if (req.method === "PUT") {
-    const { id, name, description, professor, color, additionallink, subDirectionName, additionalInfo, exampleLink, validationField } = req.body;
-
-    if (Array.isArray(id)) {
-      res.status(400).json({ error: "Multiple IDs are not supported" });
-      return;
-    }
+    const { id, name, description, professor, color, subDirections } = req.body;
 
     if (isNaN(id)) {
       res.status(400).json({ error: "Invalid ID format" });
@@ -74,26 +71,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       const updatedDirections = await prisma.directions.update({
         where: {
-          id: id,
+          id: parseInt(id),
         },
         data: {
           name,
           description,
           professor,
-          color
+          color,
+          subDirections: {
+            upsert: subDirections.map((subDir: any) => ({
+              where: { id: parseInt(subDir.id)},
+              create: { ...subDir },
+              update: { ...subDir },
+            })),
+            deleteMany: { 
+              id: { notIn: subDirections.map((subDir: any) => parseInt(subDir.id)) },
+            },
+          }
         },
-      });
-
-      const newSubdirection = await prisma.subDirections.create({
-        data: {
-          name: subDirectionName,
-          additionalInfo: additionalInfo,
-          examplelink: exampleLink,
-          additionallink: additionallink,
-          validationField: validationField,
-          directionId: id
+        include: {
+          subDirections: true
         }
-      })
+      });
 
       if (updatedDirections) {
         res.status(201).json(updatedDirections)
@@ -103,7 +102,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     } catch (error) {
       console.log(error);
-
     }
 
   } else {

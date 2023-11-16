@@ -21,9 +21,10 @@ const CategoriesView: FC = () => {
 
     useEffect(() => {
         if (data?.length >= 0) {
-        setCategories(data);
+            setCategories(data);
         }
     }, [data]);
+
 
     return (
         <Container mih="60vh">
@@ -31,7 +32,7 @@ const CategoriesView: FC = () => {
                 <Flex align={'center'} justify={'space-between'}>
                     <Box>
                         <Text fz={28} fw={700}>
-                        Всі категорії
+                            Всі категорії
                         </Text>
                     </Box>
                     <Flex gap={25} align="center" justify="flex-end">

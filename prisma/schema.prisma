@@ -22,10 +22,11 @@ model Directions {
 model SubDirections {
   id              Int        @id @default(autoincrement())
   name            String
-  additionalInfo  String
+  description     String
   examplelink     String
-  additionallink  String
-  validationField String
+  additionalInfo  String
+  downloadFile    Boolean
+  textField       Boolean
   directionId     Int
   directions      Directions @relation(fields: [directionId], references: [id], onDelete: Cascade)
   createdAt       DateTime   @default(now())
