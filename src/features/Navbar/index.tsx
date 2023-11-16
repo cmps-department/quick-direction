@@ -8,22 +8,19 @@ import { close } from '../../store/navbarReducer';
 
 import classes from './styles.module.css';
 import { useEffect } from 'react';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
-const data = [
-    { id: 1, link: '/', label: 'Головна', icon: "mdi:university-outline" },
-    { id: 2, link: '/faq', label: 'Часті питання', icon: "wpf:faq" },
-    { id: 3, link: '/about-us', label: 'Про нас', icon: "mdi:about-circle-outline" },
-    { id: 4, link: '/request-directions', label: 'Подати заявку', icon: "carbon:request-quote" },
-    { id: 5, link: '/admin/categories', label: 'Керування напрямками', icon: "eos-icons:content-lifecycle-management" },
-    { id: 6, link: '/request-processing', label: 'Опрацювання запитів', icon: "mdi:chat-processing-outline" },
-];
+import { publicRoutes, studentsRoutes, adminRoutes } from './constants/routes';
 
 export function Navbar() {
     const { isOpened } = useAppSelector(state => state.navbar);
+    const { data: session } = useSession();
     const dispatch = useDispatch();
     const router = useRouter();
+
+    console.log(session);
+    console.log(session?.roles.includes("ROLE_TEACHER"))
 
     useEffect(() => {
         if (isOpened) document.body.style.overflow = 'hidden';
@@ -32,22 +29,15 @@ export function Navbar() {
         }
     }, [isOpened]);
 
+    const privateRoutes = session?.roles.includes("ROLE_ADMIN")
+        || session?.roles.includes("ROLE_TEACHER") ? adminRoutes : studentsRoutes;
+
     const handleNavigate = (path: string) => {
         router.push(path);
         dispatch(close());
     }
 
-
     if (!isOpened) return null;
-
-    const links = data.map(link => (
-        <UnstyledButton key={link.id} className={classes.link} onClick={() => handleNavigate(link.link)}>
-            <Flex gap={15}>
-                <Icon width={22} height={22} icon={link.icon} />
-                <Text>{link.label}</Text>
-            </Flex>
-        </UnstyledButton>
-    ));
 
     return (
         <>
@@ -63,7 +53,26 @@ export function Navbar() {
                 </Flex>
                 <Divider my="md" />
                 <Stack gap="md" className={classes.navbarMain}>
-                    {links}
+                    {
+                        publicRoutes.map(route => (
+                            <UnstyledButton key={route.id} className={classes.link} onClick={() => handleNavigate(route.link)}>
+                                <Flex gap={15}>
+                                    <Icon width={22} height={22} icon={route.icon} />
+                                    <Text>{route.label}</Text>
+                                </Flex>
+                            </UnstyledButton>
+                        ))
+                    }
+                    <Divider />
+                    {
+                        privateRoutes.map(route => (
+                            <UnstyledButton key={route.id} className={classes.link} onClick={() => handleNavigate(route.link)}>
+                                <Flex gap={15}>
+                                    <Icon width={22} height={22} icon={route.icon} />
+                                    <Text>{route.label}</Text>
+                                </Flex>
+                            </UnstyledButton>))
+                    }
                 </Stack>
                 <Divider my="md" />
                 <Box className={classes.footer}>
