@@ -19,9 +19,6 @@ export function Navbar() {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    console.log(session);
-    console.log(session?.roles.includes("ROLE_TEACHER"))
-
     useEffect(() => {
         if (isOpened) document.body.style.overflow = 'hidden';
         return () => {

@@ -21,8 +21,6 @@ const Header: FC<HeaderProps> = ({color, margin = "30px 30px 60px 30px"}) => {
     const { isOpened } = useAppSelector(state => state.navbar);
     const dispatch = useDispatch();
 
-    console.log(session);
-
     return (
         <header className={styles.header} style={{ backgroundColor: color, margin: margin }}>
             <Flex gap={60} align="center">
