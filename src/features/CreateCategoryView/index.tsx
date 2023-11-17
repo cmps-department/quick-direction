@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form'
 import Frame from '../../components/Frame/Frame';
 import { Flex, NumberInput, Stack, Text, ColorInput, Space, Divider, Box } from '@mantine/core';
@@ -16,14 +16,15 @@ import SubCategory from './components/SubCategory/SubCategory';
 import useCreateCategory from './hooks/useCreateCategory';
 import { useRouter } from 'next/router';
 import { ICategory, IGetCategory, ISubCategory } from '../../interfaces/category.interface';
-import { ICreateCategory } from '../../pages/admin/categories/create';
 import useGetCategory from './hooks/useGetCategory';
 import Loading from '../../components/Loading/Loading';
 import useDeleteCategory from '../CategoriesView/hooks/useDeleteCategory';
 import useUpdateCategory from './hooks/useUpdateCategory';
 
 
-const CreateCategoryView: FC<ICreateCategory> = ({ id = null }) => {
+const CreateCategoryView: FC = () => {
+  const router = useRouter();
+  const { id } = router.query;
   const createCategory = useCreateCategory();
   const updateCategory = useUpdateCategory();
   const { data, isLoading, refetch } = useGetCategory(id);
@@ -44,7 +45,7 @@ const CreateCategoryView: FC<ICreateCategory> = ({ id = null }) => {
     updatedAt: ""
   });
 
-  const { push } = useRouter();
+
 
   const {
     register,
@@ -84,19 +85,18 @@ const CreateCategoryView: FC<ICreateCategory> = ({ id = null }) => {
     let response;
 
     try {
-      if (id === null) {
-        response = await createCategory.mutateAsync(createData);
-      } else {
+      if (typeof id === "number" || typeof id === "string") {
         const updateData = { ...createData, id: +id }
         response = await updateCategory.mutateAsync(updateData);
+      } else {
+        response = await createCategory.mutateAsync(createData);
       }
-      console.log(response)
     } catch (error) {
       console.error(error);
     } finally {
       openSuccessModal();
       setTimeout(() => {
-        push('/admin/categories')
+        router.push('/admin/categories')
       }, 1500);
     }
   }
@@ -106,7 +106,7 @@ const CreateCategoryView: FC<ICreateCategory> = ({ id = null }) => {
     if (answer && id) {
       const result = await deleteCategory(+id);
       setTimeout(() => {
-        push('/admin/categories')
+        router.push('/admin/categories')
       }, 1000);
     }
   }
@@ -141,7 +141,7 @@ const CreateCategoryView: FC<ICreateCategory> = ({ id = null }) => {
         <Loading visible={isLoading} />
         <form onSubmit={handleSubmit(handleAdd)}>
           <Stack gap={24}>
-            <Flex align={'center'} justify={'space-between'}>
+            <Flex align={'center'} justify={'space-between'} gap={24} wrap={"wrap"}>
               <Text fz={28} fw={700}>
                 {id ? "Редагування категорії" : "Нова категорія"}
               </Text>

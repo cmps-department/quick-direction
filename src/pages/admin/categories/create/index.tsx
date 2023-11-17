@@ -3,15 +3,12 @@ import PageLayout from '../../../../layouts/PageLayout'
 import LayoutHF from '../../../../layouts/LayoutHF'
 import CreateCategoryView from '../../../../features/CreateCategoryView'
 
-export interface ICreateCategory {
-    id?: string | undefined 
-}
 
-const CreateCategoryPage: FC<ICreateCategory> = ({id}) => {
+const CreateCategoryPage: FC = () => {
     return (
         <PageLayout title={"New Category"}>
             <LayoutHF headerColor='#2A2A2A'> 
-                <CreateCategoryView id={id}/>
+                <CreateCategoryView/>
             </LayoutHF>
         </PageLayout>
     )

@@ -6,7 +6,6 @@ import DeleteModal from '../../../CreateCategoryView/components/DeleteModal/Dele
 import { useDisclosure } from '@mantine/hooks';
 import styles from './category.module.scss'
 import useDeleteCategory from '../../hooks/useDeleteCategory';
-import { useRouter } from 'next/router';
 
 interface ICategory {
     category: IGetCategory,
@@ -48,15 +47,12 @@ const Category: FC<ICategory> = ({ category, index }) => {
                     onContextMenu={handleRightClick}
                     href={`/admin/categories/${category.id}`}
                 >
-                    <Flex className={styles.category} wrap={'wrap'} align={"center"} justify={"space-between"} p={24}>
-                        <Flex align={"center"} gap={12}>
-                            <Box h={20} w={20} bg={category.color} style={{ borderRadius: '50%' }}></Box>
-                            <Text fz={18} fw={600} c={'var(--accent-color)'}>Категорія {index + 1}</Text>
+                    <Flex className={styles.category} align={"center"} justify={"space-between"} p={24}>
+                        <Box h={20} w={20} bg={category.color} style={{ borderRadius: '50%' }}></Box>
+                        <Flex style={{ flex: 1}} align={"center"} justify={"space-between"}>
+                            <Text style={{ flex: 3, textAlign: 'center' }} fz={20} fw={600} c={'var(--accent-color)'}>{category.name}</Text>
+                            <Text style={{ flex: 1, textAlign: 'end' }} fz={18} fw={600} c={'black'}>{category.professor}</Text>
                         </Flex>
-
-                        <Text fz={16} fw={400} c={'black'}>{category.name}</Text>
-
-                        <Text fz={18} fw={600} c={'black'}>{category.professor}</Text>
                     </Flex>
                 </Link>
             </Flex>

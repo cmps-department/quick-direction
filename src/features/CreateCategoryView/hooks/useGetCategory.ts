@@ -3,7 +3,7 @@ import axios from "axios";
 import { IGetCategory } from "../../../interfaces/category.interface";
 
 
-const useGetCategory = (id: string | null | undefined | number): UseQueryResult<IGetCategory, unknown>  => {
+const useGetCategory = (id: string | null | undefined | number | string[]): UseQueryResult<IGetCategory, unknown>  => {
     return useQuery(
         ["oneCategory"],
         () => {
