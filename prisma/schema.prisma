@@ -12,8 +12,9 @@ model Directions {
   id              Int      @id @default(autoincrement())
   name            String
   description     String
-  professors      String[]
-  subDirections   SubDirections[] 
+  professor       String
+  color           String
+  subDirections   SubDirections[]
   requests        Request[] 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -22,10 +23,11 @@ model Directions {
 model SubDirections {
   id              Int        @id @default(autoincrement())
   name            String
-  additionalInfo  String
+  description     String
   examplelink     String
-  additionallink  String
-  validationField String
+  additionalInfo  String
+  downloadFile    Boolean
+  textField       Boolean
   directionId     Int
   directions      Directions @relation(fields: [directionId], references: [id])
   createdAt       DateTime   @default(now())

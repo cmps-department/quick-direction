@@ -49,6 +49,7 @@ const ExtraPoints = () => {
                                 w={72}
                                 h={72}
                                 src="/images/Plus.png"
+                                alt="dropzone"
                             />
                         </Dropzone.Idle>
                         <div>

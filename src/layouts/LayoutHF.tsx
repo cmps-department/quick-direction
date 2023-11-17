@@ -1,24 +1,25 @@
-import { FC, ReactNode } from 'react';
-import Header from '../features/header';
-import Footer from '../features/footer';
-import SimpleHeader from '../components/SimpleHeader';
+import { CSSProperties, FC, ReactNode } from 'react';
 
-const Headers = {
-    extended: Header,
-    simple: SimpleHeader
-}
+import { useRouter } from 'next/router';
+
+import MainPageHeader from '../features/MainPageHeader';
+import Footer from '../features/Footer';
+import Header from '../features/Header';
+import { Navbar } from '../features/Navbar';
 
 interface LayoutHFProps {
     children: ReactNode;
-    headerType: keyof typeof Headers;
+    headerColor?: CSSProperties["backgroundColor"];
 }
 
-const LayoutHF: FC<LayoutHFProps> = ({ children, headerType }) => {
-    const PageHeader = Headers[headerType];
+const LayoutHF: FC<LayoutHFProps> = ({ children, headerColor }) => {
+    const router = useRouter();
+    const currentRoute = router.pathname;
 
     return (
         <>
-            <PageHeader />
+            <Navbar />
+            {currentRoute === "/" ? <MainPageHeader /> : <Header color={headerColor} />}
                 <main>
                     {children}
                 </main>

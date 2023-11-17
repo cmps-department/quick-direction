@@ -9,7 +9,7 @@ const ReactQueryDevtoolsProduction = lazy(() =>
 export default function Devtools() {
     return (
         <Suspense fallback={null}>
-            <ReactQueryDevtoolsProduction />
+            <ReactQueryDevtoolsProduction position="bottom-right" />
         </Suspense>
     );
 }

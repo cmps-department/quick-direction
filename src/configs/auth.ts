@@ -24,7 +24,8 @@ declare module "next-auth" {
         id_token: string;
         roles: string;
         user: {
-            address: string
+            name: string;
+            email: string;
         }
     }
   }
