@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         try {
-          const { name, surname, email, text, status, directions} = req.body;
+          const { name, surname, email, text, status, directionId} = req.body;
     
           const newRequest = await prisma.request.create({
             data: {
@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 email,
                 text,
                 status,
-                directions
+                directionId
             },
           });
 

@@ -14,14 +14,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           description,
           professor,
           color,
-          subDirections: {
-            create: subDirections.map((subDir:any) => ({
-              ...subDir,
-            })),
-          }
+          // subDirections: {
+          //   create: subDirections.map((subDir:any) => ({
+          //     ...subDir,
+          //   })),
+          // }
         },
         include: {
-          subDirections: true
+          subDirections: true,
+          requests: true
         }
       });
 
@@ -62,7 +63,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           res.status(500).json({message: "There is no directions"})
         }
       }else if(req.method === "PUT"){
-        const { id, name, description, professors, additionallink, subDirectionName, additionalInfo, exampleLink, validationField } = req.body;
+        const { id, name, description, subDirectionName, additionalInfo, exampleLink, downloadFile, textField, professor } = req.body;
 
         if (Array.isArray(id)) {
           res.status(400).json({ error: "Multiple IDs are not supported" });
@@ -81,7 +82,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             data: {
               name,
               description, 
-              professors,
+              professor,
           },
           });
   
@@ -90,9 +91,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               name: subDirectionName,
               additionalInfo: additionalInfo,
               examplelink: exampleLink,
-              additionallink: additionallink,
-              validationField: validationField,
-              directionId: id
+              directionId: id,
+              description: description,
+              downloadFile: downloadFile,
+              textField: textField
             }
           })
   
