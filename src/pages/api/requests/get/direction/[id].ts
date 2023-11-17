@@ -4,25 +4,19 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const requestId = parseInt(req.query.id as string);
+  const directionId = parseInt(req.query.id as string);
 
-  if (req.method === 'PUT') {
+  if (req.method === 'GET') {
     try {
-      const { name, surname, email, text, status, directionId } = req.body;
-
-      const updatedRequest = await prisma.request.update({
-        where: { id: requestId },
-        data: {
-          name,
-          surname,
-          email,
-          text,
-          status,
-          directionId,
-        },
+      const request = await prisma.request.findMany({
+        where: { directionId: directionId }
       });
 
-      res.status(200).json(updatedRequest);
+      if (request.length === 0) {
+        return res.status(404).json({ message: 'Request not found' });
+      }
+
+      res.status(200).json(request);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal Server Error' });

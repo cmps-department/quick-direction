@@ -8,15 +8,15 @@ datasource db {
 }
 
 model Directions {
-  id              Int      @id @default(autoincrement())
+  id              Int        @id @default(autoincrement())
   name            String
   description     String
   professor       String
   color           String
   subDirections   SubDirections[]
   requests        Request[] 
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
 }
 
 model SubDirections {
@@ -35,23 +35,23 @@ model SubDirections {
 
 
 model Request {
-  id              Int      @id @default(autoincrement())
+  id              Int        @id @default(autoincrement())
   name            String
   surname         String
   email           String
   text            String
-  status          Status   @default(Submitted)
+  status          Status     @default(Submitted)
   document        Document?
   directionId     Int
   directions      Directions @relation(fields: [directionId], references: [id])     
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
 }
 
 model Document {
   id              Int       @id @default(autoincrement())
   questionId      Int       @unique
-  question        Request @relation(fields: [questionId], references: [id])
+  question        Request   @relation(fields: [questionId], references: [id])
   filename        String
   filepath        String
 }
