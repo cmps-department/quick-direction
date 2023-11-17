@@ -21,20 +21,21 @@ const CategoriesView: FC = () => {
 
     useEffect(() => {
         if (data?.length >= 0) {
-        setCategories(data);
+            setCategories(data);
         }
     }, [data]);
+
 
     return (
         <Container mih="60vh">
             <Frame className={styles.frame}>
-                <Flex align={'center'} justify={'space-between'}>
+                <Flex align={'center'} justify={'space-between'} wrap={'wrap'}>
                     <Box>
                         <Text fz={28} fw={700}>
-                        Всі категорії
+                            Всі категорії
                         </Text>
                     </Box>
-                    <Flex gap={25} align="center" justify="flex-end">
+                    <Flex className={styles.groupBtn} gap={25} align="center" justify="flex-end">
                         <CustomButton style={{ margin: '1rem', padding: '14px 32px', color: 'var(--dark-color)' }} onClick={() => { push('/admin/categories/create') }}>
                             Нова категорія
                         </CustomButton>

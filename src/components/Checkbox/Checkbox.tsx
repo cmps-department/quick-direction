@@ -1,16 +1,21 @@
 import { CheckboxProps, Checkbox as CheckboxC } from '@mantine/core';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 interface IReg {
-  req?: any
+  req?: any,
+  isChecked?: boolean
 }
 
 
-const Checkbox: FC<CheckboxProps & IReg> = ({ label, req }) => {
+const Checkbox: FC<CheckboxProps & IReg> = ({ label, req, isChecked = false }) => {
 
   const [checked, setChecked] = useState(false);
   const accentColor = checked ? 'var(--accent-color)' : '#000';
 
+  useEffect(() => {
+    setChecked(isChecked);
+  }, [isChecked])
+  
   return <CheckboxC styles={{
     body: {
       alignItems: 'center',
@@ -38,8 +43,10 @@ const Checkbox: FC<CheckboxProps & IReg> = ({ label, req }) => {
     }
 
   }}
+    {...req}
+    checked={checked}
     onChange={(event) => setChecked(event.currentTarget.checked)}
-    label={label}  {...req}/>
+    label={label}  />
 }
 
 export default Checkbox

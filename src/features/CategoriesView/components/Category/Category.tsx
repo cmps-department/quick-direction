@@ -6,13 +6,13 @@ import DeleteModal from '../../../CreateCategoryView/components/DeleteModal/Dele
 import { useDisclosure } from '@mantine/hooks';
 import styles from './category.module.scss'
 import useDeleteCategory from '../../hooks/useDeleteCategory';
-import { useRouter } from 'next/router';
 
 interface ICategory {
-    category: IGetCategory
+    category: IGetCategory,
+    index: number
 }
 
-const Category: FC<ICategory> = ({ category }) => {
+const Category: FC<ICategory> = ({ category, index }) => {
     const [isSwipe, setSwipe] = useState(false);
     const [isDeleteModalOpen, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
 
@@ -25,6 +25,11 @@ const Category: FC<ICategory> = ({ category }) => {
             const result = await deleteCategory(category.id);
         }
     }
+
+    const handleRightClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        setSwipe(prev => !prev)
+    };
 
     return (
         <>
@@ -39,18 +44,15 @@ const Category: FC<ICategory> = ({ category }) => {
                 </Button>
                 <Link
                     style={isSwipe ? { transform: 'translateX(80px)', width: '100%', zIndex: 20 } : { width: '100%', zIndex: 20 }}
-                    onMouseDown={() => setSwipe(prev => !prev)}
-                    href={'/admin/categories/create'}
+                    onContextMenu={handleRightClick}
+                    href={`/admin/categories/${category.id}`}
                 >
-                    <Flex className={styles.category} wrap={'wrap'} align={"center"} justify={"space-between"} p={24}>
-                        <Flex align={"center"} gap={12}>
-                            <Box h={20} w={20} bg={category.color} style={{ borderRadius: '50%' }}></Box>
-                            <Text fz={18} fw={600} c={'var(--accent-color)'}>Категорія {category.id}</Text>
+                    <Flex className={styles.category} align={"center"} justify={"space-between"} p={24}>
+                        <Box h={20} w={20} bg={category.color} style={{ borderRadius: '50%' }}></Box>
+                        <Flex style={{ flex: 1}} align={"center"} justify={"space-between"}>
+                            <Text style={{ flex: 3, textAlign: 'center' }} fz={20} fw={600} c={'var(--accent-color)'}>{category.name}</Text>
+                            <Text style={{ flex: 1, textAlign: 'end' }} fz={18} fw={600} c={'black'}>{category.professor}</Text>
                         </Flex>
-
-                        <Text fz={16} fw={400} c={'black'}>{category.name}</Text>
-
-                        <Text fz={18} fw={600} c={'black'}>{category.professor}</Text>
                     </Flex>
                 </Link>
             </Flex>
