@@ -1,7 +1,9 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 import Frame from '../../components/Frame/Frame';
-import { Flex, NumberInput, Stack, Text, ColorInput, Space, Divider, Box } from '@mantine/core';
+import { Flex, NumberInput, Stack, Text, ColorInput, Space, Divider } from '@mantine/core';
 import Textarea from '../../components/Textarea/Textarea';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { useDisclosure } from '@mantine/hooks';
@@ -20,6 +22,8 @@ import useGetCategory from './hooks/useGetCategory';
 import Loading from '../../components/Loading/Loading';
 import useDeleteCategory from '../CategoriesView/hooks/useDeleteCategory';
 import useUpdateCategory from './hooks/useUpdateCategory';
+import useFormValidationC from './hooks/useFormValidationC';
+import generateValidationSC from './hooks/generateValidationSC';
 
 
 const CreateCategoryView: FC = () => {
@@ -45,20 +49,40 @@ const CreateCategoryView: FC = () => {
     updatedAt: ""
   });
 
+  const validationSchemaC = useFormValidationC();
 
+  const validationSchemaSC = useMemo(() => {
+    return Array.from({ length: amountSub }, (_, index) => generateValidationSC(index));
+  }, [amountSub]);
+
+  const mergedSchema = useMemo(() => {
+    return Yup.object().shape({
+      ...validationSchemaC.fields,
+      ...validationSchemaSC.reduce((acc, schema) => {
+        return Object.keys(schema.fields).reduce((innerAcc, key) => {
+          return {
+            ...innerAcc,
+            [key]: Yup.reach(schema, key),
+          };
+        }, acc);
+      }, {}),
+    });
+  }, [validationSchemaC.fields, validationSchemaSC]);
 
   const {
     register,
     formState: {
-      isValid
+      isValid, errors
     },
     handleSubmit,
-    reset
+    reset,
   } = useForm({
-    mode: "all"
+    mode: "all",
+    resolver: yupResolver(mergedSchema)
   })
 
   const handleAdd = async (data: any) => {
+    console.log(data);
     const createData: ICategory = {
       name: data.nameD,
       description: data.descriptionD,
@@ -76,8 +100,8 @@ const CreateCategoryView: FC = () => {
         downloadFile: data[`downloadFileSD_${i}`],
         textField: data[`textFieldSD_${i}`]
       };
-      if(id !== null && id !== undefined) {
-        obj.id = defaultData.subDirections[i]?.id || Math.floor(Math.random()*10000+1)
+      if (id !== null && id !== undefined) {
+        obj.id = defaultData.subDirections[i]?.id || Math.floor(Math.random() * 10000 + 1)
       }
       subDir.push(obj);
     }
@@ -116,7 +140,6 @@ const CreateCategoryView: FC = () => {
   }, [id, refetch]);
 
   useEffect(() => {
-    reset();
     if (data) {
       setAmountSub(data.subDirections.length);
       setDefaultData(data);
@@ -134,6 +157,10 @@ const CreateCategoryView: FC = () => {
       })
     }
   }, [data]);
+
+  useEffect(() => {
+    reset();
+  }, [defaultData])
 
   return (
     <Container>
@@ -156,36 +183,18 @@ const CreateCategoryView: FC = () => {
 
             <Text fz={20} fw={700}>Назва категорії <Text fz={20} fw={700} span c="red">*</Text></Text>
             <TextInput
+              error={errors?.nameD ? errors.nameD.message : null}
               defaultValue={defaultData.name}
-              req={register('nameD', {
-                required: "Поле обов'язкове до заповнення!",
-                minLength: {
-                  value: 2,
-                  message: 'Мінімум 2 символи!'
-                },
-                maxLength: {
-                  value: 50,
-                  message: 'Максимум 50 символів!'
-                },
-              })}
+              req={register('nameD')}
               placeholder="Введіть назву категорії"
               withAsterisk
             />
 
             <Text fz={20} fw={700}>Опис <Text fz={20} fw={700} span c="red">*</Text></Text>
             <Textarea
+              error={errors?.descriptionD ? errors.descriptionD.message : null}
               defaultValue={defaultData.description}
-              req={register('descriptionD', {
-                required: "Поле обов'язкове до заповнення!",
-                minLength: {
-                  value: 2,
-                  message: 'Мінімум 2 символи!'
-                },
-                maxLength: {
-                  value: 50,
-                  message: 'Максимум 50 символів!'
-                },
-              })}
+              req={register('descriptionD')}
               styles={{
                 input: {
                   minHeight: "160px"
@@ -197,22 +206,9 @@ const CreateCategoryView: FC = () => {
 
             <Text fz={20} fw={700}>Відповідальний викладач <Text fz={20} fw={700} span c="red">*</Text></Text>
             <TextInput
+              error={errors?.professorMail ? errors.professorMail.message : null}
               defaultValue={defaultData.professor}
-              req={register('professorMail', {
-                required: true,
-                minLength: {
-                  value: 2,
-                  message: 'Мінімум 2 символи!'
-                },
-                maxLength: {
-                  value: 50,
-                  message: 'Максимум 50 символів!'
-                },
-                pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: 'Поле не відповідає формату email!'
-                }
-              })}
+              req={register('professorMail')}
               label="Пошта"
               placeholder="Введіть пошту"
             />
@@ -233,7 +229,7 @@ const CreateCategoryView: FC = () => {
             {Array.from({ length: amountSub }, (_, index) => (
               <Stack gap={24} key={index}>
                 <Space h="xl" />
-                <SubCategory subC={data?.subDirections[index]} index={index} register={register} />
+                <SubCategory subC={data?.subDirections[index]} index={index} register={register} errors={errors} />
                 <Space h="sm" />
                 <Divider my="sm" />
               </Stack>
