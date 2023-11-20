@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           professor,
           color,
           subDirections: {
-            create: subDirections.map((subDir:any) => ({
+            create: subDirections.map((subDir: any) => ({
               ...subDir,
             })),
           }
@@ -79,13 +79,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           professor,
           color,
           subDirections: {
-            upsert: subDirections.map((subDir: any) => ({
-              where: { id: parseInt(subDir.id)},
-              create: { ...subDir },
-              update: { ...subDir },
+            create: subDirections
+              .filter((subDir: any) => !subDir.id)
+              .map((subDir: any) => ({
+                name: subDir.name,
+                description: subDir.description,
+                examplelink: subDir.examplelink,
+                additionalInfo: subDir.additionalInfo,
+                downloadFile: subDir.downloadFile,
+                textField: subDir.textField,
+              })),
+            update: subDirections.filter((subDir: any) => subDir.id).map((subDir: any) => ({
+              where: { id: subDir.id },
+              data: {
+                name: subDir.name,
+                description: subDir.description,
+                examplelink: subDir.examplelink,
+                additionalInfo: subDir.additionalInfo,
+                downloadFile: subDir.downloadFile,
+                textField: subDir.textField,
+              },
             })),
-            deleteMany: { 
-              id: { notIn: subDirections.map((subDir: any) => parseInt(subDir.id)) },
+
+            deleteMany: {
+              name: {
+                notIn: subDirections.map((subDir: any) => subDir.name)
+              }
             },
           }
         },

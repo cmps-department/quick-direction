@@ -100,8 +100,8 @@ const CreateCategoryView: FC = () => {
         downloadFile: data[`downloadFileSD_${i}`],
         textField: data[`textFieldSD_${i}`]
       };
-      if (id !== null && id !== undefined) {
-        obj.id = defaultData.subDirections[i]?.id || Math.floor(Math.random() * 10000 + 1)
+      if (id !== null && id !== undefined && defaultData.subDirections[i]?.id) {
+        obj.id = defaultData.subDirections[i]?.id
       }
       subDir.push(obj);
     }
@@ -236,7 +236,7 @@ const CreateCategoryView: FC = () => {
             ))}
 
             <Flex justify="end" wrap={'wrap'} gap={15}>
-              {id !== null &&
+              {(id || id === '0') &&
                 <CustomButton onClick={openDeleteModal} className={styles.deleteBtn}>
                   Видалити
                 </CustomButton>
