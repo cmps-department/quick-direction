@@ -18,8 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         id: id,
       },
       include: { 
-        subDirections: true,
-        requests: true 
+        subDirections: true
       }
     });
 

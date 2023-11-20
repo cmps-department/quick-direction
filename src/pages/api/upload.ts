@@ -30,14 +30,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const filePath = `./public/uploads/${file[0].originalFilename}`;
 
-    fs.rename(file[0].filepath, filePath, (err) => {
-      if (err) {
-        console.error('Error renaming file:', err);
-        res.status(500).json({ success: false, message: 'Error uploading file' });
-        return;
-      }
-      console.log(files)
-      res.status(200).json({ success: true, message: 'File uploaded successfully' });
+    // fs.rename(file[0].filepath, filePath, (err) => {
+    //   if (err) {
+    //     console.error('Error renaming file:', err);
+    //     res.status(500).json({ success: false, message: 'Error uploading file' });
+    //     return;
+    //   }
+    //   console.log(files)
+    //   res.status(200).json({ success: true, message: 'File uploaded successfully' });
+    // });
+
+    
+    const readStream = fs.createReadStream(file[0].filepath);
+    const writeStream = fs.createWriteStream(filePath);
+
+    readStream.on('error', (err) => {
+      console.error('Error reading file stream:', err);
+      return res.status(500).json({ success: false, message: 'Error uploading file', error: err.message });
     });
+
+    writeStream.on('error', (err) => {
+      console.error('Error writing file stream:', err);
+      return res.status(500).json({ success: false, message: 'Error uploading file', error: err.message });
+    });
+
+    writeStream.on('finish', () => {
+      console.log('File uploaded:', filePath);
+      res.status(200).json({ success: true, message: 'File uploaded successfully', filePath });
+    });
+
+    readStream.pipe(writeStream);
   });
 }

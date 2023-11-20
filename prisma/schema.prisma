@@ -28,7 +28,7 @@ model SubDirections {
   downloadFile    Boolean
   textField       Boolean
   directionId     Int
-  directions      Directions @relation(fields: [directionId], references: [id])
+  directions      Directions @relation(fields: [directionId], references: [id], onDelete: Cascade)
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
 }
@@ -50,8 +50,8 @@ model Request {
 
 model Document {
   id              Int       @id @default(autoincrement())
-  questionId      Int       @unique
-  question        Request   @relation(fields: [questionId], references: [id])
+  requestId       Int       @unique
+  request         Request   @relation(fields: [requestId], references: [id])
   filename        String
   filepath        String
 }

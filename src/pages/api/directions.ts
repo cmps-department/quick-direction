@@ -14,15 +14,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           description,
           professor,
           color,
-          // subDirections: {
-          //   create: subDirections.map((subDir:any) => ({
-          //     ...subDir,
-          //   })),
-          // }
+          subDirections: {
+            create: subDirections.map((subDir:any) => ({
+              ...subDir,
+            })),
+          }
         },
         include: {
-          subDirections: true,
-          requests: true
+          subDirections: true
         }
       });
 
@@ -62,47 +61,63 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }else{
           res.status(500).json({message: "There is no directions"})
         }
-      }else if(req.method === "PUT"){
-        const { id, name, description, subDirectionName, additionalInfo, exampleLink, downloadFile, textField, professor } = req.body;
-
-        if (Array.isArray(id)) {
-          res.status(400).json({ error: "Multiple IDs are not supported" });
-          return;
-        }
-  
+      } else if (req.method === "PUT") {
+        const { id, name, description, professor, color, subDirections } = req.body;
+    
         if (isNaN(id)) {
           res.status(400).json({ error: "Invalid ID format" });
           return;
         }
         try {
-          const updatedDirections= await prisma.directions.update({
-            where:{
-              id: id,
+          const updatedDirections = await prisma.directions.update({
+            where: {
+              id: parseInt(id),
             },
             data: {
               name,
-              description, 
+              description,
               professor,
-          },
-          });
-  
-          const newSubdirection = await prisma.subDirections.create({
-            data:{
-              name: subDirectionName,
-              additionalInfo: additionalInfo,
-              examplelink: exampleLink,
-              directionId: id,
-              description: description,
-              downloadFile: downloadFile,
-              textField: textField
+              color,
+              subDirections: {
+                create: subDirections
+                  .filter((subDir: any) => !subDir.id)
+                  .map((subDir: any) => ({
+                    name: subDir.name,
+                    description: subDir.description,
+                    examplelink: subDir.examplelink,
+                    additionalInfo: subDir.additionalInfo,
+                    downloadFile: subDir.downloadFile,
+                    textField: subDir.textField,
+                  })),
+                update: subDirections.filter((subDir: any) => subDir.id).map((subDir: any) => ({
+                  where: { id: subDir.id },
+                  data: {
+                    name: subDir.name,
+                    description: subDir.description,
+                    examplelink: subDir.examplelink,
+                    additionalInfo: subDir.additionalInfo,
+                    downloadFile: subDir.downloadFile,
+                    textField: subDir.textField,
+                  },
+                })),
+    
+                deleteMany: {
+                  name: {
+                    notIn: subDirections.map((subDir: any) => subDir.name)
+                  }
+                },
+              }
+            },
+            include: {
+              subDirections: true
             }
-          })
-  
-          if(updatedDirections){
+          });
+    
+          if (updatedDirections) {
             res.status(201).json(updatedDirections)
-          }else{
-  
-            res.status(500).json({error: "There is no directions"})
+          } else {
+    
+            res.status(500).json({ error: "There is no directions" })
           }
         } catch (error) {
           console.log(error);

@@ -26,35 +26,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           console.error(error);
           res.status(500).json({ error: "An error occurred while creating the request." });
         }
-      }else if(req.method === "GET"){
+      } else if (req.method === "GET") {
         const id = Number(req.query.id)
 
-        if(!id){
+        if (!id) {
             const allRequests = await prisma.request.findMany({
                 include: {document: true}
               })
       
-              if(allRequests){
+              if (allRequests) {
                 res.status(201).json(allRequests)
               }else{
       
                 res.status(500).json({error: "There is no request"})
               }
-        }else{
+        } else {
             const allRequests = await prisma.request.findUnique({
                 where: {
                     id: id,
                 },
               })
       
-              if(allRequests){
+              if (allRequests) {
                 res.status(201).json(allRequests)
-              }else{
+              } else {
       
                 res.status(500).json({error: "There is no request"})
               }
         }  
-      }else if(req.method === "DELETE"){
+      } else if (req.method === "DELETE") {
         const id = Number(req.query.id)
 
         if (isNaN(id)) {
@@ -68,12 +68,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           }
         })
 
-        if(request){
+        if (request) {
           res.status(201).json({message: "Succesfuly deleted"})
-        }else{
+        } else {
           res.status(500).json({message: "There is no directions"})
         }
-      }else if(req.method === "PUT"){
+      } else if (req.method === "PUT") {
         const { id, name, surname, email, text, status } = req.body;
 
         if (Array.isArray(id)) {
@@ -99,9 +99,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
           });
   
-          if(updatedRequest){
+          if (updatedRequest) {
             res.status(201).json(updatedRequest)
-          }else{
+          } else {
   
             res.status(500).json({error: "There is no directions"})
           }
@@ -110,7 +110,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           
         }
         
-      }else {
+      } else {
         res.status(405).end();
       }
 }
