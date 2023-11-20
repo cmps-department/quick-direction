@@ -6,8 +6,17 @@ interface IReg {
     req?: any
 }
 
-const TextInput: FC<IReg & TextInputProps> = ({req, ...props}) => {
-    return <MantineTextInput {...req} radius="xl" classNames={classes} {...props} />
+const TextInput: FC<IReg & TextInputProps> = ({ req, ...props }) => {
+    return <MantineTextInput
+        {...req} 
+        radius="xl"
+        styles={{
+            error: {
+                marginLeft: 12
+            }
+        }}
+        classNames={classes} {...props}
+    />
 }
 
 export default TextInput;
