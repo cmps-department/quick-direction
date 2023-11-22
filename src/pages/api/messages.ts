@@ -6,14 +6,15 @@ const prisma = new PrismaClient();
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         try {
-          const { requestId, senderId, text, linkToDocument } = req.body;
+          const { requestId, senderId, text, filename, filepath } = req.body;
     
           const newMessage = await prisma.message.create({
             data: {
                 requestId,
                 senderId,
                 text,
-                linkToDocument
+                filename,
+                filepath
 
             },
           });
