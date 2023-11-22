@@ -43,6 +43,7 @@ model Request {
   status          Status     @default(Submitted)
   document        Document?
   directionId     Int
+  messages        Message[]
   directions      Directions @relation(fields: [directionId], references: [id])     
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
@@ -54,6 +55,15 @@ model Document {
   request         Request   @relation(fields: [requestId], references: [id])
   filename        String
   filepath        String
+}
+
+model Message {
+  id              Int       @id @default(autoincrement())
+  requestId       Int       @unique
+  request         Request   @relation(fields: [requestId], references: [id])
+  senderId        Int
+  text            String
+  linkToDocument  String              
 }
 
 enum Status {
