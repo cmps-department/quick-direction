@@ -41,20 +41,20 @@ model Request {
   email           String
   text            String
   status          Status     @default(Submitted)
-  document        Document?
+  documentLink    String
   directionId     Int
   directions      Directions @relation(fields: [directionId], references: [id])     
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
 }
 
-model Document {
-  id              Int       @id @default(autoincrement())
-  requestId       Int       @unique
-  request         Request   @relation(fields: [requestId], references: [id])
-  filename        String
-  filepath        String
-}
+// model Document {
+//   id              Int       @id @default(autoincrement())
+//   requestId       Int       @unique
+//   request         Request   @relation(fields: [requestId], references: [id])
+//   filename        String
+//   filepath        String
+// }
 
 enum Status {
   Submitted

@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         try {
-          const { name, surname, email, text, status, directionId} = req.body;
+          const { name, surname, email, text, status, directionId, documentLink} = req.body;
     
           const newRequest = await prisma.request.create({
             data: {
@@ -15,6 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 email,
                 text,
                 status,
+                documentLink,
                 directionId
             },
           });
@@ -30,9 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const id = Number(req.query.id)
 
         if (!id) {
-            const allRequests = await prisma.request.findMany({
-                include: {document: true}
-              })
+            const allRequests = await prisma.request.findMany()
       
               if (allRequests) {
                 res.status(201).json(allRequests)
@@ -74,7 +73,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           res.status(500).json({message: "There is no directions"})
         }
       } else if (req.method === "PUT") {
-        const { id, name, surname, email, text, status } = req.body;
+        const { id, status } = req.body;
 
         if (Array.isArray(id)) {
           res.status(400).json({ error: "Multiple IDs are not supported" });
@@ -91,11 +90,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               id: id,
             },
             data: {
-              name,
-              surname,
-              email, 
-              text,
-              status,
+              status
           },
           });
   
