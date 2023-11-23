@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated/client"
 }
 
 datasource db {
@@ -9,14 +8,15 @@ datasource db {
 }
 
 model Directions {
-  id              Int      @id @default(autoincrement())
+  id              Int        @id @default(autoincrement())
   name            String
   description     String
   professor       String
   color           String
   subDirections   SubDirections[]
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  requests        Request[] 
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
 }
 
 model SubDirections {
@@ -31,4 +31,36 @@ model SubDirections {
   directions      Directions @relation(fields: [directionId], references: [id], onDelete: Cascade)
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
+}
+
+
+model Request {
+  id              Int        @id @default(autoincrement())
+  name            String
+  surname         String
+  email           String
+  text            String
+  status          Status     @default(Submitted)
+  documentLink    String
+  directionId     Int
+  directions      Directions @relation(fields: [directionId], references: [id])     
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+// model Document {
+//   id              Int       @id @default(autoincrement())
+//   requestId       Int       @unique
+//   request         Request   @relation(fields: [requestId], references: [id])
+//   filename        String
+//   filepath        String
+// }
+
+enum Status {
+  Submitted
+  Processing
+  Clarify
+  Clarified
+  Processed
+  Canceled
 }
