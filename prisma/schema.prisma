@@ -41,7 +41,7 @@ model Request {
   email           String
   text            String
   status          Status     @default(Submitted)
-  document        Document?
+  documentLink    String
   directionId     Int
   messages        Message[]
   directions      Directions @relation(fields: [directionId], references: [id])     
@@ -49,13 +49,13 @@ model Request {
   updatedAt       DateTime   @updatedAt
 }
 
-model Document {
-  id              Int       @id @default(autoincrement())
-  requestId       Int       @unique
-  request         Request   @relation(fields: [requestId], references: [id])
-  filename        String
-  filepath        String
-}
+// model Document {
+//   id              Int       @id @default(autoincrement())
+//   requestId       Int       @unique
+//   request         Request   @relation(fields: [requestId], references: [id])
+//   filename        String
+//   filepath        String
+// }
 
 model Message {
   id              Int       @id @default(autoincrement())
