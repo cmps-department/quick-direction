@@ -179,8 +179,8 @@ const CreateCategoryView: FC = () => {
                 radius="xl"
                 placeholder="Колір категорії"
               />
-            </Flex>
-
+              </Flex>
+              <Divider style={{ borderTop: "4px solid #02808F", marginBottom: "24px" }} maw={608} w="100%" />
             <Text fz={20} fw={700}>Назва категорії <Text fz={20} fw={700} span c="red">*</Text></Text>
             <TextInput
               error={errors?.nameD ? errors.nameD.message : null}
