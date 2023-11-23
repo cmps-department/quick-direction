@@ -1,11 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import navbarReducer from "./navbarReducer";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 const store = configureStore({
-    reducer: {
-        navbar: navbarReducer
-    },
+    reducer: {}
 });
 
 export type RootState = ReturnType<typeof store.getState>;

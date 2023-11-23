@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import MainPageHeader from '../features/MainPageHeader';
 import Footer from '../features/Footer';
 import Header from '../features/Header';
-import { Navbar } from '../features/Navbar';
 
 interface LayoutHFProps {
     children: ReactNode;
@@ -18,7 +17,6 @@ const LayoutHF: FC<LayoutHFProps> = ({ children, headerColor }) => {
 
     return (
         <>
-            <Navbar />
             {currentRoute === "/" ? <MainPageHeader /> : <Header color={headerColor} />}
                 <main>
                     {children}

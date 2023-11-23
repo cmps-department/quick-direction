@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Box, Flex, Text } from '@mantine/core';
+import { Box, Button, Divider, Flex, Text } from '@mantine/core';
 import { useRouter } from 'next/router';
 
 import Container from '../../components/Container/Container';
@@ -36,12 +36,13 @@ const CategoriesView: FC = () => {
                         </Text>
                     </Box>
                     <Flex className={styles.groupBtn} gap={25} align="center" justify="flex-end">
-                        <CustomButton style={{ margin: '1rem', padding: '14px 32px', color: 'var(--dark-color)' }} onClick={() => { push('/admin/categories/create') }}>
-                            Нова категорія
-                        </CustomButton>
                         <Sortings allCategories={data} setCategories={setCategories} />
                     </Flex>
                 </Flex>
+                <Divider style={{ borderTop: "4px solid #02808F", marginBottom: "24px" }} maw={608} w="100%" />
+                <Button h={48} w={193} radius="xl" color="#02808F" onClick={() => { push('/admin/categories/create') }}>
+                    Створити категорію
+                </Button>
                 <Loading visible={isLoading} />
                 <CategoriesList categories={categories} />
             </Frame>
