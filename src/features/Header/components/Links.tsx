@@ -37,7 +37,7 @@ const Links: FC = () => {
                     </UnstyledButton>
                 </>
             )
-        } else if (session?.roles.includes("ROLE_TEACHddfdER")) {
+        } else if (session?.roles.includes("ROLE_TEACHER")) {
             return (
                 <>
                     {
