@@ -63,8 +63,7 @@ model Message {
   request         Request   @relation(fields: [requestId], references: [id])
   senderId        Int
   text            String
-  filename        String
-  filepath        String           
+  documentLink    String[]   
 }
 
 enum Status {
