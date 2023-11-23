@@ -7,7 +7,7 @@ declare module 'next-auth/jwt' {
     interface JWT {
         decoded?: {
             realm_access: {
-                roles: string;
+                roles: string[];
             }
         };
         access_token?: string;
@@ -22,7 +22,7 @@ declare module "next-auth" {
     interface Session {
         access_token: string;
         id_token: string;
-        roles: string;
+        roles: string[];
         user: {
             name: string;
             email: string;
