@@ -109,6 +109,23 @@ const RequestForm = () => {
                                 )}
                             />
                         </Group>
+                        <Group grow>
+                            <Controller
+                                name={"studentGroup"}
+                                control={control}
+                                render={({ field, fieldState }) => (
+                                    <TextInput
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                        error={fieldState.error && fieldState.error.message}
+                                        label="Група"
+                                        placeholder="ІКМ-220а"
+                                        withAsterisk
+                                    />
+                                )}
+                            />
+                            <Box></Box>
+                        </Group>
                         <Text fz={20} fw={700}>Введіть корпоративну електронну пошту <Text fz={20} fw={700} span c="red">*</Text></Text>
                         <Controller
                             name={"email"}

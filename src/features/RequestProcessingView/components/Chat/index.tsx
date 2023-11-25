@@ -1,18 +1,21 @@
 import { FC, useState } from "react";
-import { Flex, Stack, Text, Button, FileButton, UnstyledButton } from "@mantine/core";
-
-import { IRequest } from "../..";
+import { Flex, Stack, Text, Button, FileButton, UnstyledButton, Paper, Box } from "@mantine/core";
 
 import styles from "./styles.module.scss";
 import TextInput from "../../../../components/TextInput/TextInput";
 import { Icon } from "@iconify/react";
 import ChatMenu from "../ChatMenu";
+import { IRequest } from "../../../../interfaces/request.interface";
+import LeftMessage from "../LeftMessage/LeftMessage";
+import RightMessage from "../RightMessage/RightMessage";
+import { useSession } from "next-auth/react";
 
 interface ChatProps {
     request: IRequest;
 }
 
 const Chat: FC<ChatProps> = ({ request }) => {
+    const { data: session } = useSession();
     const [file, setFile] = useState<File | null>(null);
 
     return (
@@ -24,62 +27,28 @@ const Chat: FC<ChatProps> = ({ request }) => {
                 justify="space-between"
             >
                 <Flex align="center" gap={14}>
-                    <Text fw={600} fz={18} c="#02808F">{`${request.category} - ${request.subdirection}`}</Text>
+                    <Text fw={600} fz={18} c="#02808F">{`${request.direction.name} - ${request.subDirection.name}`}</Text>
                 </Flex>
                 <Flex gap={5}>
-                    <Text fz={18}>{request.userGroup}</Text>
-                    <Text fz={18} fw={700}>{request.userName}</Text>
+                    <Text fz={18}>{request.studentGroup}</Text>
+                    <Text fz={18} fw={700}>{`${request.name} ${request.surname}`}</Text>
                     <ChatMenu />
                 </Flex>
             </Flex>
-            <section className={styles.msger}>
+
+            <Paper shadow='xl' className={styles.msger}>
                 <main className={styles.msgerChat}>
-                    <div className={`${styles.msg} ${styles.leftMsg}`}>
-                        <div className={styles.msgBubble}>
-                            <div className={styles.msgInfo}>
-                                <div className={styles.msgInfoName}>Губенко Г.В.</div>
-                                <div className={styles.msgInfoTime}>12:45</div>
-                            </div>
-
-                            <div className={styles.msgText}>
-                                Добрий день, надсилаю Вам свої документи:
-                            </div>
-
-                            <Stack mt={10} gap={10}>
-                                <Button
-                                    w={217}
-                                    radius="xl"
-                                    variant="outline"
-                                    color="#02808F"
-                                    leftSection={<Icon width={24} height={24} icon="basil:document-outline" />}
-                                >
-                                    Документ 1.pdf
-                                </Button>
-                                <Button
-                                    w={217}
-                                    radius="xl"
-                                    variant="outline"
-                                    color="#02808F"
-                                    leftSection={<Icon width={24} height={24} icon="basil:document-outline" />}
-                                >
-                                    Документ 2.pdf
-                                </Button>
-                            </Stack>
-                        </div>
-                    </div>
-
-                    <div className={`${styles.msg} ${styles.rightMsg}`}>
-                        <div className={styles.msgBubble}>
-                            <div className={styles.msgInfo}>
-                                <div className={styles.msgInfoName}>Чаплін А.А</div>
-                                <div className={styles.msgInfoTime}>12:46</div>
-                            </div>
-
-                            <div className={styles.msgText}>
-                                Добрий день, є пара нюансів заповнення, очікуйте відповіді.
-                            </div>
-                        </div>
-                    </div>
+                    {
+                        request.messages.length > 0
+                            ? request.messages.map((message) => {
+                                return message.userId === session?.user.userId
+                                    ? <RightMessage message={message} />
+                                    : <LeftMessage message={message} />
+                            })
+                            : <Box className={styles.noMessages}>
+                                <Text c="gray" fz={20} fw={700}>Повідомлень поки що немає...</Text>
+                            </Box>
+                    }
                 </main>
 
                 <form>
@@ -95,7 +64,7 @@ const Chat: FC<ChatProps> = ({ request }) => {
                         <Button radius="xl" h={48} w="30%" color="#02808F" type="submit">Надіслати</Button>
                     </Flex>
                 </form>
-            </section>
+            </Paper>
         </Stack>
     )
 }

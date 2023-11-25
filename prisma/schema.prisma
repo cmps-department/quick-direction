@@ -8,19 +8,19 @@ datasource db {
 }
 
 model Directions {
-  id              Int        @id @default(autoincrement())
+  id              Int             @id @default(autoincrement())
   name            String
   description     String
   professor       String
   color           String
   subDirections   SubDirections[]
   requests        Request[] 
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }
 
 model SubDirections {
-  id              Int        @id @default(autoincrement())
+  id              Int             @id @default(autoincrement())
   name            String
   description     String
   examplelink     String
@@ -28,43 +28,42 @@ model SubDirections {
   downloadFile    Boolean
   textField       Boolean
   directionId     Int
-  directions      Directions @relation(fields: [directionId], references: [id], onDelete: Cascade)
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
+  requests        Request[]
+  directions      Directions      @relation(fields: [directionId], references: [id], onDelete: Cascade)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }
 
-
 model Request {
-  id              Int        @id @default(autoincrement())
+  id              Int             @id @default(autoincrement())
   name            String
   surname         String
   email           String
-  userId          String
-  text            String?
-  status          Status     @default(Submitted)
-  documentLink    String?
-  directionId     Int
-  messages        Message[]
-  directions      Directions @relation(fields: [directionId], references: [id])     
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
-}
-
-// model Document {
-//   id              Int       @id @default(autoincrement())
-//   requestId       Int       @unique
-//   request         Request   @relation(fields: [requestId], references: [id])
-//   filename        String
-//   filepath        String
-// }
-
-model Message {
-  id              Int       @id @default(autoincrement())
-  requestId       Int       @unique
-  request         Request   @relation(fields: [requestId], references: [id])
+  studentGroup    String
   userId          String
   text            String
-  documentLink    String[]   
+  status          Status          @default(Submitted)
+  documentLink    String
+  directionId     Int
+  direction       Directions      @relation(fields: [directionId], references: [id])
+  subDirectionId  Int
+  subDirection    SubDirections   @relation(fields: [subDirectionId], references: [id])
+  messages        Message[]    
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model Message {
+  id              Int             @id @default(autoincrement())
+  requestId       Int             @unique
+  request         Request         @relation(fields: [requestId], references: [id])
+  userId          String
+  userName        String
+  userSurname     String
+  text            String
+  documentLinks    String[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt   
 }
 
 enum Status {

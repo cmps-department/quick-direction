@@ -36,11 +36,13 @@ CREATE TABLE "Request" (
     "name" TEXT NOT NULL,
     "surname" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "studentGroup" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "text" TEXT,
+    "text" TEXT NOT NULL,
     "status" "Status" NOT NULL DEFAULT 'Submitted',
-    "documentLink" TEXT,
+    "documentLink" TEXT NOT NULL,
     "directionId" INTEGER NOT NULL,
+    "subDirectionId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -66,6 +68,9 @@ ALTER TABLE "SubDirections" ADD CONSTRAINT "SubDirections_directionId_fkey" FORE
 
 -- AddForeignKey
 ALTER TABLE "Request" ADD CONSTRAINT "Request_directionId_fkey" FOREIGN KEY ("directionId") REFERENCES "Directions"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Request" ADD CONSTRAINT "Request_subDirectionId_fkey" FOREIGN KEY ("subDirectionId") REFERENCES "SubDirections"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Message" ADD CONSTRAINT "Message_requestId_fkey" FOREIGN KEY ("requestId") REFERENCES "Request"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

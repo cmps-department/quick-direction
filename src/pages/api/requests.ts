@@ -1,25 +1,25 @@
-import { PrismaClient } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
-
-const prisma = new PrismaClient();
+import prisma from '../../lib/prisma';
  
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         try {
-          const { name, surname, email, userId, text, status, directionId, documentLink} = req.body;
+            const { name, surname, email, studentGroup, userId, text, status, directionId, subDirectionId, documentLink} = req.body;
     
-          const newRequest = await prisma.request.create({
-            data: {
-                name,
-                surname, 
-                email,
-                userId,
-                text,
-                status,
-                documentLink,
-                directionId
-            },
-          });
+            const newRequest = await prisma.request.create({
+                data: {
+                    name,
+                    surname, 
+                    email,
+                    studentGroup,
+                    userId,
+                    text,
+                    status,
+                    documentLink,
+                    directionId,
+                    subDirectionId
+                },
+            });
 
     
           res.status(201).json(newRequest);
@@ -32,7 +32,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const id = Number(req.query.id)
 
         if (!id) {
-            const allRequests = await prisma.request.findMany()
+            const allRequests = await prisma.request.findMany({
+                include: {
+                    direction: true,
+                    subDirection: true,
+                    messages: true
+                }
+            });
       
               if (allRequests) {
                 res.status(201).json(allRequests)
