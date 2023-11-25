@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     console.log(file)
 
-    const filePath = `./public/uploads/${file[0].originalFilename}`;
+    const filePath = `/uploads/${file[0].originalFilename}`;
 
     // fs.rename(file[0].filepath, filePath, (err) => {
     //   if (err) {
