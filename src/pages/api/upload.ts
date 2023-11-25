@@ -26,8 +26,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return;
     }
 
-    console.log(file);
-
     const uniqueId = uuidv4();
     const fileName = `${uniqueId}_${file[0].originalFilename}`;
     const filePath = `./public/uploads/${fileName}`;

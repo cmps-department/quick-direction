@@ -11,9 +11,9 @@ import { MantineProvider } from "@mantine/core";
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Devtools from "../components/Devtools";
 
-import { theme } from "../constants/theme/theme";
 import { Provider } from "react-redux";
 import store from "../store";
+import { theme } from "../constants/theme";
 
 
 const config = {

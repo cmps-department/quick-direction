@@ -1,18 +1,21 @@
-import { FC, useState } from "react";
-
+import { FC } from "react";
 import { Group, Flex, Text, Image, Stack } from "@mantine/core";
-import { Dropzone, FileWithPath, MIME_TYPES } from '@mantine/dropzone';
+import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import OutlineButton from "../../../../components/OutlineButton/OutlineButton";
 import { Icon } from "@iconify/react";
 
+import { RequestFormState } from "../../hooks/useForm";
+import { UseFormSetValue } from "react-hook-form";
+
 interface DocumentRequestProps {
     examplelink: string;
+    value: File | undefined;
+    setValue: UseFormSetValue<RequestFormState>;
+    fieldError: any;
     open: () => void;
 }
 
-const DocumentRequest: FC<DocumentRequestProps> = ({ examplelink, open }) => {
-    const [files, setFiles] = useState<FileWithPath[]>([]);
-
+const DocumentRequest: FC<DocumentRequestProps> = ({ examplelink, open, value, setValue, fieldError }) => {
     return (
         <>
             <Group>
@@ -36,11 +39,13 @@ const DocumentRequest: FC<DocumentRequestProps> = ({ examplelink, open }) => {
                     </Text>
                 </Flex>
                 <Dropzone
-                    onDrop={(files) => setFiles(files)}
+                    onDrop={files => setValue("document", files[0])}
                     accept={[MIME_TYPES.doc, MIME_TYPES.docx, MIME_TYPES.pdf]}
+                    maxFiles={1}
+                    multiple={false}
                     styles={{
                         root: {
-                            border: "2px dashed #02808F",
+                            border: fieldError ? "2px dashed red" : "2px dashed #02808F",
                             borderRadius: "24px"
                         }
                     }}
@@ -61,8 +66,8 @@ const DocumentRequest: FC<DocumentRequestProps> = ({ examplelink, open }) => {
                             />
                         </Dropzone.Idle>
                         <div>
-                            <Text fw={500} size="sm" c="dimmed" inline mt={7}>
-                                {files.length > 0 ? files.map(file => file.name).join(", ") : "Завантажити"}
+                            <Text fw={500} size="sm" c={fieldError ? "red" : "dimmed"} inline mt={7}>
+                                {fieldError ? fieldError.message : value?.name || "Завантажити"}
                             </Text>
                         </div>
                     </Stack>

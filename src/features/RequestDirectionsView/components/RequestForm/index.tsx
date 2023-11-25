@@ -13,20 +13,24 @@ import ConfirmModal from "../AdditionalInfoModal/AdditionalInfoModal";
 import useGetCategories from "../../../CategoriesView/hooks/useGetCategories";
 import { ISubCategory } from "../../../../interfaces/category.interface";
 import { useSession } from "next-auth/react";
+import SuccessModal from "../../../../components/SuccessModal/SuccessModal";
 
 const RequestForm = () => {
     const { data: session } = useSession();
     const [opened, { open, close }] = useDisclosure(false);
+    const [isSuccessModalOpen, { open: openSuccessModal, close: closeSuccessModal }] = useDisclosure(false);
     const [additionalInfo, setAdditionalInfo] = useState("");
     const {
         form: {
             control,
             setValue,
+            getValues,
             handleSubmit,
+            formState: { errors },
             watch
         },
         onSubmit
-    } = useCreateForm();
+    } = useCreateForm({openSuccessModal});
 
     const { data } = useGetCategories();
 
@@ -42,13 +46,15 @@ const RequestForm = () => {
         }))
     }, [data?.length]);
     
-    const directionId = watch("directionId");
+    const subDirectionId = watch("subDirectionId");
+    const document = watch("document");
 
     const FormSection = useMemo(() => {
         let subCategory: ISubCategory | undefined;
 
         data?.forEach((category) => {
-            subCategory = category.subDirections.find(subCategory => subCategory.id == directionId) as ISubCategory | undefined;
+            if (subCategory) return;
+            subCategory = category.subDirections.find(subCategory => subCategory.id == subDirectionId) as ISubCategory | undefined;
         });
 
         if (!subCategory) return null;
@@ -58,16 +64,19 @@ const RequestForm = () => {
             return <DocumentRequest
                 examplelink={subCategory.examplelink}
                 open={open}
+                value={getValues("document")}
+                setValue={setValue}
+                fieldError={errors.document}
             />
         } else {
-            return <WrittenRequest />
+            return <WrittenRequest control={control} />
         }
-    }, [directionId]);
+    }, [subDirectionId, errors, document]);
 
     return (
         <>
             <Container maw={1012} px={103} py={64}>
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <Stack gap={24}>
                         <Text fz={20} fw={700}>Введіть свої дані <Text fz={20} fw={700} span c="red">*</Text></Text>
                         <Group grow>
@@ -117,12 +126,17 @@ const RequestForm = () => {
                         />
                         <Text fz={20} fw={700}>Оберіть напрямок запиту <Text fz={20} fw={700} span c="red">*</Text></Text>
                         <Controller
-                            name={"directionId"}
+                            name={"subDirectionId"}
                             control={control}
                             render={({ field, fieldState }) => (
                                 <Select
                                     value={field.value ? field.value.toString() : undefined}
-                                    onChange={field.onChange}
+                                    onChange={value => {
+                                        field.onChange(parseInt(value!));
+                                        setValue("directionId", data?.find(direction =>
+                                            direction.subDirections.find(subDirection => subDirection.id === parseInt(value as string))
+                                        )?.id!);
+                                    }}
                                     error={fieldState.error && fieldState.error.message}
                                     searchable
                                     nothingFoundMessage={"Напрямок не знайдено"}
@@ -135,7 +149,7 @@ const RequestForm = () => {
                         />
                         {FormSection}
                         <Flex justify="center">
-                            <Button onClick={open} h={48} w={398} mt={48} radius="xl" color="#02808F">
+                            <Button type="submit" h={48} w={398} mt={48} radius="xl" color="#02808F">
                                 Подати заявку
                             </Button>
                         </Flex>
@@ -143,6 +157,7 @@ const RequestForm = () => {
                 </form>
             </Container>
             <ConfirmModal additionalInfo={additionalInfo} opened={opened} close={close} />
+            <SuccessModal opened={isSuccessModalOpen} close={closeSuccessModal} text="Категорія успішно додана" />
         </>
     )
 }

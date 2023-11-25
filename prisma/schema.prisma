@@ -40,9 +40,9 @@ model Request {
   surname         String
   email           String
   userId          String
-  text            String
+  text            String?
   status          Status     @default(Submitted)
-  documentLink    String
+  documentLink    String?
   directionId     Int
   messages        Message[]
   directions      Directions @relation(fields: [directionId], references: [id])     
