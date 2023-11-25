@@ -4,7 +4,7 @@ import OutlineButton from "../../../../components/OutlineButton/OutlineButton";
 import { Icon } from "@iconify/react";
 
 
-const ExtraPoints = () => {
+const DocumentRequest = () => {
     return (
         <>
             <Group>
@@ -64,4 +64,4 @@ const ExtraPoints = () => {
     )
 }
 
-export default ExtraPoints;
+export default DocumentRequest;

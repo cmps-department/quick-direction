@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 
 import Container from '../../components/Container/Container';
 import Frame from '../../components/Frame/Frame';
-import CustomButton from '../../components/CustomButton/CustomButton';
 import CategoriesList from './components/CategoriesList/CategoriesList';
 import { IGetCategory } from '../../interfaces/category.interface';
 import Loading from '../../components/Loading/Loading';
@@ -17,10 +16,10 @@ import styles from './categories.module.scss';
 const CategoriesView: FC = () => {
     const { push } = useRouter();
     const [categories, setCategories] = useState<IGetCategory[] | []>([]);
-    const { data, error, isLoading, refetch } = useGetCategories();
+    const { data, isLoading } = useGetCategories();
 
     useEffect(() => {
-        if (data?.length >= 0) {
+        if (data) {
             setCategories(data);
         }
     }, [data]);
@@ -36,7 +35,7 @@ const CategoriesView: FC = () => {
                         </Text>
                     </Box>
                     <Flex className={styles.groupBtn} gap={25} align="center" justify="flex-end">
-                        <Sortings allCategories={data} setCategories={setCategories} />
+                        <Sortings allCategories={data || []} setCategories={setCategories} />
                     </Flex>
                 </Flex>
                 <Divider style={{ borderTop: "4px solid #02808F", marginBottom: "24px" }} maw={608} w="100%" />

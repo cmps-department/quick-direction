@@ -6,18 +6,17 @@ const prisma = new PrismaClient();
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         try {
-          const { requestId, senderId, text, documentLink } = req.body;
+          const { requestId, userId, text, documentLink } = req.body;
     
           const newMessage = await prisma.message.create({
             data: {
                 requestId,
-                senderId,
+                userId,
                 text,
                 documentLink
 
             },
           });
-
     
           res.status(201).json(newMessage);
 

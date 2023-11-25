@@ -39,6 +39,7 @@ model Request {
   name            String
   surname         String
   email           String
+  userId          String
   text            String
   status          Status     @default(Submitted)
   documentLink    String
@@ -61,7 +62,7 @@ model Message {
   id              Int       @id @default(autoincrement())
   requestId       Int       @unique
   request         Request   @relation(fields: [requestId], references: [id])
-  senderId        Int
+  userId          String
   text            String
   documentLink    String[]   
 }
