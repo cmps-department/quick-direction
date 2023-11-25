@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     console.log(file)
 
-    const filePath = `/uploads/${file[0].originalFilename}`;
+    const filePath = `./public/uploads/${file[0].originalFilename}`;
 
     // fs.rename(file[0].filepath, filePath, (err) => {
     //   if (err) {
@@ -56,7 +56,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     writeStream.on('finish', () => {
       console.log('File uploaded:', filePath);
-      res.status(200).json({ success: true, message: 'File uploaded successfully', filePath });
+      const fileLink = `/uploads/${file[0].originalFilename}`
+      console.log('File link: ', fileLink)
+      res.status(200).json({ success: true, message: 'File uploaded successfully', filePath, fileLink });
     });
 
     readStream.pipe(writeStream);
