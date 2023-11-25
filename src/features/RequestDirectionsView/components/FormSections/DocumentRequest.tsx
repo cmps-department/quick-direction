@@ -1,17 +1,27 @@
+import { FC, useState } from "react";
+
 import { Group, Flex, Text, Image, Stack } from "@mantine/core";
-import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
+import { Dropzone, FileWithPath, MIME_TYPES } from '@mantine/dropzone';
 import OutlineButton from "../../../../components/OutlineButton/OutlineButton";
 import { Icon } from "@iconify/react";
 
+interface DocumentRequestProps {
+    examplelink: string;
+    open: () => void;
+}
 
-const DocumentRequest = () => {
+const DocumentRequest: FC<DocumentRequestProps> = ({ examplelink, open }) => {
+    const [files, setFiles] = useState<FileWithPath[]>([]);
+
     return (
         <>
             <Group>
-                <OutlineButton>
-                    Зразок
-                </OutlineButton>
-                <OutlineButton>
+                <a href={examplelink} target="_blank">
+                    <OutlineButton>
+                        Зразок
+                    </OutlineButton>
+                </a>
+                <OutlineButton onClick={open}>
                     Інструкція
                 </OutlineButton>
             </Group>
@@ -26,9 +36,7 @@ const DocumentRequest = () => {
                     </Text>
                 </Flex>
                 <Dropzone
-                    onDrop={(files) => console.log('accepted files', files)}
-                    onReject={(files) => console.log('rejected files', files)}
-                    maxSize={3 * 1024 ** 2}
+                    onDrop={(files) => setFiles(files)}
                     accept={[MIME_TYPES.doc, MIME_TYPES.docx, MIME_TYPES.pdf]}
                     styles={{
                         root: {
@@ -39,7 +47,7 @@ const DocumentRequest = () => {
                 >
                     <Stack justify="center" align="center" mih={188} style={{ pointerEvents: 'none' }}>
                         <Dropzone.Accept>
-                            <Icon width={72} height={72} color="#E4FDE0" icon="clarity:success-standard-solid" />
+                            <Icon width={72} height={72} color="green" icon="clarity:success-standard-solid" />
                         </Dropzone.Accept>
                         <Dropzone.Reject>
                             <Icon width={72} height={72} color="red" icon="ic:sharp-error" />
@@ -54,7 +62,7 @@ const DocumentRequest = () => {
                         </Dropzone.Idle>
                         <div>
                             <Text fw={500} size="sm" c="dimmed" inline mt={7}>
-                                Завантажити
+                                {files.length > 0 ? files.map(file => file.name).join(", ") : "Завантажити"}
                             </Text>
                         </div>
                     </Stack>
