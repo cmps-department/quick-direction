@@ -55,13 +55,13 @@ model Request {
 
 model Message {
   id              Int             @id @default(autoincrement())
-  requestId       Int             @unique
+  requestId       Int             
   request         Request         @relation(fields: [requestId], references: [id])
   userId          String
   userName        String
   userSurname     String
   text            String
-  documentLinks    String[]
+  documentLinks   String[]
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt   
 }

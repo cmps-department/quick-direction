@@ -19,7 +19,7 @@ const RequestProcessingView = () => {
 
     useEffect(() => {
         setActiveRequest(null);
-    }, [activeTab])
+    }, [activeTab]);
 
     const setRole = (roles: string[]) => {
         if (roles?.includes("ROLE_TEACHER")) {

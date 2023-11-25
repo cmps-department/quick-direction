@@ -16,7 +16,7 @@ const RightMessage: FC<RightMessageProps> = ({ message }) => {
             <div className={styles.msgBubble}>
                 <div className={styles.msgInfo}>
                     <div className={styles.msgInfoName}>{`${message.userSurname} ${message.userName}`}</div>
-                    <div className={styles.msgInfoTime}>{`${dayjs(message.createdAt).format("hh:mm")}`}</div>
+                    <div className={styles.msgInfoTime}>{`${dayjs(message.createdAt).format("HH:MM")}`}</div>
                 </div>
 
                 <div className={styles.msgText}>

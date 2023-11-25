@@ -1,5 +1,6 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useRef } from "react";
 import { Flex, Stack, Text, Button, FileButton, UnstyledButton, Paper, Box } from "@mantine/core";
+import { Controller } from "react-hook-form";
 
 import styles from "./styles.module.scss";
 import TextInput from "../../../../components/TextInput/TextInput";
@@ -9,6 +10,8 @@ import { IRequest } from "../../../../interfaces/request.interface";
 import LeftMessage from "../LeftMessage/LeftMessage";
 import RightMessage from "../RightMessage/RightMessage";
 import { useSession } from "next-auth/react";
+import useChatForm from "../../hooks/useChat";
+import { useMessages } from "../../hooks/useMessages";
 
 interface ChatProps {
     request: IRequest;
@@ -16,7 +19,23 @@ interface ChatProps {
 
 const Chat: FC<ChatProps> = ({ request }) => {
     const { data: session } = useSession();
-    const [file, setFile] = useState<File | null>(null);
+    const {
+        form: {
+            control,
+            setValue,
+            handleSubmit
+        },
+        onSubmit,
+        isLoading
+    } = useChatForm(request.id);
+    const { messages } = useMessages(request.id);
+    const chatRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!chatRef) return;
+        if (!chatRef.current) return;
+        chatRef.current.scrollTop = chatRef.current.scrollHeight;
+      }, [messages]);
 
     return (
         <Stack pt={25} gap={24} className={`${styles.chat} ${request ? styles.active : null}`}>
@@ -37,10 +56,10 @@ const Chat: FC<ChatProps> = ({ request }) => {
             </Flex>
 
             <Paper shadow='xl' className={styles.msger}>
-                <main className={styles.msgerChat}>
+                <main ref={chatRef} className={styles.msgerChat}>
                     {
-                        request.messages.length > 0
-                            ? request.messages.map((message) => {
+                        messages.length > 0
+                            ? messages.map((message) => {
                                 return message.userId === session?.user.userId
                                     ? <RightMessage message={message} />
                                     : <LeftMessage message={message} />
@@ -51,17 +70,31 @@ const Chat: FC<ChatProps> = ({ request }) => {
                     }
                 </main>
 
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <Flex align="center" gap={24} p={24}>
-                        <TextInput w="70%" placeholder="Повідомлення..." />
-                        <FileButton onChange={setFile} accept="application/doc,application/pdf,application/docx">
+                        <Controller
+                            name={"text"}
+                            control={control}
+                            render={({ field, fieldState }) => (
+                                <TextInput
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    error={fieldState.error && fieldState.error.message}
+                                    w="70%"
+                                    placeholder="Повідомлення..."
+                                />
+                            )}
+                        />
+                        <FileButton multiple onChange={files => setValue("files", files)} accept="application/doc,application/pdf,application/docx">
                             {(props) => (
                                 <UnstyledButton className={styles.clip} {...props}>
                                     <Icon width={24} height={24} icon="heroicons:paper-clip-solid" />
                                 </UnstyledButton>
                             )}
                         </FileButton>
-                        <Button radius="xl" h={48} w="30%" color="#02808F" type="submit">Надіслати</Button>
+                        <Button loading={isLoading} radius="xl" h={48} w="30%" color="#02808F" type="submit">
+                            Надіслати
+                        </Button>
                     </Flex>
                 </form>
             </Paper>
