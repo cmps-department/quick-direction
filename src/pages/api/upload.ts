@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {IncomingForm} from 'formidable';
+import { IncomingForm } from 'formidable';
 import fs from 'fs';
+import { v4 as uuidv4 } from 'uuid';
 
 export const config = {
   api: {
@@ -18,29 +19,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return;
     }
 
-    const file  = files[''];
-
+    const file = files[''];
 
     if (!file) {
       res.status(400).json({ success: false, message: 'No file provided for upload' });
       return;
     }
 
-    console.log(file)
+    console.log(file);
 
-    const filePath = `./public/uploads/${file[0].originalFilename}`;
+    const uniqueId = uuidv4();
+    const fileName = `${uniqueId}_${file[0].originalFilename}`;
+    const filePath = `./public/uploads/${fileName}`;
 
-    // fs.rename(file[0].filepath, filePath, (err) => {
-    //   if (err) {
-    //     console.error('Error renaming file:', err);
-    //     res.status(500).json({ success: false, message: 'Error uploading file' });
-    //     return;
-    //   }
-    //   console.log(files)
-    //   res.status(200).json({ success: true, message: 'File uploaded successfully' });
-    // });
-
-    
     const readStream = fs.createReadStream(file[0].filepath);
     const writeStream = fs.createWriteStream(filePath);
 
@@ -56,8 +47,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     writeStream.on('finish', () => {
       console.log('File uploaded:', filePath);
-      const fileLink = `/uploads/${file[0].originalFilename}`
-      console.log('File link: ', fileLink)
+      const fileLink = `${process.env.NEXTAUTH_URL}/uploads/${fileName}`;
+      console.log('File link: ', fileLink);
       res.status(200).json({ success: true, message: 'File uploaded successfully', filePath, fileLink });
     });
 
