@@ -1,98 +1,24 @@
-import { Box, Container, Flex, Stack, Text } from "@mantine/core";
+import { Container, Flex, Stack, Text } from "@mantine/core";
 import Frame from "../../components/Frame/Frame";
 
 import styles from "./styles.module.scss";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Tabs, { TabState } from "./components/Tabs/Tabs";
 import RequestItem from "./components/RequestItem";
 import Chat from "./components/Chat";
-
-export interface IRequest {
-    id: number;
-    category: string;
-    categoryName: string;
-    subdirection: string;
-    userGroup: string;
-    userName: string;
-}
-
-const requests: IRequest[] = [
-    {
-        id: 1,
-        category: "Категорія 1",
-        categoryName: "Категорія для прийняття заяв на вступ абітурієнтів за квотою 1",
-        subdirection: "Підкатегорія 2",
-        userGroup: "ІКМ-220в",
-        userName: "Губенко Г.В."
-    },
-    {
-        id: 2,
-        category: "Категорія 1",
-        categoryName: "Категорія для прийняття заяв на вступ абітурієнтів за квотою 1",
-        subdirection: "Підкатегорія 2",
-        userGroup: "ІКМ-220в",
-        userName: "Губенко Г.В."
-    },
-    {
-        id: 3,
-        category: "Категорія 1",
-        categoryName: "Категорія для прийняття заяв на вступ абітурієнтів за квотою 1",
-        subdirection: "Підкатегорія 2",
-        userGroup: "ІКМ-220в",
-        userName: "Губенко Г.В."
-    },
-    {
-        id: 4,
-        category: "Категорія 1",
-        categoryName: "Категорія для прийняття заяв на вступ абітурієнтів за квотою 1",
-        subdirection: "Підкатегорія 2",
-        userGroup: "ІКМ-220в",
-        userName: "Губенко Г.В."
-    },
-    {
-        id: 5,
-        category: "Категорія 1",
-        categoryName: "Категорія для прийняття заяв на вступ абітурієнтів за квотою 1",
-        subdirection: "Підкатегорія 2",
-        userGroup: "ІКМ-220в",
-        userName: "Губенко Г.В."
-    },
-    {
-        id: 6,
-        category: "Категорія 1",
-        categoryName: "Категорія для прийняття заяв на вступ абітурієнтів за квотою 1",
-        subdirection: "Підкатегорія 2",
-        userGroup: "ІКМ-220в",
-        userName: "Губенко Г.В."
-    },
-    {
-        id: 7,
-        category: "Категорія 1",
-        categoryName: "Категорія для прийняття заяв на вступ абітурієнтів за квотою 1",
-        subdirection: "Підкатегорія 2",
-        userGroup: "ІКМ-220в",
-        userName: "Губенко Г.В."
-    },
-    {
-        id: 8,
-        category: "Категорія 1",
-        categoryName: "Категорія для прийняття заяв на вступ абітурієнтів за квотою 1",
-        subdirection: "Підкатегорія 2",
-        userGroup: "ІКМ-220в",
-        userName: "Губенко Г.В."
-    },
-]
+import { useRequests } from "./hooks/useRequests";
+import Loading from "../../components/Loading/Loading";
 
 const RequestProcessingView = () => {
     const { data: session } = useSession();
     const [activeTab, setActiveTab] = useState<TabState>("active");
-    const [activeRequest, setActiveRequest] = useState<IRequest | null>(null);
+    const [activeRequestId, setActiveRequestId] = useState<number | null>(null);
+    const { requests, isLoading } = useRequests();
 
     useEffect(() => {
-        console.log(activeTab);
-        setActiveRequest(null);
-    }, [activeTab])
+        setActiveRequestId(null);
+    }, [activeTab]);
 
     const setRole = (roles: string[]) => {
         if (roles?.includes("ROLE_TEACHER")) {
@@ -104,14 +30,33 @@ const RequestProcessingView = () => {
         }
     }
 
-    const requestsData = requests.map((request) => (
-        <RequestItem
-            key={request.id}
-            request={request} setActiveRequest={() => activeRequest ? setActiveRequest(null) : setActiveRequest(request)}
-            hidden={!!activeRequest}
-            isActive={activeRequest ? activeRequest.id === request.id : false}
-        />
-    ))
+    const requestsData = useMemo(() => {
+        if (activeTab === "processed") {
+            return requests
+                .filter(request => request.status === "Processed")
+                .map((request) => (
+                    <RequestItem
+                        key={request.id}
+                        request={request}
+                        setActiveRequest={() => setActiveRequestId(activeRequest => activeRequest ? null : request.id)}
+                        hidden={!!activeRequestId}
+                        isActive={activeRequestId ? activeRequestId === request.id : false}
+                    />
+                ));
+        }
+
+        return requests
+        .filter(request => request.status !== "Processed")
+            .map((request) => (
+            <RequestItem
+                key={request.id}
+                request={request}
+                setActiveRequest={() => setActiveRequestId(activeRequest => activeRequest ? null : request.id)}
+                hidden={!!activeRequestId}
+                isActive={activeRequestId ? activeRequestId === request.id : false}
+            />
+        ));
+    }, [activeTab, requests]);
 
     return (
         <Container size="lg" mih="60vh">
@@ -121,12 +66,20 @@ const RequestProcessingView = () => {
                 <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
             </Stack>
             <Flex align="baseline" style={{ marginBlock: "34px" }}>
-                <Frame className={`${styles.frame} ${activeRequest ? styles.compressed : null}`}>
-                    <Stack>
-                        {requestsData}
+                <Frame className={`${styles.frame} ${activeRequestId ? styles.compressed : null}`}>
+                    <Stack mih={685}>
+                        {
+                            isLoading
+                                ? <Loading visible={isLoading} />
+                                : requestsData.length > 0 ? requestsData : (
+                                    <Flex mih={685} w={"100%"} align="center" justify="center">
+                                        <Text fz={20} fw={700} c="gray">Нічого не знайдено...</Text>
+                                    </Flex>
+                                )
+                        }
                     </Stack>
                 </Frame>
-                {activeRequest ? <Chat request={activeRequest} /> : null}
+                {activeRequestId ? <Chat setActiveRequestId={setActiveRequestId} requestId={activeRequestId} /> : null}
             </Flex>
         </Container>
     )

@@ -7,7 +7,7 @@ import { Flex, NumberInput, Stack, Text, ColorInput, Space, Divider } from '@man
 import Textarea from '../../components/Textarea/Textarea';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { useDisclosure } from '@mantine/hooks';
-import SuccessModal from './components/SuccessModal/SuccessModal';
+import SuccessModal from '../../components/SuccessModal/SuccessModal';
 import DeleteModal from './components/DeleteModal/DeleteModal';
 import Container from '../../components/Container/Container';
 
@@ -244,7 +244,7 @@ const CreateCategoryView: FC = () => {
               <CustomButton type='submit' disabled={!isValid} className={styles.successBtn}>
                 Зберегти
               </CustomButton>
-              <SuccessModal opened={isSuccessModalOpen} close={closeSuccessModal} />
+              <SuccessModal opened={isSuccessModalOpen} close={closeSuccessModal} text="Категорія успішно додана" />
               <DeleteModal setAnswer={handleDelete} opened={isDeleteModalOpen} close={closeDeleteModal} />
             </Flex>
           </Stack>

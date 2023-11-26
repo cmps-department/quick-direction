@@ -6,9 +6,9 @@ interface OutlineButtonProps extends ButtonProps {
     onClick?: MouseEventHandler;
 }
 
-const OutlineButton: FC<OutlineButtonProps> = ({ children }) => {
+const OutlineButton: FC<OutlineButtonProps> = ({ children, ...props }) => {
     return (
-        <Button classNames={classes} radius="xl" variant="outline">
+        <Button classNames={classes} {...props} radius="xl" variant="outline">
             {children}
         </Button>
     )

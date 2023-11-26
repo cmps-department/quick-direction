@@ -1,11 +1,11 @@
 import IntroSection from "./containers/IntroSection/IntroSection";
-import DirectionForm from "./components/DirectionForm";
+import RequestForm from "./components/RequestForm";
 
 const RequestDirectionsView = () => {
     return (
         <>
             <IntroSection />
-            <DirectionForm />
+            <RequestForm />
         </>
     )
 }

@@ -8,7 +8,8 @@ declare module 'next-auth/jwt' {
         decoded?: {
             realm_access: {
                 roles: string[];
-            }
+            },
+            sub: string;
         };
         access_token?: string;
         id_token?: string;
@@ -26,6 +27,7 @@ declare module "next-auth" {
         user: {
             name: string;
             email: string;
+            userId: string;
         }
     }
   }
@@ -59,6 +61,7 @@ export const authConfig: AuthOptions = {
             session.access_token = encrypt(token.access_token!);
             session.id_token = encrypt(token.id_token!);
             session.roles = token.decoded?.realm_access.roles!;
+            session.user.userId = token.decoded?.sub!;
             return session;
         },
     },
