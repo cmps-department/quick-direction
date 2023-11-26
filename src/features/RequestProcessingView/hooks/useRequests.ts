@@ -18,7 +18,6 @@ export const useRequests = () => {
             return data.data;
         } else if (session?.roles.includes("ROLE_TEACHER")) {
             return data.data.filter((request) => {
-                console.log(request.direction.professor, session.user.email)
                 return request.direction.professor === session.user.email
             });
         } else {

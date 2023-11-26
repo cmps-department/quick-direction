@@ -1,4 +1,4 @@
-import { Container, Flex, Stack, Text, Center } from "@mantine/core";
+import { Container, Flex, Stack, Text } from "@mantine/core";
 import Frame from "../../components/Frame/Frame";
 
 import styles from "./styles.module.scss";
@@ -8,17 +8,16 @@ import Tabs, { TabState } from "./components/Tabs/Tabs";
 import RequestItem from "./components/RequestItem";
 import Chat from "./components/Chat";
 import { useRequests } from "./hooks/useRequests";
-import { IRequest } from "../../interfaces/request.interface";
 import Loading from "../../components/Loading/Loading";
 
 const RequestProcessingView = () => {
     const { data: session } = useSession();
     const [activeTab, setActiveTab] = useState<TabState>("active");
-    const [activeRequest, setActiveRequest] = useState<IRequest | null>(null);
+    const [activeRequestId, setActiveRequestId] = useState<number | null>(null);
     const { requests, isLoading } = useRequests();
 
     useEffect(() => {
-        setActiveRequest(null);
+        setActiveRequestId(null);
     }, [activeTab]);
 
     const setRole = (roles: string[]) => {
@@ -34,23 +33,27 @@ const RequestProcessingView = () => {
     const requestsData = useMemo(() => {
         if (activeTab === "processed") {
             return requests
-                .filter(request => request.status === "Processing")
+                .filter(request => request.status === "Processed")
                 .map((request) => (
                     <RequestItem
                         key={request.id}
-                        request={request} setActiveRequest={() => setActiveRequest(activeRequest => activeRequest ? null : request)}
-                        hidden={!!activeRequest}
-                        isActive={activeRequest ? activeRequest.id === request.id : false}
+                        request={request}
+                        setActiveRequest={() => setActiveRequestId(activeRequest => activeRequest ? null : request.id)}
+                        hidden={!!activeRequestId}
+                        isActive={activeRequestId ? activeRequestId === request.id : false}
                     />
                 ));
         }
 
-        return requests.map((request) => (
+        return requests
+        .filter(request => request.status !== "Processed")
+            .map((request) => (
             <RequestItem
                 key={request.id}
-                request={request} setActiveRequest={() => setActiveRequest(activeRequest => activeRequest ? null : request)}
-                hidden={!!activeRequest}
-                isActive={activeRequest ? activeRequest.id === request.id : false}
+                request={request}
+                setActiveRequest={() => setActiveRequestId(activeRequest => activeRequest ? null : request.id)}
+                hidden={!!activeRequestId}
+                isActive={activeRequestId ? activeRequestId === request.id : false}
             />
         ));
     }, [activeTab, requests]);
@@ -63,7 +66,7 @@ const RequestProcessingView = () => {
                 <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
             </Stack>
             <Flex align="baseline" style={{ marginBlock: "34px" }}>
-                <Frame className={`${styles.frame} ${activeRequest ? styles.compressed : null}`}>
+                <Frame className={`${styles.frame} ${activeRequestId ? styles.compressed : null}`}>
                     <Stack mih={685}>
                         {
                             isLoading
@@ -76,7 +79,7 @@ const RequestProcessingView = () => {
                         }
                     </Stack>
                 </Frame>
-                {activeRequest ? <Chat request={activeRequest} /> : null}
+                {activeRequestId ? <Chat setActiveRequestId={setActiveRequestId} requestId={activeRequestId} /> : null}
             </Flex>
         </Container>
     )

@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useRef } from "react";
 import { Flex, Stack, Text, Button, FileButton, UnstyledButton, Paper, Box } from "@mantine/core";
 import { Controller } from "react-hook-form";
 
@@ -6,18 +6,19 @@ import styles from "./styles.module.scss";
 import TextInput from "../../../../components/TextInput/TextInput";
 import { Icon } from "@iconify/react";
 import ChatMenu from "../ChatMenu";
-import { IRequest } from "../../../../interfaces/request.interface";
 import LeftMessage from "../LeftMessage/LeftMessage";
 import RightMessage from "../RightMessage/RightMessage";
 import { useSession } from "next-auth/react";
 import useChatForm from "../../hooks/useChat";
 import { useMessages } from "../../hooks/useMessages";
+import { useRequest } from "../../hooks/useRequest";
 
 interface ChatProps {
-    request: IRequest;
+    requestId: number;
+    setActiveRequestId: Dispatch<SetStateAction<number | null>>
 }
 
-const Chat: FC<ChatProps> = ({ request }) => {
+const Chat: FC<ChatProps> = ({ requestId, setActiveRequestId }) => {
     const { data: session } = useSession();
     const {
         form: {
@@ -27,15 +28,17 @@ const Chat: FC<ChatProps> = ({ request }) => {
         },
         onSubmit,
         isLoading
-    } = useChatForm(request.id);
-    const { messages } = useMessages(request.id);
+    } = useChatForm(requestId);
+    const { messages } = useMessages(requestId);
+    const { request } = useRequest(requestId);
+
     const chatRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!chatRef) return;
         if (!chatRef.current) return;
         chatRef.current.scrollTop = chatRef.current.scrollHeight;
-      }, [messages]);
+    }, [messages]);
 
     return (
         <Stack pt={25} gap={24} className={`${styles.chat} ${request ? styles.active : null}`}>
@@ -46,12 +49,12 @@ const Chat: FC<ChatProps> = ({ request }) => {
                 justify="space-between"
             >
                 <Flex align="center" gap={14}>
-                    <Text fw={600} fz={18} c="#02808F">{`${request.direction.name} - ${request.subDirection.name}`}</Text>
+                    <Text fw={600} fz={18} c="#02808F">{`${request?.direction?.name} - ${request?.subDirection?.name}`}</Text>
                 </Flex>
                 <Flex gap={5}>
-                    <Text fz={18}>{request.studentGroup}</Text>
-                    <Text fz={18} fw={700}>{`${request.name} ${request.surname}`}</Text>
-                    <ChatMenu />
+                    <Text fz={18}>{request?.studentGroup}</Text>
+                    <Text fz={18} fw={700}>{`${request?.name} ${request?.surname}`}</Text>
+                    <ChatMenu requestId={request?.id!} currentStatus={request?.status!} setActiveRequestId={setActiveRequestId}  />
                 </Flex>
             </Flex>
 
@@ -61,8 +64,8 @@ const Chat: FC<ChatProps> = ({ request }) => {
                         messages.length > 0
                             ? messages.map((message) => {
                                 return message.userId === session?.user.userId
-                                    ? <RightMessage message={message} />
-                                    : <LeftMessage message={message} />
+                                    ? <RightMessage key={message.id} message={message} />
+                                    : <LeftMessage key={message.id} message={message} />
                             })
                             : <Box className={styles.noMessages}>
                                 <Text c="gray" fz={20} fw={700}>Повідомлень поки що немає...</Text>

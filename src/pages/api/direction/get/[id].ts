@@ -13,13 +13,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         try {
-            const oneDirection = await prisma.directions.findFirst({
-                where: {
-                    id: id,
-                },
-                include: { 
-                    subDirections: true
-                }
+            const oneDirection = await prisma.directions.findUnique({
+                where: { id },
+                include: { subDirections: true }
             });
 
             if (oneDirection) {

@@ -26,7 +26,7 @@ const RightMessage: FC<RightMessageProps> = ({ message }) => {
                 <Stack mt={10} gap={10}>
                     {
                         message.documentLinks.map((documentLink, idx) => (
-                            <MessageDocument label={`Документ ${idx + 1}`} documentLink={documentLink} />
+                            <MessageDocument key={idx} label={`Документ ${idx + 1}`} documentLink={documentLink} />
                         ))
                     }
                 </Stack>

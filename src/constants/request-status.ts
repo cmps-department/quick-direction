@@ -5,4 +5,15 @@ export const RequestStatus = {
     Clarified: "Clarified",
     Processed: "Processed",
     Canceled: "Canceled"
-} as const; 
+} as const;
+
+export const RequestStatusTraslit = {
+    Submitted: "Надіслано",
+    Processing: "В обробці",
+    Clarify: "Потребує уточнення",
+    Clarified: "Уточнений",
+    Processed: "Опрацьований",
+    Canceled: "Скасований"
+} as const;
+
+
