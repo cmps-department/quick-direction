@@ -10,6 +10,7 @@ import styles from "./styles.module.scss";
 import { Box, Text } from "@mantine/core";
 
 import classes from "./styles.module.scss";
+import HeroCarousel from "../HeroCarousel";
 
 interface MainPageHeaderProps {
     children: ReactNode;
@@ -21,7 +22,10 @@ const MainPageHeader: FC<MainPageHeaderProps> = ({ children }) => {
 
     return (
         <Box className={classes.mainPageHeader}>
-            <Box className={classes.headerBg}>{children}</Box>
+            <Box className={classes.headerBg}>
+                <Box className={classes.headerNav}>{children}</Box>
+                <HeroCarousel />
+            </Box>
 
             <Box className={styles.hBanner}>
                 <Container>
