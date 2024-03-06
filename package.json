@@ -37,7 +37,8 @@
     "react-redux": "^8.1.3",
     "sass": "^1.69.2",
     "uuid": "^9.0.1",
-    "yup": "^1.3.2"
+    "yup": "^1.3.2",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/formidable": "^3.4.5",

@@ -11,8 +11,6 @@ import { MantineProvider } from "@mantine/core";
 import { Hydrate, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Devtools from "../components/Devtools";
 
-import { Provider } from "react-redux";
-import store from "../store";
 import { theme } from "../constants/theme";
 
 const config = {
@@ -38,14 +36,12 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
 
             <SessionProvider session={session}>
                 <MantineProvider theme={theme}>
-                    <Provider store={store}>
-                        <QueryClientProvider client={queryClient}>
-                            <Hydrate state={pageProps.dehydratedState}>
-                                <Component {...pageProps} />
-                                <Devtools />
-                            </Hydrate>
-                        </QueryClientProvider>
-                    </Provider>
+                    <QueryClientProvider client={queryClient}>
+                        <Hydrate state={pageProps.dehydratedState}>
+                            <Component {...pageProps} />
+                            <Devtools />
+                        </Hydrate>
+                    </QueryClientProvider>
                 </MantineProvider>
             </SessionProvider>
         </Fragment>

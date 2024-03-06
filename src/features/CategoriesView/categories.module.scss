@@ -7,11 +7,10 @@
 
 .frame {
     padding: 48px;
-    margin-block: 34px !important;
     background-color: white;
     position: relative;
 
-    @media (max-width:600px) {
+    @media (max-width: 600px) {
         & {
             padding: 20px;
         }
@@ -19,7 +18,7 @@
 }
 
 .groupBtn {
-    @media (max-width:450px) {
+    @media (max-width: 450px) {
         & {
             margin-top: 20px;
             gap: 10 !important;
@@ -33,5 +32,3 @@
         }
     }
 }
-
-

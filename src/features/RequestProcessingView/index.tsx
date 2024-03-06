@@ -22,23 +22,23 @@ const RequestProcessingView = () => {
 
     const setRole = (roles: string[]) => {
         if (roles?.includes("ROLE_TEACHER")) {
-            return "Викладач"
+            return "Викладач";
         } else if (roles?.includes("ROLE_ADMIN")) {
-            return "Адміністратор"
+            return "Адміністратор";
         } else if (roles?.includes("ROLE_STUDENT")) {
-            return "Студент"
+            return "Студент";
         }
-    }
+    };
 
     const requestsData = useMemo(() => {
         if (activeTab === "processed") {
             return requests
-                .filter(request => request.status === "Processed")
+                .filter((request) => request.status === "Processed")
                 .map((request) => (
                     <RequestItem
                         key={request.id}
                         request={request}
-                        setActiveRequest={() => setActiveRequestId(activeRequest => activeRequest ? null : request.id)}
+                        setActiveRequest={() => setActiveRequestId((activeRequest) => (activeRequest ? null : request.id))}
                         hidden={!!activeRequestId}
                         isActive={activeRequestId ? activeRequestId === request.id : false}
                     />
@@ -46,43 +46,49 @@ const RequestProcessingView = () => {
         }
 
         return requests
-        .filter(request => request.status !== "Processed")
+            .filter((request) => request.status !== "Processed")
             .map((request) => (
-            <RequestItem
-                key={request.id}
-                request={request}
-                setActiveRequest={() => setActiveRequestId(activeRequest => activeRequest ? null : request.id)}
-                hidden={!!activeRequestId}
-                isActive={activeRequestId ? activeRequestId === request.id : false}
-            />
-        ));
+                <RequestItem
+                    key={request.id}
+                    request={request}
+                    setActiveRequest={() => setActiveRequestId((activeRequest) => (activeRequest ? null : request.id))}
+                    hidden={!!activeRequestId}
+                    isActive={activeRequestId ? activeRequestId === request.id : false}
+                />
+            ));
     }, [activeTab, requests]);
 
     return (
-        <Container size="lg" mih="60vh">
+        <Container mt={64} size="lg" mih="60vh">
             <Stack gap={24} pl={35}>
-                <Text fw={700} fz={28}>{session?.user.name}</Text>
-                <Text fw={700} fz={20}>{setRole(session?.roles!)}</Text>
+                <Text fw={700} fz={28}>
+                    {session?.user.name}
+                </Text>
+                <Text fw={700} fz={20}>
+                    {setRole(session?.roles!)}
+                </Text>
                 <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
             </Stack>
             <Flex align="baseline" style={{ marginBlock: "34px" }}>
-                <Frame className={`${styles.frame} ${activeRequestId ? styles.compressed : null}`}>
+                <Frame className={`${styles.frame} ${!!activeRequestId && styles.compressed}`}>
                     <Stack mih={685}>
-                        {
-                            isLoading
-                                ? <Loading visible={isLoading} />
-                                : requestsData.length > 0 ? requestsData : (
-                                    <Flex mih={685} w={"100%"} align="center" justify="center">
-                                        <Text fz={20} fw={700} c="gray">Нічого не знайдено...</Text>
-                                    </Flex>
-                                )
-                        }
+                        {isLoading ? (
+                            <Loading visible={isLoading} />
+                        ) : requestsData.length > 0 ? (
+                            requestsData
+                        ) : (
+                            <Flex mih={685} w={"100%"} align="center" justify="center">
+                                <Text fz={20} fw={700} c="gray">
+                                    Нічого не знайдено...
+                                </Text>
+                            </Flex>
+                        )}
                     </Stack>
                 </Frame>
-                {activeRequestId ? <Chat setActiveRequestId={setActiveRequestId} requestId={activeRequestId} /> : null}
+                {!!activeRequestId && <Chat setActiveRequestId={setActiveRequestId} requestId={activeRequestId} />}
             </Flex>
         </Container>
-    )
-}
+    );
+};
 
 export default RequestProcessingView;

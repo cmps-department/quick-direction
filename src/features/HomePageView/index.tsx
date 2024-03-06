@@ -6,11 +6,11 @@ import HelpSection from "./containers/help";
 const HomePageView: FC = () => {
     return (
         <>
-            <AdvantagesSection/>
-            <GuideSection/>
-            <HelpSection/>
+            <AdvantagesSection />
+            <GuideSection />
+            <HelpSection />
         </>
-    )
-}
+    );
+};
 
-export default HomePageView
+export default HomePageView;

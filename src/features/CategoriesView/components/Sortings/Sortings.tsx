@@ -1,86 +1,42 @@
 import { Button, Menu } from "@mantine/core";
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 
 import styles from "./sortings.module.scss";
+import { useCategoryFilterStore } from "@/store/filter-category.store";
 
-enum EnumSortings {
-    Alphabetical,
-    NonAlphabetical,
-    CreationTime,
-}
+const Sortings: FC = () => {
+    const filter = useCategoryFilterStore((state) => state.filter);
+    const setFilter = useCategoryFilterStore((state) => state.setFilter);
 
-interface ISortings {
-    allCategories: IGetCategory[] | [];
-    setCategories: (arr: IGetCategory[] | []) => void;
-}
-
-const Sortings: FC<ISortings> = ({ allCategories, setCategories }) => {
-    const changeSortingData = (sorting: EnumSortings) => {
-        switch (sorting) {
-            case EnumSortings.Alphabetical:
-                const arr1 = [...allCategories];
-                arr1.sort((u1, u2) => {
-                    const u1Name = u1.name.toUpperCase();
-                    const u2Name = u2.name.toUpperCase();
-                    if (u1Name < u2Name) {
-                        return -1;
-                    } else if (u1Name === u2Name) {
-                        return 0;
-                    }
-                    return 1;
-                });
-                setCategories(arr1);
-                break;
-            case EnumSortings.NonAlphabetical:
-                const arr2 = [...allCategories];
-                arr2.sort((u1, u2) => {
-                    const u1Name = u1.name.toUpperCase();
-                    const u2Name = u2.name.toUpperCase();
-                    if (u1Name > u2Name) {
-                        return -1;
-                    } else if (u1Name === u2Name) {
-                        return 0;
-                    }
-                    return 1;
-                });
-                setCategories(arr2);
-                break;
-            case EnumSortings.CreationTime:
-                const arr3 = [...allCategories];
-                arr3.sort((u1, u2) => {
-                    const dateA = new Date(u1.createdAt);
-                    const dateB = new Date(u2.createdAt);
-                    if (dateA < dateB) {
-                        return -1;
-                    }
-                    if (dateA > dateB) {
-                        return 1;
-                    }
-                    return 0;
-                });
-                setCategories(arr3);
-                break;
+    const label = useMemo(() => {
+        switch (filter) {
+            case "asc":
+                return "Від А до Я";
+            case "dec":
+                return "Від Я до А";
+            case "date":
+                return "За часом створення";
             default:
-                return;
+                return "Сортування";
         }
-    };
+    }, [filter]);
 
     return (
         <Menu position="bottom-start" offset={10} arrowPosition="center">
             <Menu.Target>
                 <Button className={styles.menuItem} style={{ border: "none" }} variant="default">
-                    Сортування
+                    {label}
                 </Button>
             </Menu.Target>
 
             <Menu.Dropdown style={{ borderRadius: "24px" }}>
-                <Menu.Item component="button" onClick={() => changeSortingData(EnumSortings.Alphabetical)} className={styles.menuItem}>
+                <Menu.Item component="button" onClick={() => setFilter(filter === "asc" ? "" : "asc")} className={styles.menuItem}>
                     Від А до Я
                 </Menu.Item>
-                <Menu.Item component="button" onClick={() => changeSortingData(EnumSortings.NonAlphabetical)} className={styles.menuItem}>
+                <Menu.Item component="button" onClick={() => setFilter(filter === "dec" ? "" : "dec")} className={styles.menuItem}>
                     Від Я до А
                 </Menu.Item>
-                <Menu.Item component="button" onClick={() => changeSortingData(EnumSortings.CreationTime)} className={styles.menuItem}>
+                <Menu.Item component="button" onClick={() => setFilter(filter === "date" ? "" : "date")} className={styles.menuItem}>
                     За часом створення
                 </Menu.Item>
             </Menu.Dropdown>

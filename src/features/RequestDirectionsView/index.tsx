@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import IntroSection from "./components/IntroSection";
 import RequestForm from "./components/RequestForm";
 
