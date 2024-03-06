@@ -1,16 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { ICategory } from "../../../interfaces/category.interface";
 
-const createCategory = async ({
-    name,
-    description,
-    professor,
-    color,
-    subDirections,
-}: ICategory) => {
+const createCategory = async ({ name, description, professor, color, subDirections }: ICategory) => {
     try {
-        const response = await axios.post('/api/directions', {
+        const response = await axios.post("/api/directions", {
             name,
             description,
             professor,
@@ -28,11 +21,9 @@ const useCreateCategory = () => {
 
     return useMutation(createCategory, {
         onSuccess: () => {
-            queryClient.invalidateQueries(['categories']);
+            queryClient.invalidateQueries(["categories"]);
         },
     });
 };
 
-
-export default useCreateCategory
-
+export default useCreateCategory;

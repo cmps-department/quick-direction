@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../../utils/api";
-import { RequestPayload } from "../../../interfaces/request.interface";
 
 export const useCreateRequest = () => {
     const queryClient = useQueryClient();
@@ -10,9 +9,7 @@ export const useCreateRequest = () => {
         onSuccess: () => {
             queryClient.invalidateQueries(["REQUESTS"]);
         },
-        onError: () => {
-            
-        },
+        onError: () => {},
     });
 
     return {

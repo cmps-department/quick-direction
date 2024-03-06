@@ -1,24 +1,24 @@
-import { Button, Menu } from '@mantine/core'
-import React, { FC } from 'react'
+import { Button, Menu } from "@mantine/core";
+import React, { FC } from "react";
 
-import styles from './sortings.module.scss'
-import { IGetCategory } from '../../../../interfaces/category.interface'
+import styles from "./sortings.module.scss";
 
 enum EnumSortings {
-    Alphabetical, NonAlphabetical, CreationTime
+    Alphabetical,
+    NonAlphabetical,
+    CreationTime,
 }
 
 interface ISortings {
-    allCategories: IGetCategory[] | [],
-    setCategories: (arr: IGetCategory[] | []) => void
+    allCategories: IGetCategory[] | [];
+    setCategories: (arr: IGetCategory[] | []) => void;
 }
 
-const Sortings: FC <ISortings>= ({allCategories, setCategories }) => {
-
+const Sortings: FC<ISortings> = ({ allCategories, setCategories }) => {
     const changeSortingData = (sorting: EnumSortings) => {
         switch (sorting) {
             case EnumSortings.Alphabetical:
-                const arr1 = [...allCategories]
+                const arr1 = [...allCategories];
                 arr1.sort((u1, u2) => {
                     const u1Name = u1.name.toUpperCase();
                     const u2Name = u2.name.toUpperCase();
@@ -29,10 +29,10 @@ const Sortings: FC <ISortings>= ({allCategories, setCategories }) => {
                     }
                     return 1;
                 });
-                setCategories(arr1)
+                setCategories(arr1);
                 break;
             case EnumSortings.NonAlphabetical:
-                const arr2 = [...allCategories]
+                const arr2 = [...allCategories];
                 arr2.sort((u1, u2) => {
                     const u1Name = u1.name.toUpperCase();
                     const u2Name = u2.name.toUpperCase();
@@ -46,7 +46,7 @@ const Sortings: FC <ISortings>= ({allCategories, setCategories }) => {
                 setCategories(arr2);
                 break;
             case EnumSortings.CreationTime:
-                const arr3 = [...allCategories]
+                const arr3 = [...allCategories];
                 arr3.sort((u1, u2) => {
                     const dateA = new Date(u1.createdAt);
                     const dateB = new Date(u2.createdAt);
@@ -63,27 +63,29 @@ const Sortings: FC <ISortings>= ({allCategories, setCategories }) => {
             default:
                 return;
         }
-    }
+    };
 
     return (
         <Menu position="bottom-start" offset={10} arrowPosition="center">
             <Menu.Target>
-                <Button className={styles.menuItem} style={{ border: 'none' }} variant='default'>Сортування</Button>
+                <Button className={styles.menuItem} style={{ border: "none" }} variant="default">
+                    Сортування
+                </Button>
             </Menu.Target>
 
-            <Menu.Dropdown style={{ borderRadius: '24px' }}>
-                <Menu.Item component='button' onClick={() => changeSortingData(EnumSortings.Alphabetical)} className={styles.menuItem}>
+            <Menu.Dropdown style={{ borderRadius: "24px" }}>
+                <Menu.Item component="button" onClick={() => changeSortingData(EnumSortings.Alphabetical)} className={styles.menuItem}>
                     Від А до Я
                 </Menu.Item>
-                <Menu.Item component='button' onClick={() => changeSortingData(EnumSortings.NonAlphabetical)} className={styles.menuItem}>
+                <Menu.Item component="button" onClick={() => changeSortingData(EnumSortings.NonAlphabetical)} className={styles.menuItem}>
                     Від Я до А
                 </Menu.Item>
-                <Menu.Item component='button' onClick={() => changeSortingData(EnumSortings.CreationTime)} className={styles.menuItem}>
+                <Menu.Item component="button" onClick={() => changeSortingData(EnumSortings.CreationTime)} className={styles.menuItem}>
                     За часом створення
                 </Menu.Item>
             </Menu.Dropdown>
         </Menu>
-    )
-}
+    );
+};
 
-export default Sortings
+export default Sortings;

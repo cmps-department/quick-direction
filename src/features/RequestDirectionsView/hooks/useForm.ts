@@ -4,14 +4,13 @@ import * as yup from "yup";
 import { uploadFile } from "../api/uploadFile";
 import { useSession } from "next-auth/react";
 import { RequestStatus } from "../../../constants/request-status";
-import { RequestPayload } from "../../../interfaces/request.interface";
 import { useCreateRequest } from "./useCreateRequest";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 interface useCreateFormProps {
     openSuccessModal: () => void;
 }
-
 
 export interface RequestFormState {
     name: string;
@@ -24,7 +23,7 @@ export interface RequestFormState {
     subDirectionId: number;
 }
 
-export default function useCreateForm({openSuccessModal}: useCreateFormProps) {
+export default function useCreateForm({ openSuccessModal }: useCreateFormProps) {
     const { data: session } = useSession();
     const { createRequest } = useCreateRequest();
     const router = useRouter();
@@ -39,7 +38,7 @@ export default function useCreateForm({openSuccessModal}: useCreateFormProps) {
                 text: yup.string(),
                 document: yup.mixed<File>(),
                 directionId: yup.number().required("Обов'язкове поле"),
-                subDirectionId: yup.number().required("Обов'язкове поле")
+                subDirectionId: yup.number().required("Обов'язкове поле"),
             }),
         ),
         defaultValues: {
@@ -50,9 +49,13 @@ export default function useCreateForm({openSuccessModal}: useCreateFormProps) {
             text: "",
             document: undefined,
             directionId: undefined,
-            subDirectionId: undefined
+            subDirectionId: undefined,
         },
     });
+
+    useEffect(() => {
+        form.setValue("email", session?.user.email!);
+    }, [session]);
 
     const onSubmit = async (data: RequestFormState) => {
         try {
@@ -64,8 +67,8 @@ export default function useCreateForm({openSuccessModal}: useCreateFormProps) {
                 userId: session?.user.userId!,
                 directionId: data.directionId,
                 subDirectionId: data.subDirectionId,
-                status: RequestStatus.Submitted
-            }
+                status: RequestStatus.Submitted,
+            };
 
             if (data.document) {
                 const response = await uploadFile(data.document);
@@ -80,7 +83,7 @@ export default function useCreateForm({openSuccessModal}: useCreateFormProps) {
             openSuccessModal();
             setTimeout(() => {
                 router.push("/request-processing");
-            }, 3000)
+            }, 3000);
         } catch (err) {
             console.log(err);
         }

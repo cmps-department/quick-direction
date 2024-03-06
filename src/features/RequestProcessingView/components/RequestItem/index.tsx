@@ -2,7 +2,6 @@ import { FC } from "react";
 import { Flex, Text } from "@mantine/core";
 
 import styles from "./styles.module.scss";
-import { IRequest } from "../../../../interfaces/request.interface";
 
 interface RequestItemProps {
     request: IRequest;
@@ -21,7 +20,9 @@ const RequestItem: FC<RequestItemProps> = ({ request, setActiveRequest, hidden, 
             justify="space-between"
         >
             <Flex align="center" gap={24}>
-                <Text fw={600} fz={18} c="#02808F">{request.direction.name}</Text>
+                <Text fw={600} fz={18} c="#02808F">
+                    {request.direction.name}
+                </Text>
                 <Text fz={16}>{request.subDirection.name}</Text>
             </Flex>
             <Flex gap={5}>
@@ -29,7 +30,7 @@ const RequestItem: FC<RequestItemProps> = ({ request, setActiveRequest, hidden, 
                 <Text fz={18} fw={700}>{`${request.surname} ${request.name}`}</Text>
             </Flex>
         </Flex>
-    )
-}
+    );
+};
 
 export default RequestItem;

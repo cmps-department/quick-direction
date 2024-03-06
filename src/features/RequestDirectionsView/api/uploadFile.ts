@@ -1,5 +1,4 @@
-import { FileApiResponse } from "../../../interfaces/files.interface";
-import api from "../../../utils/api"
+import api from "../../../utils/api";
 
 export const uploadFile = async (file: File) => {
     const formData = new FormData();
@@ -7,4 +6,4 @@ export const uploadFile = async (file: File) => {
 
     const response = await api.post<FileApiResponse>("/api/upload", formData);
     return response.data;
-}
+};
