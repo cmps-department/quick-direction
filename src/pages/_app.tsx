@@ -1,31 +1,29 @@
 import "../styles/global.scss";
 import "../utils/dayjs";
 import "@mantine/core/styles.css";
-import '@mantine/carousel/styles.css';
+import "@mantine/carousel/styles.css";
 
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { Fragment, useState } from "react";
-import { SessionProvider } from "next-auth/react"
+import { SessionProvider } from "next-auth/react";
 import { MantineProvider } from "@mantine/core";
-import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Hydrate, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Devtools from "../components/Devtools";
 
 import { Provider } from "react-redux";
 import store from "../store";
 import { theme } from "../constants/theme";
 
-
 const config = {
     defaultOptions: {
         queries: {
             staleTime: 60 * 60 * 1000,
             cacheTime: 5 * 60 * 60 * 1000,
-            refetchOnWindowFocus: false
-        }
-    }
-}
-
+            refetchOnWindowFocus: false,
+        },
+    },
+};
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     const [queryClient] = useState(() => new QueryClient(config));
@@ -50,6 +48,6 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
                     </Provider>
                 </MantineProvider>
             </SessionProvider>
-      </Fragment>
-  );
+        </Fragment>
+    );
 }

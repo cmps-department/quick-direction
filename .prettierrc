@@ -1,0 +1,23 @@
+{
+    "printWidth": 150,
+    "useTabs": false,
+    "tabWidth": 4,
+    "semi": true,
+    "quoteProps": "as-needed",
+    "jsxSingleQuote": false,
+    "trailingComma": "all",
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "arrowParens": "always",
+    "requirePragma": false,
+    "insertPragma": false,
+    "proseWrap": "preserve",
+    "htmlWhitespaceSensitivity": "css",
+    "singleAttributePerLine": false,
+    "singleQuote": false,
+    "jsxBracketSameLine": false,
+    "endOfLine": "lf",
+    "embeddedLanguageFormatting": "auto",
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
+}

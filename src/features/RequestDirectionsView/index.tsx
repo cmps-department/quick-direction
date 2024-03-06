@@ -1,4 +1,4 @@
-import IntroSection from "./containers/IntroSection/IntroSection";
+import IntroSection from "./components/IntroSection";
 import RequestForm from "./components/RequestForm";
 
 const RequestDirectionsView = () => {
@@ -7,7 +7,7 @@ const RequestDirectionsView = () => {
             <IntroSection />
             <RequestForm />
         </>
-    )
-}
+    );
+};
 
 export default RequestDirectionsView;

@@ -1,29 +1,47 @@
-import { CSSProperties, FC, ReactNode } from 'react';
+import { FC, ReactNode } from "react";
 
-import { useRouter } from 'next/router';
+import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
-import MainPageHeader from '../features/MainPageHeader';
-import Footer from '../features/Footer';
-import Header from '../features/Header';
+import MainPageHeader from "../components/Headers/MainPageHeader";
+import DefautHeader from "../components/Headers/DefautHeader";
+import StudentHeader from "../components/Headers/StudentHeader";
+import TeacherHeader from "../components/Headers/TeacherHeader";
+import AdminHeader from "../components/Headers/AdminHeader";
+import Footer from "../components/Footer";
+
+import roles from "../constants/roles";
 
 interface LayoutHFProps {
     children: ReactNode;
-    headerColor?: CSSProperties["backgroundColor"];
 }
 
-const LayoutHF: FC<LayoutHFProps> = ({ children, headerColor }) => {
-    const router = useRouter();
-    const currentRoute = router.pathname;
+const headers = {
+    ROLE_STUDENT: StudentHeader,
+    ROLE_TEACHER: TeacherHeader,
+    ROLE_ADMIN: AdminHeader,
+};
+
+const LayoutHF: FC<LayoutHFProps> = ({ children }) => {
+    const { data: session } = useSession();
+    const path = usePathname();
+
+    const role = session?.roles.find((role) => Object.keys(roles).includes(role));
+    const Header = role ? headers[role as keyof typeof headers] : DefautHeader;
 
     return (
         <>
-            {currentRoute === "/" ? <MainPageHeader /> : <Header color={headerColor} />}
-                <main>
-                    {children}
-                </main>
+            {path === "/" ? (
+                <MainPageHeader>
+                    <Header />
+                </MainPageHeader>
+            ) : (
+                <Header />
+            )}
+            <main>{children}</main>
             <Footer />
         </>
-    )
-}
+    );
+};
 
 export default LayoutHF;
