@@ -1,18 +1,17 @@
-
 .header {
-    padding: 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 68px;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 68px;
 }
 
 .link {
-    font-size: 18;
-    font-weight: 600;
-    color: #FAFBFC;
+  font-size: 18;
+  font-weight: 600;
+  color: #fafbfc;
 }
 
 .link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }

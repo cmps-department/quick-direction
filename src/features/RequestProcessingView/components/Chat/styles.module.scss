@@ -1,65 +1,64 @@
 .chat {
-    width: 0;
-    height: 0;
-    opacity: 0;
-    visibility: hidden;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .active {
-    width: 100%;
-    height: auto;
-    opacity: 1;
-    visibility: visible;
-    transition: opacity .2s ease-in-out;
+  width: 100%;
+  height: auto;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .request {
-    width: 100%;
-    overflow: hidden;
-    text-wrap: nowrap;
-    background-color: #E4FDE0;
-    border-radius: 71px;
+  width: 100%;
+  overflow: hidden;
+  text-wrap: nowrap;
+  background-color: #e4fde0;
+  border-radius: 71px;
 }
 
 .msger {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: space-between;
-    width: 100%;
-    border-radius: 30px;
-    background: #ffff;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+  width: 100%;
+  border-radius: 30px;
+  background: #ffff;
 }
 
 .msgerChat {
-    flex: 1;
-    padding: 24px;
-    overflow-y: auto;
-    min-height: 500px;
-    max-height: 500px;
-    position: relative;
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  min-height: 500px;
+  max-height: 500px;
+  position: relative;
 }
 
 .noMessages {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translateY(-50%);
-    transform: translateX(-50%);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  transform: translateX(-50%);
 }
 
 .msgerChat::-webkit-scrollbar {
-    width: 6px;
+  width: 6px;
 }
 
 .msgerChat::-webkit-scrollbar-track {
-    background: #ddd;
+  background: #ddd;
 }
 
 .msgerChat::-webkit-scrollbar-thumb {
-    background: #bdbdbd;
+  background: #bdbdbd;
 }
 
 .clip:hover {
-    color: #02808F;
+  color: #02808f;
 }
-  

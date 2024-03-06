@@ -1,12 +1,12 @@
-import PageLayout from '../../layouts/PageLayout';
+import FaqView from '../../features/FaqView';
 import LayoutHF from '../../layouts/LayoutHF';
-import RequestProcessingView from '../../features/RequestProcessingView';
+import PageLayout from '../../layouts/PageLayout';
 
 export default function RequestProcessingPage() {
   return (
     <PageLayout title={'Request Processing'}>
-      <LayoutHF headerColor="#2A2A2A">
-        <RequestProcessingView />
+      <LayoutHF headerColor="#02808F">
+        <FaqView />
       </LayoutHF>
     </PageLayout>
   );

@@ -1,37 +1,35 @@
 .navbar {
-    background-color: var(--dark-color);
-    border-radius: 68px;
-    margin: 30px;
-    padding-inline: 24px;
+  background-color: var(--dark-color);
+  border-radius: 68px;
+  margin: 30px;
+  padding-inline: 24px;
 }
 
 .frame {
-    padding: 48px;
-    margin-block: 34px !important;
-    background-color: white;
-    position: relative;
+  padding: 48px;
+  margin-block: 34px !important;
+  background-color: white;
+  position: relative;
 
-    @media (max-width:600px) {
-        & {
-            padding: 20px;
-        }
+  @media (max-width: 600px) {
+    & {
+      padding: 20px;
     }
+  }
 }
 
 .groupBtn {
-    @media (max-width:450px) {
-        & {
-            margin-top: 20px;
-            gap: 10 !important;
-            flex-direction: column;
-            justify-content: center !important;
-            align-items: center !important;
-            width: 100%;
-            > button:last-child {
-                align-self: flex-start;
-            }
-        }
+  @media (max-width: 450px) {
+    & {
+      margin-top: 20px;
+      gap: 10 !important;
+      flex-direction: column;
+      justify-content: center !important;
+      align-items: center !important;
+      width: 100%;
+      > button:last-child {
+        align-self: flex-start;
+      }
     }
+  }
 }
-
-

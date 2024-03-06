@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import Frame from '../../components/Frame/Frame';
@@ -25,7 +25,6 @@ import useUpdateCategory from './hooks/useUpdateCategory';
 import useFormValidationC from './hooks/useFormValidationC';
 import generateValidationSC from './hooks/generateValidationSC';
 
-
 const CreateCategoryView: FC = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -40,13 +39,13 @@ const CreateCategoryView: FC = () => {
   const [amountSub, setAmountSub] = useState<number>(1);
   const [defaultData, setDefaultData] = useState<IGetCategory>({
     id: 0,
-    name: "",
-    description: "",
-    professor: "",
-    color: "#0000ff",
+    name: '',
+    description: '',
+    professor: '',
+    color: '#0000ff',
     subDirections: [],
-    createdAt: "",
-    updatedAt: ""
+    createdAt: '',
+    updatedAt: '',
   });
 
   const validationSchemaC = useFormValidationC();
@@ -71,15 +70,13 @@ const CreateCategoryView: FC = () => {
 
   const {
     register,
-    formState: {
-      isValid, errors
-    },
+    formState: { isValid, errors },
     handleSubmit,
     reset,
   } = useForm({
-    mode: "all",
-    resolver: yupResolver(mergedSchema)
-  })
+    mode: 'all',
+    resolver: yupResolver(mergedSchema),
+  });
 
   const handleAdd = async (data: any) => {
     console.log(data);
@@ -88,8 +85,8 @@ const CreateCategoryView: FC = () => {
       description: data.descriptionD,
       professor: data.professorMail,
       color: defaultData.color,
-      subDirections: []
-    }
+      subDirections: [],
+    };
     const subDir: ISubCategory[] = [];
     for (let i = 0; i < amountSub; i++) {
       const obj: ISubCategory = {
@@ -98,10 +95,10 @@ const CreateCategoryView: FC = () => {
         examplelink: data[`examplelinkSD_${i}`],
         additionalInfo: data[`additionalInfoSD_${i}`],
         downloadFile: data[`downloadFileSD_${i}`],
-        textField: data[`textFieldSD_${i}`]
+        textField: data[`textFieldSD_${i}`],
       };
       if (id !== null && id !== undefined && defaultData.subDirections[i]?.id) {
-        obj.id = defaultData.subDirections[i]?.id
+        obj.id = defaultData.subDirections[i]?.id;
       }
       subDir.push(obj);
     }
@@ -109,8 +106,8 @@ const CreateCategoryView: FC = () => {
     let response;
 
     try {
-      if (typeof id === "number" || typeof id === "string") {
-        const updateData = { ...createData, id: +id }
+      if (typeof id === 'number' || typeof id === 'string') {
+        const updateData = { ...createData, id: +id };
         response = await updateCategory.mutateAsync(updateData);
       } else {
         response = await createCategory.mutateAsync(createData);
@@ -120,20 +117,20 @@ const CreateCategoryView: FC = () => {
     } finally {
       openSuccessModal();
       setTimeout(() => {
-        router.push('/admin/categories')
+        router.push('/admin/categories');
       }, 1500);
     }
-  }
+  };
 
   const handleDelete = async (answer: boolean) => {
     closeDeleteModal();
     if (answer && id) {
       const result = await deleteCategory(+id);
       setTimeout(() => {
-        router.push('/admin/categories')
+        router.push('/admin/categories');
       }, 1000);
     }
-  }
+  };
 
   useEffect(() => {
     refetch();
@@ -147,20 +144,20 @@ const CreateCategoryView: FC = () => {
       setAmountSub(1);
       setDefaultData({
         id: 0,
-        name: "",
-        description: "",
-        professor: "",
-        color: "#0000ff",
+        name: '',
+        description: '',
+        professor: '',
+        color: '#0000ff',
         subDirections: [],
-        createdAt: "",
-        updatedAt: ""
-      })
+        createdAt: '',
+        updatedAt: '',
+      });
     }
   }, [data]);
 
   useEffect(() => {
     reset();
-  }, [defaultData])
+  }, [defaultData]);
 
   return (
     <Container>
@@ -168,20 +165,25 @@ const CreateCategoryView: FC = () => {
         <Loading visible={isLoading} />
         <form onSubmit={handleSubmit(handleAdd)}>
           <Stack gap={24}>
-            <Flex align={'center'} justify={'space-between'} gap={24} wrap={"wrap"}>
+            <Flex align={'center'} justify={'space-between'} gap={24} wrap={'wrap'}>
               <Text fz={28} fw={700}>
-                {id ? "Редагування категорії" : "Нова категорія"}
+                {id ? 'Редагування категорії' : 'Нова категорія'}
               </Text>
               <ColorInput
                 value={defaultData.color}
-                onChange={(e) => setDefaultData({ ...defaultData, color: e })}
+                onChange={e => setDefaultData({ ...defaultData, color: e })}
                 className={styles.colorInput}
                 radius="xl"
                 placeholder="Колір категорії"
               />
-              </Flex>
-              <Divider style={{ borderTop: "4px solid #02808F", marginBottom: "24px" }} maw={608} w="100%" />
-            <Text fz={20} fw={700}>Назва категорії <Text fz={20} fw={700} span c="red">*</Text></Text>
+            </Flex>
+            <Divider style={{ borderTop: '4px solid #02808F', marginBottom: '24px' }} maw={608} w="100%" />
+            <Text fz={20} fw={700}>
+              Назва категорії{' '}
+              <Text fz={20} fw={700} span c="red">
+                *
+              </Text>
+            </Text>
             <TextInput
               error={errors?.nameD ? errors.nameD.message : null}
               defaultValue={defaultData.name}
@@ -190,21 +192,31 @@ const CreateCategoryView: FC = () => {
               withAsterisk
             />
 
-            <Text fz={20} fw={700}>Опис <Text fz={20} fw={700} span c="red">*</Text></Text>
+            <Text fz={20} fw={700}>
+              Опис{' '}
+              <Text fz={20} fw={700} span c="red">
+                *
+              </Text>
+            </Text>
             <Textarea
               error={errors?.descriptionD ? errors.descriptionD.message : null}
               defaultValue={defaultData.description}
               req={register('descriptionD')}
               styles={{
                 input: {
-                  minHeight: "160px"
-                }
+                  minHeight: '160px',
+                },
               }}
               placeholder="Введіть опис..."
               withAsterisk
             />
 
-            <Text fz={20} fw={700}>Відповідальний викладач <Text fz={20} fw={700} span c="red">*</Text></Text>
+            <Text fz={20} fw={700}>
+              Відповідальний викладач{' '}
+              <Text fz={20} fw={700} span c="red">
+                *
+              </Text>
+            </Text>
             <TextInput
               error={errors?.professorMail ? errors.professorMail.message : null}
               defaultValue={defaultData.professor}
@@ -213,7 +225,12 @@ const CreateCategoryView: FC = () => {
               placeholder="Введіть пошту"
             />
 
-            <Text fz={20} fw={700}>Підкатегорії <Text fz={20} fw={700} span c="red">*</Text></Text>
+            <Text fz={20} fw={700}>
+              Підкатегорії{' '}
+              <Text fz={20} fw={700} span c="red">
+                *
+              </Text>
+            </Text>
             <NumberInput
               className={styles.inputNumber}
               value={amountSub}
@@ -236,12 +253,12 @@ const CreateCategoryView: FC = () => {
             ))}
 
             <Flex justify="end" wrap={'wrap'} gap={15}>
-              {(id || id === '0') &&
+              {(id || id === '0') && (
                 <CustomButton onClick={openDeleteModal} className={styles.deleteBtn}>
                   Видалити
                 </CustomButton>
-              }
-              <CustomButton type='submit' disabled={!isValid} className={styles.successBtn}>
+              )}
+              <CustomButton type="submit" disabled={!isValid} className={styles.successBtn}>
                 Зберегти
               </CustomButton>
               <SuccessModal opened={isSuccessModalOpen} close={closeSuccessModal} text="Категорія успішно додана" />
@@ -251,7 +268,7 @@ const CreateCategoryView: FC = () => {
         </form>
       </Frame>
     </Container>
-  )
-}
+  );
+};
 
-export default CreateCategoryView
+export default CreateCategoryView;
