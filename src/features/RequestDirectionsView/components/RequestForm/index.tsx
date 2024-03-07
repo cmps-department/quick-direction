@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import SuccessModal from "@/components/Modals/SuccessModal/SuccessModal";
 import TextInput from "@/components/TextInput/TextInput";
 import Select from "@/components/Select/Select";
+import routes from "@/constants/routes";
 
 const RequestForm = () => {
     const { form, onSubmit } = useCreateForm();
@@ -167,7 +168,7 @@ const RequestForm = () => {
                 </FormProvider>
             </Container>
             <Modal triggers={[Modals.SUCCESS]}>
-                <SuccessModal onSuccess={() => router.push("/request-processing")} text="Ваш запит успішно надіслано" />
+                <SuccessModal onSuccess={() => router.push(routes.REQUEST_PROCESSING)} text="Ваш запит успішно надіслано" />
             </Modal>
         </>
     );

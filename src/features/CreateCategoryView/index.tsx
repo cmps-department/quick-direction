@@ -10,6 +10,7 @@ import { Modals } from "@/components/Modals/data/modals";
 
 import classes from "./styles.module.scss";
 import CreateCategoryForm from "./components/CreateCategoryForm";
+import routes from "@/constants/routes";
 
 const CreateCategoryView: FC = () => {
     const router = useRouter();
@@ -19,7 +20,7 @@ const CreateCategoryView: FC = () => {
             <Frame className={classes.frame}>
                 <CreateCategoryForm />
                 <Modal triggers={[Modals.SUCCESS]}>
-                    <SuccessModal onSuccess={() => router.push("/admin/categories")} text="Категорія успішно додана" />
+                    <SuccessModal onSuccess={() => router.push(routes.CATEGORIES)} text="Категорія успішно додана" />
                 </Modal>
             </Frame>
         </Container>

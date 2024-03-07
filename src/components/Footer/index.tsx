@@ -5,6 +5,7 @@ import Image from "next/image";
 import ContainerL from "../Container/Container";
 import { Flex, UnstyledButton } from "@mantine/core";
 import { useRouter } from "next/router";
+import routes from "@/constants/routes";
 
 const Footer: FC = () => {
     const router = useRouter();
@@ -19,7 +20,7 @@ const Footer: FC = () => {
                             <UnstyledButton onClick={() => router.push("/")} className={styles.link}>
                                 Головна
                             </UnstyledButton>
-                            <UnstyledButton onClick={() => router.push("/news")} className={styles.link}>
+                            <UnstyledButton onClick={() => router.push(routes.NEWS)} className={styles.link}>
                                 Новини
                             </UnstyledButton>
                         </Flex>
@@ -29,10 +30,10 @@ const Footer: FC = () => {
                             </div>
                         </Flex>
                         <Flex gap={48} w="50%">
-                            <UnstyledButton onClick={() => router.push("/faq")} className={styles.link}>
+                            <UnstyledButton onClick={() => router.push(routes.FAQ)} className={styles.link}>
                                 Питання та відповіді
                             </UnstyledButton>
-                            <UnstyledButton onClick={() => router.push("/about-us")} className={styles.link}>
+                            <UnstyledButton onClick={() => router.push(routes.ABOUT_US)} className={styles.link}>
                                 Про нас
                             </UnstyledButton>
                         </Flex>

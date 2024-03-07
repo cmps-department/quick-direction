@@ -11,6 +11,7 @@ import { Box, Text } from "@mantine/core";
 
 import classes from "./styles.module.scss";
 import HeroCarousel from "../HeroCarousel";
+import routes from "@/constants/routes";
 
 interface MainPageHeaderProps {
     children: ReactNode;
@@ -42,7 +43,7 @@ const MainPageHeader: FC<MainPageHeaderProps> = ({ children }) => {
                         <CustomButton
                             className={styles.hBanner_btn}
                             onClick={() =>
-                                session ? router.push("/request-directions") : signIn("keycloak", { callbackUrl: "/request-directions" })
+                                session ? router.push(routes.REQUEST_DIRECTIONS) : signIn("keycloak", { callbackUrl: routes.REQUEST_DIRECTIONS })
                             }
                         >
                             Подати заявку
