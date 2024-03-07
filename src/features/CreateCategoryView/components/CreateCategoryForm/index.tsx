@@ -4,7 +4,7 @@ import { Controller, FormProvider } from "react-hook-form";
 import { ColorInput, Divider, Group, NumberInput, Stack, Text } from "@mantine/core";
 import Textarea from "@/components/Textarea/Textarea";
 import TextInput from "@/components/TextInput/TextInput";
-import ArrowButtons from "../ArrowButtons/ArrowButtons";
+import ArrowButtons from "../ArrowButtons";
 import CustomButton from "@/components/CustomButton/CustomButton";
 
 import classes from "./styles.module.scss";

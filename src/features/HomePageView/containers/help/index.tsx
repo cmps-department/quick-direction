@@ -1,12 +1,12 @@
 import { FC } from "react";
-import styles from "./help.module.scss";
-import CustomButton from "../../../../components/CustomButton/CustomButton";
-import ContainerL from "../../../../components/Container/Container";
+import styles from "./styles.module.scss";
+import CustomButton from "@/components/CustomButton/CustomButton";
+import Container from "@/components/Container/Container";
 
 const HelpSection: FC = () => {
     return (
         <section>
-            <ContainerL>
+            <Container size={"xl"}>
                 <div className={styles.help}>
                     <div className={styles.helpCard}>
                         <h3 className={styles.helpCard_title}>Є запитання?</h3>
@@ -30,7 +30,7 @@ const HelpSection: FC = () => {
                         </CustomButton>
                     </div>
                 </div>
-            </ContainerL>
+            </Container>
         </section>
     );
 };

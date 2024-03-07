@@ -6,8 +6,8 @@ import styles from "./styles.module.scss";
 import TextInput from "../../../../components/TextInput/TextInput";
 import { Icon } from "@iconify/react";
 import ChatMenu from "../ChatMenu";
-import LeftMessage from "../LeftMessage/LeftMessage";
-import RightMessage from "../RightMessage/RightMessage";
+import LeftMessage from "../LeftMessage";
+import RightMessage from "../RightMessage/indedx";
 import { useSession } from "next-auth/react";
 import useChatForm from "../../hooks/useChat";
 import { useMessages } from "../../hooks/useMessages";
@@ -15,19 +15,15 @@ import { useRequest } from "../../hooks/useRequest";
 
 interface ChatProps {
     requestId: number;
-    setActiveRequestId: Dispatch<SetStateAction<number | null>>
+    setActiveRequestId: Dispatch<SetStateAction<number | null>>;
 }
 
 const Chat: FC<ChatProps> = ({ requestId, setActiveRequestId }) => {
     const { data: session } = useSession();
     const {
-        form: {
-            control,
-            setValue,
-            handleSubmit
-        },
+        form: { control, setValue, handleSubmit },
         onSubmit,
-        isLoading
+        isLoading,
     } = useChatForm(requestId);
     const { messages } = useMessages(requestId);
     const { request } = useRequest(requestId);
@@ -42,35 +38,34 @@ const Chat: FC<ChatProps> = ({ requestId, setActiveRequestId }) => {
 
     return (
         <Stack pt={25} gap={24} className={`${styles.chat} ${request ? styles.active : null}`}>
-            <Flex
-                className={`${styles.request}`}
-                p={24}
-                align="center"
-                justify="space-between"
-            >
+            <Flex className={`${styles.request}`} p={24} align="center" justify="space-between">
                 <Flex align="center" gap={14}>
                     <Text fw={600} fz={18} c="#02808F">{`${request?.direction?.name} - ${request?.subDirection?.name}`}</Text>
                 </Flex>
                 <Flex gap={5}>
                     <Text fz={18}>{request?.studentGroup}</Text>
                     <Text fz={18} fw={700}>{`${request?.name} ${request?.surname}`}</Text>
-                    <ChatMenu requestId={request?.id!} currentStatus={request?.status!} setActiveRequestId={setActiveRequestId}  />
+                    <ChatMenu requestId={request?.id!} currentStatus={request?.status!} setActiveRequestId={setActiveRequestId} />
                 </Flex>
             </Flex>
 
-            <Paper shadow='xl' className={styles.msger}>
+            <Paper shadow="xl" className={styles.msger}>
                 <main ref={chatRef} className={styles.msgerChat}>
-                    {
-                        messages.length > 0
-                            ? messages.map((message) => {
-                                return message.userId === session?.user.userId
-                                    ? <RightMessage key={message.id} message={message} />
-                                    : <LeftMessage key={message.id} message={message} />
-                            })
-                            : <Box className={styles.noMessages}>
-                                <Text c="gray" fz={20} fw={700}>Повідомлень поки що немає...</Text>
-                            </Box>
-                    }
+                    {messages.length > 0 ? (
+                        messages.map((message) => {
+                            return message.userId === session?.user.userId ? (
+                                <RightMessage key={message.id} message={message} />
+                            ) : (
+                                <LeftMessage key={message.id} message={message} />
+                            );
+                        })
+                    ) : (
+                        <Box className={styles.noMessages}>
+                            <Text c="gray" fz={20} fw={700}>
+                                Повідомлень поки що немає...
+                            </Text>
+                        </Box>
+                    )}
                 </main>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -88,7 +83,7 @@ const Chat: FC<ChatProps> = ({ requestId, setActiveRequestId }) => {
                                 />
                             )}
                         />
-                        <FileButton multiple onChange={files => setValue("files", files)} accept="application/doc,application/pdf,application/docx">
+                        <FileButton multiple onChange={(files) => setValue("files", files)} accept="application/doc,application/pdf,application/docx">
                             {(props) => (
                                 <UnstyledButton className={styles.clip} {...props}>
                                     <Icon width={24} height={24} icon="heroicons:paper-clip-solid" />
@@ -102,7 +97,7 @@ const Chat: FC<ChatProps> = ({ requestId, setActiveRequestId }) => {
                 </form>
             </Paper>
         </Stack>
-    )
-}
+    );
+};
 
 export default Chat;

@@ -1,7 +1,7 @@
 import { FC } from "react";
-import AdvantagesSection from "./containers/advantages";
-import GuideSection from "./containers/guide";
-import HelpSection from "./containers/help";
+import AdvantagesSection from "./containers/Advantages";
+import GuideSection from "./containers/Guide";
+import HelpSection from "./containers/Help";
 
 const HomePageView: FC = () => {
     return (

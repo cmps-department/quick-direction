@@ -1,3 +1,5 @@
+type TRequestStatus = "Submitted" | "Processing" | "Clarify" | "Clarified" | "Processed" | "Canceled";
+
 interface IRequest {
     id: number;
     userId: string;
@@ -7,7 +9,7 @@ interface IRequest {
     email: string;
     text: string;
     documentLink: string;
-    status: keyof typeof RequestStatus;
+    status: TRequestStatus;
     directionId: number;
     direction: {
         id: number;
@@ -44,7 +46,7 @@ interface RequestPayload {
     userId: string;
     directionId: number;
     subDirectionId: number;
-    status: keyof typeof RequestStatus;
+    status: TRequestStatus;
     text?: string;
     documentLink?: string;
 }

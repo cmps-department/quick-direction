@@ -3,19 +3,19 @@ import { Stack } from "@mantine/core";
 
 import styles from "./styles.module.scss";
 import dayjs from "dayjs";
-import MessageDocument from "../MessageDocument/MessageDocument";
+import MessageDocument from "../MessageDocument";
 
-interface RightMessageProps {
+interface LeftMessageProps {
     message: IMessage;
 }
 
-const RightMessage: FC<RightMessageProps> = ({ message }) => {
+const LeftMessage: FC<LeftMessageProps> = ({ message }) => {
     return (
-        <div className={`${styles.msg} ${styles.rightMsg}`}>
+        <div className={`${styles.msg} ${styles.leftMsg}`}>
             <div className={styles.msgBubble}>
                 <div className={styles.msgInfo}>
                     <div className={styles.msgInfoName}>{`${message.userSurname} ${message.userName}`}</div>
-                    <div className={styles.msgInfoTime}>{`${dayjs(message.createdAt).format("HH:MM")}`}</div>
+                    <div className={styles.msgInfoTime}>{dayjs(message.createdAt).format("HH:MM")}</div>
                 </div>
 
                 <div className={styles.msgText}>{message.text}</div>
@@ -30,4 +30,4 @@ const RightMessage: FC<RightMessageProps> = ({ message }) => {
     );
 };
 
-export default RightMessage;
+export default LeftMessage;

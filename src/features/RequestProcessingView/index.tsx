@@ -4,7 +4,7 @@ import Frame from "../../components/Frame/Frame";
 import styles from "./styles.module.scss";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
-import Tabs, { TabState } from "./components/Tabs/Tabs";
+import Tabs, { TabState } from "./components/Tabs";
 import RequestItem from "./components/RequestItem";
 import Chat from "./components/Chat";
 import { useRequests } from "./hooks/useRequests";

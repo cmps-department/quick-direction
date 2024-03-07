@@ -1,20 +1,19 @@
 import { useMemo } from "react";
-import { useDisclosure } from "@mantine/hooks";
 import useCreateForm from "../../hooks/useForm";
 
 import { Container, Stack, Text, Group, Flex, Button, Box } from "@mantine/core";
-import TextInput from "../../../../components/TextInput/TextInput";
-import Select from "../../../../components/Select/Select";
 import { Controller, FormProvider } from "react-hook-form";
 
 import InstructionsModal from "../InstructionsModal";
-import SuccessModal from "../../../../components/Modals/SuccessModal/SuccessModal";
 import Link from "next/link";
 import FormSection from "../FormSections";
 import useData from "@/hooks/useData";
 import Modal from "@/components/Modals/Modal";
 import { Modals } from "@/components/Modals/data/modals";
 import { useRouter } from "next/router";
+import SuccessModal from "@/components/Modals/SuccessModal/SuccessModal";
+import TextInput from "@/components/TextInput/TextInput";
+import Select from "@/components/Select/Select";
 
 const RequestForm = () => {
     const { form, onSubmit } = useCreateForm();

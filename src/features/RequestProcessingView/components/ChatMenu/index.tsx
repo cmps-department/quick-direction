@@ -1,16 +1,16 @@
-import { Menu, Stack, UnstyledButton, Text } from '@mantine/core';
-import { Dispatch, FC, SetStateAction, useMemo, useState } from 'react';
+import { Menu, Stack, UnstyledButton, Text } from "@mantine/core";
+import { Dispatch, FC, SetStateAction, useMemo, useState } from "react";
 
 import styles from "./styles.module.scss";
-import { Icon } from '@iconify/react';
-import { RequestStatus, RequestStatusTraslit } from '../../../../constants/request-status';
-import { useSession } from 'next-auth/react';
-import { useUpdateRequest } from '../../hooks/useUpdateRequest';
+import { Icon } from "@iconify/react";
+import { useSession } from "next-auth/react";
+import { useUpdateRequest } from "../../hooks/useUpdateRequest";
+import { RequestStatus, RequestStatusTraslit } from "@/constants/request-status";
 
 interface ChatMenuProps {
     requestId: number;
     currentStatus: keyof typeof RequestStatus;
-    setActiveRequestId: Dispatch<SetStateAction<number | null>>
+    setActiveRequestId: Dispatch<SetStateAction<number | null>>;
 }
 
 const MenuAdminItems = [
@@ -22,9 +22,7 @@ const MenuAdminItems = [
     { id: 6, label: "Скасований", value: "Canceled", color: "#A1001B" },
 ];
 
-const MenuStudentItems = [
-    { id: 1, label: "Скасований", value: "Canceled", color: "#A1001B" },
-];
+const MenuStudentItems = [{ id: 1, label: "Скасований", value: "Canceled", color: "#A1001B" }];
 
 const ChatMenu: FC<ChatMenuProps> = ({ currentStatus, requestId, setActiveRequestId }) => {
     const [opened, setOpened] = useState(false);
@@ -40,13 +38,13 @@ const ChatMenu: FC<ChatMenuProps> = ({ currentStatus, requestId, setActiveReques
         updateRequest({ id: requestId, status });
         setOpened(false);
         setActiveRequestId(null);
-    }
+    };
 
     return (
-        <Menu classNames={{ dropdown:  styles.dropdown}} opened={opened} onChange={setOpened}>
+        <Menu classNames={{ dropdown: styles.dropdown }} opened={opened} onChange={setOpened}>
             <Menu.Target>
                 <UnstyledButton ml={10} c="#02808F">
-                    <Icon width={25} height={25} icon="pepicons-pop:dots-x"/>
+                    <Icon width={25} height={25} icon="pepicons-pop:dots-x" />
                 </UnstyledButton>
             </Menu.Target>
 
@@ -63,25 +61,25 @@ const ChatMenu: FC<ChatMenuProps> = ({ currentStatus, requestId, setActiveReques
                     </Text>
                 </Stack>
                 <Stack gap={24}>
-                    {
-                        menuItems.map((item) => {
-                            if (item.value === currentStatus) return null;
-                            return (
-                                <UnstyledButton
-                                    onClick={() => changeRequestStatus(item.value as ChatMenuProps["currentStatus"])}
-                                    key={item.id}
-                                    className={styles.btn}
-                                    c={item.color}
-                                >
-                                    <Text fw={600} fz={18}>{item.label}</Text>
-                                </UnstyledButton>
-                            )
-                        })
-                    }
+                    {menuItems.map((item) => {
+                        if (item.value === currentStatus) return null;
+                        return (
+                            <UnstyledButton
+                                onClick={() => changeRequestStatus(item.value as ChatMenuProps["currentStatus"])}
+                                key={item.id}
+                                className={styles.btn}
+                                c={item.color}
+                            >
+                                <Text fw={600} fz={18}>
+                                    {item.label}
+                                </Text>
+                            </UnstyledButton>
+                        );
+                    })}
                 </Stack>
             </Menu.Dropdown>
         </Menu>
-    )
-}
+    );
+};
 
-export default ChatMenu
+export default ChatMenu;

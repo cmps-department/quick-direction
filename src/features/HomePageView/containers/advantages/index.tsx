@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { advantages } from "../../constants/advantages";
-import AdvantageCard from "../../components/advantage-card/AdvantageCard";
-import styles from './advantages.module.scss';
+import AdvantageCard from "../../components/AdvantageCard";
+import styles from "./styles.module.scss";
 import Container from "../../../../components/Container/Container";
 
 const AdvantagesSection: FC = () => {
@@ -11,14 +11,14 @@ const AdvantagesSection: FC = () => {
                 <div className={styles.advantages}>
                     <h2 className={styles.advantages_title}>Чому саме електронні довідки</h2>
                     <div className={styles.advantages_wrap}>
-                        {advantages?.map(advantage => (
-                        <AdvantageCard advantage={advantage} key={advantage.id} />
+                        {advantages?.map((advantage) => (
+                            <AdvantageCard advantage={advantage} key={advantage.id} />
                         ))}
                     </div>
                 </div>
             </section>
         </Container>
-    )
-}
+    );
+};
 
-export default AdvantagesSection
+export default AdvantagesSection;
