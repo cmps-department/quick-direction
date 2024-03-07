@@ -6,7 +6,7 @@ import Container from "@/components/Container/Container";
 const HelpSection: FC = () => {
     return (
         <section>
-            <Container size={"xl"}>
+            <Container>
                 <div className={styles.help}>
                     <div className={styles.helpCard}>
                         <h3 className={styles.helpCard_title}>Є запитання?</h3>
