@@ -3,7 +3,7 @@ const routes = {
     REQUEST_PROCESSING: "/request-processing",
     CATEGORIES: "/admin/categories",
     CREATE_CATEGORY: "/admin/categories/create",
-    EDIT_CATEGORY: (id: string) => `/admin/categories/${id}`,
+    EDIT_CATEGORY: (id: string | number) => `/admin/categories/${id}`,
     FAQ: "/faq",
     ABOUT_US: "/about-us",
     INFORMATION: "/information",

@@ -1,7 +1,7 @@
 import { Button, Menu } from "@mantine/core";
 import React, { FC, useMemo } from "react";
 
-import styles from "./sortings.module.scss";
+import styles from "./styles.module.scss";
 import { useCategoryFilterStore } from "@/store/filter-category.store";
 
 const Sortings: FC = () => {

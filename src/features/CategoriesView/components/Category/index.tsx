@@ -1,28 +1,19 @@
 import React, { FC, useState } from "react";
 import { Box, Flex, Text, Button, Image } from "@mantine/core";
 import Link from "next/link";
-import DeleteModal from "../../../CreateCategoryView/components/DeleteModal/DeleteModal";
-import { useDisclosure } from "@mantine/hooks";
-import styles from "./category.module.scss";
-import useDeleteCategory from "../../hooks/useDeleteCategory";
+import routes from "@/constants/routes";
+
+import styles from "./styles.module.scss";
+import { Modals } from "@/components/Modals/data/modals";
+import { useModalStore } from "@/store/modal.store";
 
 interface ICategory {
     category: IGetCategory;
-    index: number;
 }
 
-const Category: FC<ICategory> = ({ category, index }) => {
+const Category: FC<ICategory> = ({ category }) => {
     const [isSwipe, setSwipe] = useState(false);
-    const [isDeleteModalOpen, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
-
-    const { deleteCategory } = useDeleteCategory();
-
-    const handleDelete = async (answer: boolean) => {
-        closeDeleteModal();
-        if (answer) {
-            const result = await deleteCategory(category.id);
-        }
-    };
+    const setOpen = useModalStore((store) => store.setOpen);
 
     const handleRightClick = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -32,13 +23,25 @@ const Category: FC<ICategory> = ({ category, index }) => {
     return (
         <>
             <Flex align={"center"} pos={"relative"}>
-                <Button onClick={openDeleteModal} radius={"xl"} className={styles.deleteBtn}>
-                    <Image width={40} height={40} src="/images/DeleteBtn.svg" alt="Success" />
+                <Button
+                    onClick={() =>
+                        setOpen({
+                            trigger: Modals.DELETE,
+                            payload: {
+                                name: category.name,
+                                id: category.id,
+                            },
+                        })
+                    }
+                    radius={"xl"}
+                    className={styles.deleteBtn}
+                >
+                    <Image width={40} height={40} src="/images/DeleteBtn.svg" alt="delete-category" />
                 </Button>
                 <Link
-                    style={isSwipe ? { transform: "translateX(80px)", width: "100%", zIndex: 20 } : { width: "100%", zIndex: 20 }}
+                    style={{ transition: "all .2s linear", marginLeft: isSwipe ? "80px" : 0, width: "100%", zIndex: 20 }}
                     onContextMenu={handleRightClick}
-                    href={`/admin/categories/${category.id}`}
+                    href={routes.EDIT_CATEGORY(category.id)}
                 >
                     <Flex className={styles.category} align={"center"} justify={"space-between"} p={24}>
                         <Box h={20} w={20} bg={category.color} style={{ borderRadius: "50%" }}></Box>
@@ -53,7 +56,6 @@ const Category: FC<ICategory> = ({ category, index }) => {
                     </Flex>
                 </Link>
             </Flex>
-            <DeleteModal setAnswer={handleDelete} opened={isDeleteModalOpen} close={closeDeleteModal} />
         </>
     );
 };

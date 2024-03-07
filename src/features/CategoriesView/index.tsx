@@ -3,18 +3,29 @@ import { Button, Divider, Group, Paper, Stack, Text } from "@mantine/core";
 
 import Container from "../../components/Container/Container";
 import Loading from "../../components/Loading/Loading";
-import Sortings from "./components/Sortings/Sortings";
+import Sortings from "./components/Sortings";
 import useData from "@/hooks/useData";
-import CategoriesList from "./components/CategoriesList/CategoriesList";
+import CategoriesList from "./components/CategoriesList";
 import Link from "next/link";
 import routes from "@/constants/routes";
 import { useCategoryFilterStore } from "@/store/filter-category.store";
+import Modal from "@/components/Modals/Modal";
+import { Modals } from "@/components/Modals/data/modals";
+import DeleteModal from "@/components/Modals/DeleteModal/DeleteModal";
+import useMutationData from "@/hooks/useMutationData";
 
 const CategoriesView: FC = () => {
     const filter = useCategoryFilterStore((state) => state.filter);
+
     const { data, isLoading } = useData<IGetCategory[]>({
-        queryKey: [["CATEGORIES", `FILTER_${filter}`]],
+        queryKey: ["CATEGORIES", { filter }],
         path: `/api/directions?filter=${filter}`,
+    });
+
+    const deleteCategory = useMutationData({
+        url: (id) => `/api/direction/delete/${id}`,
+        type: "delete",
+        queryKeys: { invalidate: [{ queryKey: ["CATEGORIES"] }] },
     });
 
     return (
@@ -35,6 +46,13 @@ const CategoriesView: FC = () => {
                 </Stack>
                 <Loading visible={isLoading} />
             </Paper>
+            <Modal triggers={[Modals.DELETE]}>
+                <DeleteModal
+                    onConfirm={(payload) => deleteCategory.mutateAsync(payload.id)}
+                    text={(payload) => `Видалити категорію ${payload.name}?`}
+                    loading={deleteCategory.isLoading}
+                />
+            </Modal>
         </Container>
     );
 };

@@ -1,5 +1,5 @@
 import { Stack, Text } from "@mantine/core";
-import Category from "../Category/Category";
+import Category from "../Category";
 import { FC } from "react";
 
 interface ICategoryList {
@@ -17,8 +17,8 @@ const CategoriesList: FC<ICategoryList> = ({ categories }) => {
 
     return (
         <Stack gap={24}>
-            {categories.map((category, index) => (
-                <Category key={category.id} category={category} index={index} />
+            {categories.map((category) => (
+                <Category key={category.id} category={category} />
             ))}
         </Stack>
     );

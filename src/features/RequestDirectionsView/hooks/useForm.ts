@@ -4,13 +4,12 @@ import * as yup from "yup";
 import { uploadFile } from "../api/uploadFile";
 import { useSession } from "next-auth/react";
 import { RequestStatus } from "../../../constants/request-status";
-import { useCreateRequest } from "./useCreateRequest";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
-
-interface useCreateFormProps {
-    openSuccessModal: () => void;
-}
+import { useModalStore } from "@/store/modal.store";
+import { Modals } from "@/components/Modals/data/modals";
+import useMutationData from "@/hooks/useMutationData";
+import routes from "@/constants/routes";
+import { useRouter } from "next/navigation";
 
 export interface RequestFormState {
     name: string;
@@ -23,10 +22,16 @@ export interface RequestFormState {
     subDirectionId: number;
 }
 
-export default function useCreateForm({ openSuccessModal }: useCreateFormProps) {
+export default function useCreateForm() {
     const { data: session } = useSession();
-    const { createRequest } = useCreateRequest();
+    const setOpen = useModalStore((state) => state.setOpen);
     const router = useRouter();
+
+    const createRequest = useMutationData({
+        url: () => `/api/requests`,
+        type: "post",
+        queryKeys: { invalidate: [{ queryKey: ["REQUESTS"] }] },
+    });
 
     const form = useForm<RequestFormState>({
         resolver: yupResolver(
@@ -79,11 +84,14 @@ export default function useCreateForm({ openSuccessModal }: useCreateFormProps) 
                 payload.text = data.text;
             }
 
-            createRequest(payload);
-            openSuccessModal();
-            setTimeout(() => {
-                router.push("/request-processing");
-            }, 3000);
+            createRequest.mutate(payload, {
+                onSuccess: () => {
+                    setOpen({
+                        trigger: Modals.SUCCESS,
+                    });
+                    router.push(routes.REQUEST_PROCESSING);
+                },
+            });
         } catch (err) {
             console.log(err);
         }

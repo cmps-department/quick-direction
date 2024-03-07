@@ -8,16 +8,22 @@ import Select from "../../../../components/Select/Select";
 import { Controller, FormProvider } from "react-hook-form";
 
 import InstructionsModal from "../InstructionsModal";
-import useGetCategories from "../../../CategoriesView/hooks/useGetCategories";
-import SuccessModal from "../../../../components/SuccessModal/SuccessModal";
+import SuccessModal from "../../../../components/Modals/SuccessModal/SuccessModal";
 import Link from "next/link";
 import FormSection from "../FormSections";
+import useData from "@/hooks/useData";
+import Modal from "@/components/Modals/Modal";
+import { Modals } from "@/components/Modals/data/modals";
+import { useRouter } from "next/router";
 
 const RequestForm = () => {
-    const [isSuccessModalOpen, { open: openSuccessModal, close: closeSuccessModal }] = useDisclosure(false);
-    const { form, onSubmit } = useCreateForm({ openSuccessModal });
+    const { form, onSubmit } = useCreateForm();
+    const router = useRouter();
 
-    const { data } = useGetCategories();
+    const { data } = useData<IGetCategory[]>({
+        queryKey: [["CATEGORIES"]],
+        path: `/api/directions`,
+    });
 
     const categories = useMemo(() => {
         if (!data) return [];
@@ -161,7 +167,9 @@ const RequestForm = () => {
                     </form>
                 </FormProvider>
             </Container>
-            <SuccessModal opened={isSuccessModalOpen} close={closeSuccessModal} text="Категорія успішно додана" />
+            <Modal triggers={[Modals.SUCCESS]}>
+                <SuccessModal onSuccess={() => router.push("/request-processing")} text="Ваш запит успішно надіслано" />
+            </Modal>
         </>
     );
 };
