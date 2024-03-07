@@ -1,12 +1,12 @@
-import FaqView from '../../features/FaqView';
+import AboutUsView from '../../features/AboutUsView';
 import LayoutHF from '../../layouts/LayoutHF';
 import PageLayout from '../../layouts/PageLayout';
 
-export default function FaqPage() {
+export default function AboutUsPage() {
   return (
     <PageLayout title={'FAQ'}>
       <LayoutHF headerColor="#02808F">
-        <FaqView />
+        <AboutUsView/>
       </LayoutHF>
     </PageLayout>
   );

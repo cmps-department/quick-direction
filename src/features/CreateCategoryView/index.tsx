@@ -2,21 +2,20 @@ import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import Frame from '../../components/Frame/Frame';
+import { useRouter } from 'next/router';
+import { useDisclosure } from '@mantine/hooks';
 import { Flex, NumberInput, Stack, Text, ColorInput, Space, Divider } from '@mantine/core';
+import Frame from '../../components/Frame/Frame';
 import Textarea from '../../components/Textarea/Textarea';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import { useDisclosure } from '@mantine/hooks';
 import SuccessModal from '../../components/SuccessModal/SuccessModal';
 import DeleteModal from './components/DeleteModal/DeleteModal';
 import Container from '../../components/Container/Container';
 
-import styles from './createC.module.scss';
 import TextInput from '../../components/TextInput/TextInput';
 import ArrowButtons from './components/ArrowButtons/ArrowButtons';
 import SubCategory from './components/SubCategory/SubCategory';
 import useCreateCategory from './hooks/useCreateCategory';
-import { useRouter } from 'next/router';
 import { ICategory, IGetCategory, ISubCategory } from '../../interfaces/category.interface';
 import useGetCategory from './hooks/useGetCategory';
 import Loading from '../../components/Loading/Loading';
@@ -24,6 +23,8 @@ import useDeleteCategory from '../CategoriesView/hooks/useDeleteCategory';
 import useUpdateCategory from './hooks/useUpdateCategory';
 import useFormValidationC from './hooks/useFormValidationC';
 import generateValidationSC from './hooks/generateValidationSC';
+
+import styles from './createC.module.scss';
 
 const CreateCategoryView: FC = () => {
   const router = useRouter();

@@ -18,7 +18,7 @@ const LayoutHF: FC<LayoutHFProps> = ({ children, headerColor }) => {
   return (
     <>
       {currentRoute === '/' ? <MainPageHeader /> : <Header color={headerColor} />}
-      <main>{children}</main>
+      <main className='main'>{children}</main>
       <Footer />
     </>
   );

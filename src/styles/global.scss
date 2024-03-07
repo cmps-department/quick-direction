@@ -6,12 +6,12 @@
   --scroll-track-background: #f8f8f8;
   --scroll-track-border-radius: 6px;
   --scroll-width: 12px;
-
   --light-color: #fafbfc;
   --dark-color: #2a2a2a;
   --accent-color: #02808f;
   --green-color: #e4fde0;
   --red-color: #a1001b;
+
   font-size: 16px !important;
 }
 
@@ -41,6 +41,10 @@ body {
   overflow-x: hidden;
   font-weight: 400;
   background-color: var(--light-color) !important;
+}
+
+.main {
+  min-height: calc(100vh - 186px - 380px);
 }
 
 a {
