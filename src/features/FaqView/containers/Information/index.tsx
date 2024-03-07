@@ -1,14 +1,14 @@
 import { FC } from 'react';
-import Container from '../../../../components/Container/Container';
-import { Box, Divider, List, Space, Text } from '@mantine/core';
+import { Box, List, Space, Text } from '@mantine/core';
+import CustomDivider from '../../../../components/CustomDivider/CustomDivider';
 
 const Information: FC = () => {
   return (
-    <Container>
+    <Box>
       <Text fz={28} fw={700} ta="center">
         Інформація
       </Text>
-      <Divider style={{ borderTop: '4px solid #02808F', margin: '24px auto 48px' }} maw={608} w="100%" />
+      <CustomDivider/>
       <Text fz={16} fw={400}>
         <Text span fw={600} inherit>
           Quick Direction
@@ -45,7 +45,7 @@ const Information: FC = () => {
         </List>
         <Space h="lg" />З Quick Direction ваше спілкування із дирекцією стає простим та ефективним!
       </Text>
-    </Container>
+    </Box>
   );
 };
 

@@ -1,11 +1,19 @@
-export interface IMessage {
+export interface IFaq {
+  question: String;
+  answer: String;
+  questionType: QuestionType;
+  documentLink: String;
+}
+
+export interface IFaqResponse extends IFaq {
   id: number;
-  requestId: number;
-  userId: string;
-  userName: string;
-  userSurname: string;
-  text: string;
-  documentLinks: string[];
   createdAt: string;
   updatedAt: string;
+}
+
+export enum QuestionType {
+  General = 'Загальна Інформація',
+  Application = 'Подача Заявок',
+  Administration = 'Взаємодія з Дирекцією',
+  Technical = 'Технічні Питання',
 }

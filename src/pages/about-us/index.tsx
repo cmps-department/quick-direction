@@ -4,7 +4,7 @@ import PageLayout from '../../layouts/PageLayout';
 
 export default function AboutUsPage() {
   return (
-    <PageLayout title={'FAQ'}>
+    <PageLayout title={'About'}>
       <LayoutHF headerColor="#02808F">
         <AboutUsView/>
       </LayoutHF>

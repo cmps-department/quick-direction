@@ -66,13 +66,6 @@
       background-color: var(--light-color);
       color: var(--accent-color);
     }
-
-    &_line {
-      width: 50%;
-      margin: 0 auto;
-      height: 4px;
-      background-color: var(--accent-color);
-    }
   }
 
   @media (max-width: 1400px) {

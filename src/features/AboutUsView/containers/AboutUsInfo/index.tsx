@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import Container from '../../../../components/Container/Container';
 import { Box, Divider, List, Space, Text } from '@mantine/core';
+import CustomDivider from '../../../../components/CustomDivider/CustomDivider';
 
 const AboutUsInfo: FC = () => {
   return (
@@ -8,7 +9,7 @@ const AboutUsInfo: FC = () => {
       <Text fz={28} fw={700} ta="center">
         Про нас
       </Text>
-      <Divider style={{ borderTop: '4px solid #02808F', margin: '24px auto 48px' }} maw={608} w="100%" />
+      <CustomDivider mb={48}/>
       <Text fz={16} fw={400}>
         Ласкаво запрошуємо до нашого інноваційного проекту, який перевертає уявлення про взаємодію між студентами та
         адміністрацією! Ми - команда талановитих студентів, які об'єднали зусилля, щоб створити веб-додаток, який

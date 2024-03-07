@@ -1,13 +1,14 @@
 import { FC } from 'react';
 import Information from './containers/Information';
-import Faq from './components/Faq';
+import FaqLayout from './components/FaqLayout';
+import Container from '../../components/Container/Container';
 
 const FaqView: FC = () => {
   return (
-    <>
+    <Container>
       <Information />
-      <Faq />
-    </>
+      <FaqLayout />
+    </Container>
   );
 };
 
