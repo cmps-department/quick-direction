@@ -8,7 +8,7 @@ interface ICustomDividerProps extends DividerProps {
 const CustomDivider: FC<ICustomDividerProps> = ({ className, ...props }) => {
   return (
     <Divider
-      style={{ borderTop: '4px solid #02808F', margin: '24px auto' }}
+      style={{ borderTop: '4px solid #02808F', marginBlock: '24px' }}
       maw={608}
       w="100%"
       className={className}

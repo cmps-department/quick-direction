@@ -37,7 +37,7 @@ const FaqList: FC = () => {
           </Frame>
         ))
       ) : (
-        <Text fz={20} fw={700} c="gray" ta="center" mt={30}>
+        <Text fz={20} fw={700} c="gray" ta="center">
           Нічого не знайдено...
         </Text>
       )}

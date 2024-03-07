@@ -9,7 +9,7 @@ const FaqLayout: FC = () => {
       <Text fz={28} fw={700} ta="center">
         Питання і відповіді
       </Text>
-      <CustomDivider mb={48}/>
+      <CustomDivider mb={48} mx={'auto'}/>
       <FaqList />
     </Box>
   );

@@ -5,9 +5,9 @@ import Header from '../Header';
 import Container from '../../components/Container/Container';
 import Frame from '../../components/Frame/Frame';
 import CustomButton from '../../components/CustomButton/CustomButton';
+import CustomDivider from '../../components/CustomDivider/CustomDivider';
 
 import styles from './styles.module.scss';
-import CustomDivider from '../../components/CustomDivider/CustomDivider';
 
 const MainPageHeader = () => {
   const { data: session } = useSession();
@@ -23,7 +23,7 @@ const MainPageHeader = () => {
         <Container>
           <Frame className={styles.hBanner_container}>
             <h2 className={styles.hBanner_title}>Що це таке?</h2>
-            <CustomDivider/>
+            <CustomDivider mx={'auto'}/>
             <p className={styles.hBanner_text}>
               <span>Quick Direction</span> - це сервіс для легкого спілкування студентів з дирекцією. З нами ваша заявка
               точно не загубиться: заповнену форму одразу буде скеровано до спеціальних відділів дирекції НТУ “ХПІ”

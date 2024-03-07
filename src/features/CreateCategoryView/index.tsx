@@ -23,6 +23,7 @@ import useDeleteCategory from '../CategoriesView/hooks/useDeleteCategory';
 import useUpdateCategory from './hooks/useUpdateCategory';
 import useFormValidationC from './hooks/useFormValidationC';
 import generateValidationSC from './hooks/generateValidationSC';
+import CustomDivider from '../../components/CustomDivider/CustomDivider';
 
 import styles from './createC.module.scss';
 
@@ -178,7 +179,7 @@ const CreateCategoryView: FC = () => {
                 placeholder="Колір категорії"
               />
             </Flex>
-            <Divider style={{ borderTop: '4px solid #02808F', marginBottom: '24px' }} maw={608} w="100%" />
+            <CustomDivider/>
             <Text fz={20} fw={700}>
               Назва категорії{' '}
               <Text fz={20} fw={700} span c="red">

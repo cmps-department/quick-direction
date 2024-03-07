@@ -8,11 +8,11 @@ const Information: FC = () => {
       <Text fz={28} fw={700} ta="center">
         Інформація
       </Text>
-      <CustomDivider/>
-      <Text fz={16} fw={400}>
+      <CustomDivider mx={'auto'}/>
+      <Text fz={16} fw={400} pt={24}>
         <Text span fw={600} inherit>
-          Quick Direction
-        </Text>{' '}
+          Quick Direction {' '}
+        </Text>
         - це інноваційний сервіс для ефективного та зручного спілкування студентів із дирекцією. Наш сервіс вирішує
         актуальні проблеми, які виникають при дистанційному навчанні та розсіяному місцезнаходженні студентів.
         <Space h="lg" />

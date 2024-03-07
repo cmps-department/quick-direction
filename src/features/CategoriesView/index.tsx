@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Box, Button, Divider, Flex, Text } from '@mantine/core';
+import { Box, Button, Flex, Text } from '@mantine/core';
 import { useRouter } from 'next/router';
 
 import Container from '../../components/Container/Container';
@@ -9,6 +9,7 @@ import { IGetCategory } from '../../interfaces/category.interface';
 import Loading from '../../components/Loading/Loading';
 import Sortings from './components/Sortings/Sortings';
 import useGetCategories from './hooks/useGetCategories';
+import CustomDivider from '../../components/CustomDivider/CustomDivider';
 
 import styles from './categories.module.scss';
 
@@ -36,7 +37,7 @@ const CategoriesView: FC = () => {
             <Sortings allCategories={data || []} setCategories={setCategories} />
           </Flex>
         </Flex>
-        <Divider style={{ borderTop: '4px solid #02808F', marginBottom: '24px' }} maw={608} w="100%" />
+        <CustomDivider />
         <Button
           h={48}
           w={193}
