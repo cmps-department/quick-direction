@@ -33,12 +33,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const readStream = fs.createReadStream(file[0].filepath);
     const writeStream = fs.createWriteStream(filePath);
 
-    readStream.on('error', (err) => {
+    readStream.on('error', err => {
       console.error('Error reading file stream:', err);
       return res.status(500).json({ success: false, message: 'Error uploading file', error: err.message });
     });
 
-    writeStream.on('error', (err) => {
+    writeStream.on('error', err => {
       console.error('Error writing file stream:', err);
       return res.status(500).json({ success: false, message: 'Error uploading file', error: err.message });
     });

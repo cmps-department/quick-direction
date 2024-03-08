@@ -14,7 +14,7 @@ const useFormValidationC = () => {
       .required("Поле обов'язкове до заповнення!")
       .min(2, 'Мінімум 2 символи!')
       .max(50, 'Максимум 50 символів!')
-      .email('Поле не відповідає формату email!')
+      .email('Поле не відповідає формату email!'),
   });
 
   return validationSchema;

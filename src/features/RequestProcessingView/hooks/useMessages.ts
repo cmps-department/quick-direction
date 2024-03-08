@@ -1,21 +1,20 @@
-import { useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
-import api from "../../../utils/api";
-import { IMessage } from "../../../interfaces/message.interface";
+import { useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import api from '../../../utils/api';
+import { IMessage } from '../../../interfaces/message.interface';
 
 export const useMessages = (requestId: number) => {
-    const { data, ...options } = useQuery(
-        ["MESSAGES", { requestId }],
-        () => api.get<IMessage[]>(`/api/messages/${requestId}`)
-    );
+  const { data, ...options } = useQuery(['MESSAGES', { requestId }], () =>
+    api.get<IMessage[]>(`/api/messages/${requestId}`),
+  );
 
-    const messages = useMemo(() => {
-        if (!data) return [];
-        return data.data;
-    }, [data]);
+  const messages = useMemo(() => {
+    if (!data) return [];
+    return data.data;
+  }, [data]);
 
-    return {
-        messages,
-        ...options,
-    };
+  return {
+    messages,
+    ...options,
+  };
 };

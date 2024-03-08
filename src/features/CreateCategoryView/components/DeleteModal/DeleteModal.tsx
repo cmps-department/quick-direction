@@ -1,6 +1,6 @@
-import { Group, Modal, Stack, Text } from '@mantine/core'
+import { Group, Modal, Stack, Text } from '@mantine/core';
 import Image from 'next/image';
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 import CustomButton from '../../../../components/CustomButton/CustomButton';
 
 import styles from './delete.module.scss';
@@ -14,34 +14,45 @@ interface IDeleteModal {
 const DeleteModal: FC<IDeleteModal> = ({ opened, close, setAnswer }) => {
   return (
     <Modal
-      shadow='xl'
-      radius='lg'
+      shadow="xl"
+      radius="lg"
       opened={opened}
       onClose={close}
       withCloseButton={false}
       styles={{
         content: {
-          minWidth: "600px",
-          padding: "64px",
-          textAlign: 'center'
-        }
+          minWidth: '600px',
+          padding: '64px',
+          textAlign: 'center',
+        },
       }}
     >
-      <Stack align='center' gap={24}>
-        <Image
-          width={95}
-          height={95}
-          src="/images/Delete.png"
-          alt="Success"
-        />
-        <Text c={'var(--red-color)'} fz={20} fw={700}>Видалити?</Text>
+      <Stack align="center" gap={24}>
+        <Image width={95} height={95} src="/images/Delete.png" alt="Success" />
+        <Text c={'var(--red-color)'} fz={20} fw={700}>
+          Видалити?
+        </Text>
         <Group>
-          <CustomButton className={styles.cancelBtn} onClick={() => {setAnswer(false)}}>Відміна</CustomButton>
-          <CustomButton className={styles.yesBtn} onClick={() => {setAnswer(true)}}>Так</CustomButton>
+          <CustomButton
+            className={styles.cancelBtn}
+            onClick={() => {
+              setAnswer(false);
+            }}
+          >
+            Відміна
+          </CustomButton>
+          <CustomButton
+            className={styles.yesBtn}
+            onClick={() => {
+              setAnswer(true);
+            }}
+          >
+            Так
+          </CustomButton>
         </Group>
       </Stack>
     </Modal>
-  )
-}
+  );
+};
 
-export default DeleteModal
+export default DeleteModal;

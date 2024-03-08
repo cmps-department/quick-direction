@@ -1,5 +1,5 @@
-import { FC } from 'react'
-import styles from './guide.module.scss'
+import { FC } from 'react';
+import styles from './guide.module.scss';
 import CarouselC from '../../components/carousel/Carousel';
 import ContainerL from '../../../../components/Container/Container';
 
@@ -13,7 +13,7 @@ const GuideSection: FC = () => {
         <CarouselC />
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default GuideSection
+export default GuideSection;
