@@ -19,7 +19,10 @@ const CategoriesView: FC = () => {
 
     const { data, isLoading } = useData<IGetCategory[]>({
         queryKey: ["CATEGORIES", { filter }],
-        path: `/api/directions?filter=${filter}`,
+        params: {
+            filter,
+        },
+        path: `/api/directions`,
     });
 
     const deleteCategory = useMutationData({
