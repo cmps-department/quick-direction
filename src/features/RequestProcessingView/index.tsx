@@ -1,5 +1,5 @@
 import { Container, Flex, Stack, Text } from "@mantine/core";
-import Frame from "../../components/Frame/Frame";
+import Frame from "../../components/Frame";
 
 import styles from "./styles.module.scss";
 import { useSession } from "next-auth/react";
@@ -8,7 +8,7 @@ import Tabs, { TabState } from "./components/Tabs";
 import RequestItem from "./components/RequestItem";
 import Chat from "./components/Chat";
 import { useRequests } from "./hooks/useRequests";
-import Loading from "../../components/Loading/Loading";
+import Loading from "../../components/Loading";
 
 const RequestProcessingView = () => {
     const { data: session } = useSession();

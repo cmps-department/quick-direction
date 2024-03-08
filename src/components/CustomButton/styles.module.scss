@@ -1,0 +1,34 @@
+.customBtn {
+    border-radius: 999px;
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: background-color .2s ease;
+    font-size: 18px;
+    font-weight: 600;
+    height: fit-content;
+    padding-block: 12px;
+
+    &:hover {
+        background-color: #fafbfc87;
+    }
+}
+
+.isDisabled {
+    opacity: 0.7;
+    cursor: progress;
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    font-size: 18px;
+    font-weight: 600;
+    border: 1px solid var(--dark-color);
+    border-radius: 999px;
+    height: fit-content;
+    padding: 12px 100px;
+
+    &:hover {
+        background-color: var(--light-color);
+    }
+}

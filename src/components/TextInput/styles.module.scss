@@ -1,0 +1,12 @@
+.input {
+    border: 2px solid #D9D9D9;
+    height: 48px;
+
+    &:focus {
+        border: 2px solid #02808F;
+    }
+}
+
+.label {
+    margin-bottom: 8px;
+}

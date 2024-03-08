@@ -1,0 +1,23 @@
+.frame {
+    padding: 48px;
+    margin-block: 48px !important;
+
+    @media (max-width: 600px) {
+        & {
+            padding: 20px;
+        }
+    }
+}
+
+.navbar {
+    background-color: var(--dark-color);
+    border-radius: 68px;
+    margin: 30px;
+    padding-inline: 24px;
+}
+
+.swatch {
+    height: 10px !important;
+    width: 10px !important;
+    border-radius: 10px !important;
+}

@@ -9,22 +9,22 @@ import Modal from "@/components/Modals/Modal";
 import { Modals } from "@/components/Modals/data/modals";
 
 import classes from "./styles.module.scss";
-import CreateCategoryForm from "./components/CreateCategoryForm";
+import EditCategoryForm from "./components/EditCategoryForm";
 import routes from "@/constants/routes";
 
-const CreateCategoryView: FC = () => {
+const EditCategoryView: FC = () => {
     const router = useRouter();
 
     return (
         <Container>
             <Frame className={classes.frame}>
-                <CreateCategoryForm />
+                <EditCategoryForm />
                 <Modal triggers={[Modals.SUCCESS]}>
-                    <SuccessModal onSuccess={() => router.push(routes.CATEGORIES)} text="Категорія успішно додана" />
+                    <SuccessModal onSuccess={() => router.push(routes.CATEGORIES)} text="Категорія успішно відредагована" />
                 </Modal>
             </Frame>
         </Container>
     );
 };
 
-export default CreateCategoryView;
+export default EditCategoryView;

@@ -4,28 +4,16 @@ import { Controller, FormProvider } from "react-hook-form";
 import { ColorInput, Divider, Group, NumberInput, Stack, Text } from "@mantine/core";
 import Textarea from "@/components/Textarea/Textarea";
 import TextInput from "@/components/TextInput/TextInput";
-import ArrowButtons from "../ArrowButtons";
-import CustomButton from "@/components/CustomButton/CustomButton";
+import ArrowButtons from "../../../../components/ArrowButtons";
+import CustomButton from "@/components/CustomButton";
 
 import classes from "./styles.module.scss";
 import CreateSubCategoryForm from "../CreateSubcategoryForm";
 
 const CreateCategoryForm = () => {
-    const [quantity, setQuantity] = useState(1);
     const { form, onSubmit } = useCreateForm();
 
     const subcategories = form.watch("subDirections");
-
-    useEffect(() => {
-        const formState = form.getValues("subDirections");
-
-        if (quantity > formState.length) {
-            form.setValue("subDirections", [...formState, subCategoryDefaultValue]);
-        } else {
-            formState.pop();
-            form.setValue("subDirections", formState);
-        }
-    }, [quantity]);
 
     return (
         <FormProvider {...form}>
@@ -116,22 +104,20 @@ const CreateCategoryForm = () => {
                         )}
                     />
 
-                    <Text fz={20} fw={700}>
-                        Підкатегорії{" "}
-                        <Text fz={20} fw={700} span c="red">
-                            *
+                    <Group mb={24} align="center" justify="space-between">
+                        <Text fz={20} fw={700}>
+                            Підкатегорії{" "}
+                            <Text fz={20} fw={700} span c="red">
+                                *
+                            </Text>
                         </Text>
-                    </Text>
-                    <NumberInput
-                        className={classes.inputNumber}
-                        value={quantity || 1}
-                        onChange={(value) => setQuantity(typeof value === "string" ? parseInt(value) || 1 : value)}
-                        rightSection={<ArrowButtons setAmountSub={setQuantity} />}
-                        placeholder="Кількість"
-                        clampBehavior="strict"
-                        radius={"xl"}
-                        min={1}
-                    />
+                        <CustomButton
+                            onClick={() => form.setValue("subDirections", [...subcategories, subCategoryDefaultValue])}
+                            className={classes.successBtn}
+                        >
+                            Додати підкатегорію
+                        </CustomButton>
+                    </Group>
 
                     {subcategories.map((_, idx) => (
                         <CreateSubCategoryForm key={idx} id={idx} />
@@ -139,7 +125,7 @@ const CreateCategoryForm = () => {
 
                     <Group justify="end" wrap={"wrap"} gap={15}>
                         <CustomButton type="submit" className={classes.successBtn}>
-                            Зберегти
+                            Створити
                         </CustomButton>
                     </Group>
                 </Stack>

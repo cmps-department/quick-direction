@@ -34,7 +34,7 @@ const TeacherHeader = () => {
                     </Link>
                 </Group>
                 <Group w={"40%"} gap={32} align="center" justify="flex-end">
-                    {session && !path.startsWith(routes.REQUEST_PROCESSING) && (
+                    {session && !path?.startsWith(routes.REQUEST_PROCESSING) && (
                         <Indicator styles={{ indicator: { height: "10px", width: "10px", top: "3px", right: "-5px" } }} color="var(--green-color)">
                             <Link className={classes.link} href="/request-processing">
                                 Заявки

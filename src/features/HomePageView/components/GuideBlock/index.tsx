@@ -1,4 +1,4 @@
-import Container from "@/components/Container/Container";
+import Container from "@/components/Container";
 import styles from "./styles.module.scss";
 
 interface IGuideBlock {

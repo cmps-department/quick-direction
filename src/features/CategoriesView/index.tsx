@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { Button, Divider, Group, Paper, Stack, Text } from "@mantine/core";
 
-import Container from "../../components/Container/Container";
-import Loading from "../../components/Loading/Loading";
+import Container from "../../components/Container";
+import Loading from "../../components/Loading";
 import Sortings from "./components/Sortings";
 import useData from "@/hooks/useData";
 import CategoriesList from "./components/CategoriesList";

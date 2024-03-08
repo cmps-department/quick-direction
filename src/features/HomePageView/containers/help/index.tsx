@@ -1,7 +1,7 @@
 import { FC } from "react";
 import styles from "./styles.module.scss";
-import CustomButton from "@/components/CustomButton/CustomButton";
-import Container from "@/components/Container/Container";
+import CustomButton from "@/components/CustomButton";
+import Container from "@/components/Container";
 
 const HelpSection: FC = () => {
     return (

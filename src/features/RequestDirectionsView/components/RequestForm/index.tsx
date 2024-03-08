@@ -13,7 +13,7 @@ import { Modals } from "@/components/Modals/data/modals";
 import { useRouter } from "next/router";
 import SuccessModal from "@/components/Modals/SuccessModal/SuccessModal";
 import TextInput from "@/components/TextInput/TextInput";
-import Select from "@/components/Select/Select";
+import Select from "@/components/Select";
 import routes from "@/constants/routes";
 
 const RequestForm = () => {

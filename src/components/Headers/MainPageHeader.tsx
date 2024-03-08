@@ -2,9 +2,9 @@ import { FC, ReactNode } from "react";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-import Container from "../Container/Container";
-import Frame from "../Frame/Frame";
-import CustomButton from "../CustomButton/CustomButton";
+import Container from "../Container";
+import Frame from "../Frame";
+import CustomButton from "../CustomButton";
 
 import styles from "./styles.module.scss";
 import { Box, Text } from "@mantine/core";

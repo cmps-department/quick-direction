@@ -1,8 +1,8 @@
 import { FC } from "react";
-import styles from "./footer.module.scss";
+import styles from "./styles.module.scss";
 import Image from "next/image";
 
-import ContainerL from "../Container/Container";
+import ContainerL from "../Container";
 import { Flex, UnstyledButton } from "@mantine/core";
 import { useRouter } from "next/router";
 import routes from "@/constants/routes";

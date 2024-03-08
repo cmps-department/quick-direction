@@ -7,13 +7,13 @@ import { CategoryFormState } from "../../hooks/useForm";
 import { Controller, useFormContext } from "react-hook-form";
 import CustomButton from "@/components/CustomButton";
 
-import classes from "../CreateCategoryForm/styles.module.scss";
+import classes from "../EditCategoryForm/styles.module.scss";
 
-interface CreateSubCategoryFormProps {
+interface EditSubCategoryFormProps {
     id: number;
 }
 
-const CreateSubCategoryForm: FC<CreateSubCategoryFormProps> = ({ id }) => {
+const EditSubCategoryForm: FC<EditSubCategoryFormProps> = ({ id }) => {
     const form = useFormContext<CategoryFormState>();
 
     const quantity = form.watch("subDirections").length;
@@ -133,14 +133,17 @@ const CreateSubCategoryForm: FC<CreateSubCategoryFormProps> = ({ id }) => {
                 <Controller
                     name={`subDirections.${id}.textField`}
                     control={form.control}
-                    render={({ field, fieldState }) => (
-                        <Checkbox
-                            checked={field.value}
-                            onChange={(e) => field.onChange(e.currentTarget.checked)}
-                            error={fieldState.error && fieldState.error.message}
-                            label={"Текстове поле"}
-                        />
-                    )}
+                    render={({ field, fieldState }) => {
+                        console.log(field.value);
+                        return (
+                            <Checkbox
+                                checked={field.value}
+                                onChange={(e) => field.onChange(e.currentTarget.checked)}
+                                error={fieldState.error && fieldState.error.message}
+                                label={"Текстове поле"}
+                            />
+                        );
+                    }}
                 />
             </Flex>
             <Space h="sm" />
@@ -149,4 +152,4 @@ const CreateSubCategoryForm: FC<CreateSubCategoryFormProps> = ({ id }) => {
     );
 };
 
-export default CreateSubCategoryForm;
+export default EditSubCategoryForm;
