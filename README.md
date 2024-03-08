@@ -1,10 +1,6 @@
 Як запустити проект
 
 ```shell
-cd getinfo
-```
-
-```shell
 docker compose up -d
 ```
 
