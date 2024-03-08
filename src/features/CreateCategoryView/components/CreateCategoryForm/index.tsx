@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
 import useCreateForm, { subCategoryDefaultValue } from "../../hooks/useForm";
 import { Controller, FormProvider } from "react-hook-form";
-import { ColorInput, Divider, Group, NumberInput, Stack, Text } from "@mantine/core";
+import { ColorInput, Divider, Group, Stack, Text } from "@mantine/core";
 import Textarea from "@/components/Textarea/Textarea";
 import TextInput from "@/components/TextInput/TextInput";
-import ArrowButtons from "../../../../components/ArrowButtons";
 import CustomButton from "@/components/CustomButton";
 
 import classes from "./styles.module.scss";

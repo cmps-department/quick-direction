@@ -20,7 +20,7 @@ const CreateCategoryView: FC = () => {
             <Frame className={classes.frame}>
                 <CreateCategoryForm />
                 <Modal triggers={[Modals.SUCCESS]}>
-                    <SuccessModal onSuccess={() => router.push(routes.CATEGORIES)} text="Категорія успішно додана" />
+                    <SuccessModal onSuccess={() => router.push(routes.CATEGORIES)} text={(payload) => `Категорія ${payload.name} успішно додана`} />
                 </Modal>
             </Frame>
         </Container>

@@ -4,8 +4,6 @@ import * as yup from "yup";
 import { useModalStore } from "@/store/modal.store";
 import { Modals } from "@/components/Modals/data/modals";
 import useMutationData from "@/hooks/useMutationData";
-import { useRouter } from "next/navigation";
-import routes from "@/constants/routes";
 
 export interface CategoryFormState {
     name: string;
@@ -40,7 +38,6 @@ const defaultValues = {
 };
 
 export default function useCreateForm() {
-    const router = useRouter();
     const setOpen = useModalStore((state) => state.setOpen);
     const createCategory = useMutationData({
         url: () => `/api/directions`,
@@ -77,8 +74,10 @@ export default function useCreateForm() {
             onSuccess: () => {
                 setOpen({
                     trigger: Modals.SUCCESS,
+                    payload: {
+                        name: data.name,
+                    },
                 });
-                router.push(routes.CATEGORIES);
             },
         });
     };

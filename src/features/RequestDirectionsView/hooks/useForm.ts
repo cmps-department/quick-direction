@@ -8,8 +8,6 @@ import { useEffect } from "react";
 import { useModalStore } from "@/store/modal.store";
 import { Modals } from "@/components/Modals/data/modals";
 import useMutationData from "@/hooks/useMutationData";
-import routes from "@/constants/routes";
-import { useRouter } from "next/navigation";
 
 export interface RequestFormState {
     name: string;
@@ -25,7 +23,6 @@ export interface RequestFormState {
 export default function useCreateForm() {
     const { data: session } = useSession();
     const setOpen = useModalStore((state) => state.setOpen);
-    const router = useRouter();
 
     const createRequest = useMutationData({
         url: () => `/api/requests`,
@@ -89,7 +86,6 @@ export default function useCreateForm() {
                     setOpen({
                         trigger: Modals.SUCCESS,
                     });
-                    router.push(routes.REQUEST_PROCESSING);
                 },
             });
         } catch (err) {

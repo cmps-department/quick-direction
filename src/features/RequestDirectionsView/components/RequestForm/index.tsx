@@ -168,7 +168,7 @@ const RequestForm = () => {
                 </FormProvider>
             </Container>
             <Modal triggers={[Modals.SUCCESS]}>
-                <SuccessModal onSuccess={() => router.push(routes.REQUEST_PROCESSING)} text="Ваш запит успішно надіслано" />
+                <SuccessModal onSuccess={() => router.push(routes.REQUEST_PROCESSING)} text={() => "Ваш запит успішно надіслано"} />
             </Modal>
         </>
     );

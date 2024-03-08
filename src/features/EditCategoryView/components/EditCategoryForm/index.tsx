@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useCreateForm, { subCategoryDefaultValue } from "../../hooks/useForm";
+import useEditForm, { subCategoryDefaultValue } from "../../hooks/useForm";
 import { Controller, FormProvider } from "react-hook-form";
 import { Box, ColorInput, Divider, Group, Stack, Text } from "@mantine/core";
 import Textarea from "@/components/Textarea/Textarea";
@@ -13,7 +13,7 @@ import useData from "@/hooks/useData";
 import Loading from "@/components/Loading";
 
 const EditCategoryForm = () => {
-    const { form, onSubmit } = useCreateForm();
+    const { form, onSubmit } = useEditForm();
     const router = useRouter();
     const { id } = router.query;
 

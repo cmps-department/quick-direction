@@ -20,7 +20,10 @@ const EditCategoryView: FC = () => {
             <Frame className={classes.frame}>
                 <EditCategoryForm />
                 <Modal triggers={[Modals.SUCCESS]}>
-                    <SuccessModal onSuccess={() => router.push(routes.CATEGORIES)} text="Категорія успішно відредагована" />
+                    <SuccessModal
+                        onSuccess={() => router.push(routes.CATEGORIES)}
+                        text={(payload) => `Категорія ${payload.name} успішно відредагована`}
+                    />
                 </Modal>
             </Frame>
         </Container>

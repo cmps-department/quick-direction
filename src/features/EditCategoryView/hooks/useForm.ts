@@ -78,6 +78,9 @@ export default function useEditForm() {
             onSuccess: () => {
                 setOpen({
                     trigger: Modals.SUCCESS,
+                    payload: {
+                        name: data.name,
+                    },
                 });
             },
         });
