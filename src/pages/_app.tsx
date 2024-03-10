@@ -24,15 +24,15 @@ const config = {
 };
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
-  const [queryClient] = useState(() => new QueryClient(config));
+    const [queryClient] = useState(() => new QueryClient(config));
 
-  return (
-    <Fragment>
-      <Head>
-        <title>QuickDirection</title>
-        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-        <link rel="icon" href="/icon.png" type="image.png" />
-      </Head>
+    return (
+        <Fragment>
+            <Head>
+                <title>QuickDirection</title>
+                <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+                <link rel="icon" href="/icon.png" type="image.png" />
+            </Head>
 
             <SessionProvider session={session}>
                 <MantineProvider theme={theme}>

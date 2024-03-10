@@ -1,12 +1,12 @@
-import { FC } from 'react';
-import { Stack } from '@mantine/core';
+import { FC } from "react";
+import { Stack } from "@mantine/core";
 
 import styles from "./styles.module.scss";
 import dayjs from "dayjs";
 import MessageDocument from "../MessageDocument";
 
 interface LeftMessageProps {
-  message: IMessage;
+    message: IMessage;
 }
 
 const LeftMessage: FC<LeftMessageProps> = ({ message }) => {

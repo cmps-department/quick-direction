@@ -18,6 +18,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.status(500).json({ error: "There is no message" });
         }
     } else {
-      res.status(500).json({ error: 'There is no message' });
+        res.status(500).json({ error: "There is no message" });
     }
 }

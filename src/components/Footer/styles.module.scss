@@ -1,7 +1,7 @@
 .footer {
-  background-color: var(--accent-color);
-  color: var(--light-color);
-  position: relative;
+    background-color: var(--accent-color);
+    color: var(--light-color);
+    position: relative;
 
     &_line {
         position: absolute;
@@ -25,7 +25,6 @@
             flex: 1;
         }
     }
-  }
 }
 
 .link {

@@ -10,14 +10,14 @@ import { Modals } from "@/components/Modals/data/modals";
 import useMutationData from "@/hooks/useMutationData";
 
 export interface RequestFormState {
-  name: string;
-  surname: string;
-  email: string;
-  studentGroup: string;
-  text?: string;
-  document?: File;
-  directionId: number;
-  subDirectionId: number;
+    name: string;
+    surname: string;
+    email: string;
+    studentGroup: string;
+    text?: string;
+    document?: File;
+    directionId: number;
+    subDirectionId: number;
 }
 
 export default function useCreateForm() {
@@ -72,14 +72,14 @@ export default function useCreateForm() {
                 status: RequestStatus.Submitted,
             };
 
-      if (data.document) {
-        const response = await uploadFile(data.document);
-        payload.documentLink = response.fileLink;
-        payload.text = '';
-      } else {
-        payload.documentLink = '';
-        payload.text = data.text;
-      }
+            if (data.document) {
+                const response = await uploadFile(data.document);
+                payload.documentLink = response.fileLink;
+                payload.text = "";
+            } else {
+                payload.documentLink = "";
+                payload.text = data.text;
+            }
 
             createRequest.mutate(payload, {
                 onSuccess: () => {
@@ -93,8 +93,8 @@ export default function useCreateForm() {
         }
     };
 
-  return {
-    form,
-    onSubmit,
-  };
+    return {
+        form,
+        onSubmit,
+    };
 }

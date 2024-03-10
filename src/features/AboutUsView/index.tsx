@@ -1,12 +1,8 @@
-import { FC } from 'react';
-import AboutUsInfo from './containers/AboutUsInfo';
+import { FC } from "react";
+import AboutUsInfo from "./containers/AboutUsInfo";
 
 const AboutUsView: FC = () => {
-  return (
-    <>
-      <AboutUsInfo />
-    </>
-  );
+    return <AboutUsInfo />;
 };
 
 export default AboutUsView;

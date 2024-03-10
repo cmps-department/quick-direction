@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import routes from "@/constants/routes";
 
 const Footer: FC = () => {
-  const router = useRouter();
+    const router = useRouter();
 
     return (
         <footer>

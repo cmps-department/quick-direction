@@ -66,43 +66,6 @@
         }
     }
 
-    &_title,
-    &_text {
-      color: var(--dark-color);
-    }
-
-    &_title {
-      font-size: 28px;
-      font-weight: 700;
-      line-height: 36px;
-      margin-top: 0;
-    }
-
-    &_text {
-      width: 85%;
-      margin: 24px auto;
-      font-size: 16px;
-      line-height: 24px;
-
-      span {
-        font-weight: 600;
-      }
-    }
-
-    &_btn {
-      background-color: var(--accent-color);
-      color: var(--light-color);
-      border: 2px solid var(--accent-color);
-      padding: 12px 120px;
-    }
-
-    &_btn:hover {
-      background-color: var(--light-color);
-      color: var(--accent-color);
-    }
-  }
-
-  @media (max-width: 1400px) {
     .hBanner {
         position: absolute;
         bottom: -45px;
@@ -158,27 +121,21 @@
             background-color: var(--accent-color);
         }
     }
-  }
 
-  @media (max-width: 700px) {
-    .hBanner {
-      &_text {
-        text-align: justify;
-      }
+    @media (max-width: 1400px) {
+        .hBanner {
+            &_container {
+                padding: 34px 0;
+            }
+        }
     }
-  }
 
-  @media (max-width: 500px) {
-    .hBanner {
-      width: 90%;
-
-      &_btn {
-        background-color: var(--accent-color);
-        color: var(--light-color);
-        border: 2px solid var(--accent-color);
-        padding-inline: 0;
-        width: 95%;
-      }
+    @media (max-width: 700px) {
+        .hBanner {
+            &_text {
+                text-align: justify;
+            }
+        }
     }
 
     @media (max-width: 500px) {

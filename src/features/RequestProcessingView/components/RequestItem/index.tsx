@@ -1,13 +1,13 @@
-import { FC } from 'react';
-import { Flex, Text } from '@mantine/core';
+import { FC } from "react";
+import { Flex, Text } from "@mantine/core";
 
 import styles from "./styles.module.scss";
 
 interface RequestItemProps {
-  request: IRequest;
-  setActiveRequest: () => void;
-  hidden: boolean;
-  isActive: boolean;
+    request: IRequest;
+    setActiveRequest: () => void;
+    hidden: boolean;
+    isActive: boolean;
 }
 
 const RequestItem: FC<RequestItemProps> = ({ request, setActiveRequest, hidden, isActive }) => {

@@ -36,7 +36,7 @@ interface IRequest {
     messages: IMessage[];
     createdAt: string;
     updatedAt: string;
-  };
+}
 
 interface RequestPayload {
     name: string;
