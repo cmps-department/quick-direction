@@ -3,12 +3,12 @@ import KeycloakProvider from "next-auth/providers/keycloak";
 import { jwtDecode } from "jwt-decode";
 import { encrypt } from "../utils/encryption";
 
-declare module 'next-auth/jwt' {
+declare module "next-auth/jwt" {
     interface JWT {
         decoded?: {
             realm_access: {
                 roles: string[];
-            },
+            };
             sub: string;
         };
         access_token?: string;
@@ -28,9 +28,9 @@ declare module "next-auth" {
             name: string;
             email: string;
             userId: string;
-        }
+        };
     }
-  }
+}
 
 export const authConfig: AuthOptions = {
     providers: [
@@ -71,6 +71,6 @@ export const authConfig: AuthOptions = {
                 const logoutUrl = `${process.env.END_SESSION_URL}?id_token_hint=${token.id_token}&post_logout_redirect_uri=${encodeURIComponent(process.env.NEXTAUTH_URL!)}`;
                 await fetch(logoutUrl);
             }
-        }
-    }
-}
+        },
+    },
+};

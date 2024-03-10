@@ -11,9 +11,7 @@ const AdvantagesSection: FC = () => {
                 <div className={styles.advantages}>
                     <h2 className={styles.advantages_title}>Чому саме електронні довідки</h2>
                     <div className={styles.advantages_wrap}>
-                        {advantages?.map((advantage) => (
-                            <AdvantageCard advantage={advantage} key={advantage.id} />
-                        ))}
+                        {advantages?.map((advantage) => <AdvantageCard advantage={advantage} key={advantage.id} />)}
                     </div>
                 </div>
             </section>

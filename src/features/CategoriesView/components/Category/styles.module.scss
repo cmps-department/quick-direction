@@ -6,11 +6,11 @@
         background-color: var(--green-color);
     }
 
-    @media (max-width:500px) {
+    @media (max-width: 500px) {
         & {
             padding: 20px !important;
 
-            >div {
+            > div {
                 flex-direction: column;
                 gap: 10px;
             }
@@ -27,10 +27,10 @@
     left: 2px;
 
     &:hover {
-        opacity: .8;
+        opacity: 0.8;
     }
 
-    @media (max-width:500px) {
+    @media (max-width: 500px) {
         & {
             padding: 10px !important;
         }

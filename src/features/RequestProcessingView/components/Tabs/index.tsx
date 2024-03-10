@@ -16,16 +16,15 @@ interface TabsProps {
 }
 
 const tabsData: ITab[] = [
-    { value: "active", label: "Активні" },   
-    { value: "processed", label: "Опрацьовані"}
-]
+    { value: "active", label: "Активні" },
+    { value: "processed", label: "Опрацьовані" },
+];
 
 const Tabs: FC<TabsProps> = ({ activeTab, setActiveTab }) => {
-
     const changeTab = (value: ITab["value"]) => {
         if (activeTab === value) return;
         setActiveTab(value);
-    }
+    };
 
     const tabs = tabsData.map((tab, idx) => (
         <Fragment key={idx}>
@@ -34,13 +33,13 @@ const Tabs: FC<TabsProps> = ({ activeTab, setActiveTab }) => {
             </UnstyledButton>
             {idx === tabsData.length - 1 ? null : <Box className={styles.divider}></Box>}
         </Fragment>
-    ))
+    ));
 
     return (
         <Flex gap={24} align="center">
             {tabs}
         </Flex>
-    )
-}
+    );
+};
 
 export default Tabs;

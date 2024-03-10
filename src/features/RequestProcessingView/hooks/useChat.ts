@@ -24,30 +24,29 @@ export default function useChatForm(requestId: number) {
         ),
         defaultValues: {
             text: "",
-            files: []
+            files: [],
         },
     });
 
     const onSubmit = (data: ChatFormState) => {
-
         const payload: MessagePayload = {
             requestId: requestId,
             userId: session?.user.userId!,
             userName: session?.user.name.split(" ")[0]!,
             userSurname: session?.user.name.split(" ")[1]!,
             text: data.text,
-            documentLinks: []
-        }
+            documentLinks: [],
+        };
 
         if (data.files) {
-            const uploadFilesQueue = data.files.map(file => uploadFile(file));
+            const uploadFilesQueue = data.files.map((file) => uploadFile(file));
             Promise.all(uploadFilesQueue)
-                .then(uploadedFiles => {
-                    const documentLinks = uploadedFiles.map(upladedFile => upladedFile.fileLink);
+                .then((uploadedFiles) => {
+                    const documentLinks = uploadedFiles.map((upladedFile) => upladedFile.fileLink);
                     payload.documentLinks = documentLinks;
                     sendMessage(payload);
                 })
-                .catch(err => console.log(err))
+                .catch((err) => console.log(err))
                 .finally(() => form.reset({ text: "", files: [] }));
         } else {
             sendMessage(payload);
@@ -58,6 +57,6 @@ export default function useChatForm(requestId: number) {
     return {
         form,
         onSubmit,
-        isLoading
+        isLoading,
     };
 }

@@ -8,5 +8,5 @@ export default function CenteredLayout({ children }: PropsWithChildren) {
                 {children}
             </Stack>
         </Stack>
-    )
+    );
 }

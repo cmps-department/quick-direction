@@ -4,7 +4,7 @@ export const RequestStatus = {
     Clarify: "Clarify",
     Clarified: "Clarified",
     Processed: "Processed",
-    Canceled: "Canceled"
+    Canceled: "Canceled",
 } as const;
 
 export const RequestStatusTraslit = {
@@ -13,7 +13,5 @@ export const RequestStatusTraslit = {
     Clarify: "Потребує уточнення",
     Clarified: "Уточнений",
     Processed: "Опрацьований",
-    Canceled: "Скасований"
+    Canceled: "Скасований",
 } as const;
-
-

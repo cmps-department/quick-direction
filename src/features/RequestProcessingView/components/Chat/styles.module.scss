@@ -10,14 +10,14 @@
     height: auto;
     opacity: 1;
     visibility: visible;
-    transition: opacity .2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
 }
 
 .request {
     width: 100%;
     overflow: hidden;
     text-wrap: nowrap;
-    background-color: #E4FDE0;
+    background-color: #e4fde0;
     border-radius: 71px;
 }
 
@@ -60,6 +60,5 @@
 }
 
 .clip:hover {
-    color: #02808F;
+    color: #02808f;
 }
-  

@@ -18,7 +18,7 @@
         align-items: center;
         justify-content: center;
 
-        >div {
+        > div {
             flex-grow: 1;
             max-width: 604px;
             min-width: 500px;
@@ -29,7 +29,7 @@
         &_wrap {
             gap: 34px;
 
-            >div {
+            > div {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;

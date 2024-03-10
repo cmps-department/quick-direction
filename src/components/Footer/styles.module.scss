@@ -3,7 +3,6 @@
     color: var(--light-color);
     position: relative;
 
-
     &_line {
         position: absolute;
         width: 100%;
@@ -22,7 +21,7 @@
         display: flex;
         align-items: center;
         padding: 130px 0 50px;
-        >* {
+        > * {
             flex: 1;
         }
     }
@@ -31,7 +30,7 @@
 .link {
     font-size: 18;
     font-weight: 600;
-    color: #FAFBFC;
+    color: #fafbfc;
 }
 
 .link:hover {

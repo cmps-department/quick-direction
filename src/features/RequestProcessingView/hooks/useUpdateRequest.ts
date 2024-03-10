@@ -15,11 +15,11 @@ export const useUpdateRequest = (requestId: number) => {
         onSuccess: () => {
             queryClient.invalidateQueries(["REQUESTS", { requestId }]);
             queryClient.invalidateQueries(["REQUESTS"]);
-        }
+        },
     });
 
     return {
         updateRequest,
-        ...options
+        ...options,
     };
 };

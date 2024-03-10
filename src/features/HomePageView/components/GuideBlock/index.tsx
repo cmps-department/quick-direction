@@ -13,11 +13,7 @@ const GuideBlock = ({ title, list }: IGuideBlock) => {
             <div className={styles.guideBlock}>
                 <div className={styles.guideBlock_info}>
                     <h3 className={styles.guideBlock_title}>{title}</h3>
-                    <ul className={styles.guideBlock_list}>
-                        {list?.map((item, index) => (
-                            <li key={index}>{item}</li>
-                        ))}
-                    </ul>
+                    <ul className={styles.guideBlock_list}>{list?.map((item, index) => <li key={index}>{item}</li>)}</ul>
                 </div>
                 <div className={styles.block}></div>
             </div>
