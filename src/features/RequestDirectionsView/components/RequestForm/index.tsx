@@ -4,20 +4,22 @@ import useCreateForm from "../../hooks/useForm";
 import { Container, Stack, Text, Group, Flex, Button, Box } from "@mantine/core";
 import { Controller, FormProvider } from "react-hook-form";
 
-import InstructionsModal from "../InstructionsModal";
 import Link from "next/link";
 import FormSection from "../FormSections";
 import useData from "@/hooks/useData";
 import Modal from "@/components/Modals/Modal";
 import { Modals } from "@/components/Modals/data/modals";
 import { useRouter } from "next/router";
-import SuccessModal from "@/components/Modals/SuccessModal/SuccessModal";
+import SuccessModal from "@/components/Modals/SuccessModal";
 import TextInput from "@/components/TextInput/TextInput";
 import Select from "@/components/Select";
 import routes from "@/constants/routes";
+import AdditionalInfoModal from "@/components/Modals/AdditionalInfoModal";
+import { useModalStore } from "@/store/modal.store";
 
 const RequestForm = () => {
     const { form, onSubmit } = useCreateForm();
+    const setOpen = useModalStore((state) => state.setOpen);
     const router = useRouter();
 
     const { data } = useData<IGetCategory[]>({
@@ -32,6 +34,19 @@ const RequestForm = () => {
             items: category.subDirections.map((subCategory) => ({ label: subCategory.name, value: subCategory.id?.toString() as string })),
         }));
     }, [data?.length]);
+
+    const directionId = form.watch("directionId");
+    const subDirectionId = form.watch("subDirectionId");
+
+    const { additionalInfo, exampleLink } = useMemo(() => {
+        const category = data?.find((item) => item.id === directionId);
+        const subCategory = category?.subDirections.find((item) => item.id === subDirectionId);
+
+        return {
+            additionalInfo: subCategory?.additionalInfo,
+            exampleLink: subCategory?.examplelink,
+        };
+    }, [data, directionId, subDirectionId]);
 
     return (
         <>
@@ -143,19 +158,39 @@ const RequestForm = () => {
                                 )}
                             />
                             <Group gap={25}>
-                                <Button
-                                    variant="outline"
-                                    color={"var(--accent-color)"}
-                                    c={"var(--accent-color)"}
-                                    style={{ borderWidth: "2px" }}
-                                    radius={"xl"}
-                                    component={Link}
-                                    href={"/"}
-                                    target="_blank"
-                                >
-                                    Зразок
-                                </Button>
-                                <InstructionsModal additionalInfo="" />
+                                {!!exampleLink && (
+                                    <Button
+                                        variant="outline"
+                                        color={"var(--accent-color)"}
+                                        c={"var(--accent-color)"}
+                                        style={{ borderWidth: "2px" }}
+                                        radius={"xl"}
+                                        component={Link}
+                                        href={"/"}
+                                        target="_blank"
+                                    >
+                                        Зразок
+                                    </Button>
+                                )}
+                                {!!additionalInfo && (
+                                    <Button
+                                        variant="outline"
+                                        color={"var(--accent-color)"}
+                                        c={"var(--accent-color)"}
+                                        style={{ borderWidth: "2px" }}
+                                        radius={"xl"}
+                                        onClick={() =>
+                                            setOpen({
+                                                trigger: Modals.ADDITIONAL_INFO,
+                                                payload: {
+                                                    additionalInfo,
+                                                },
+                                            })
+                                        }
+                                    >
+                                        Інструкція
+                                    </Button>
+                                )}
                             </Group>
                             <FormSection categories={data!} />
                             <Flex justify="center">
@@ -169,6 +204,9 @@ const RequestForm = () => {
             </Container>
             <Modal triggers={[Modals.SUCCESS]}>
                 <SuccessModal onSuccess={() => router.push(routes.REQUEST_PROCESSING)} text={() => "Ваш запит успішно надіслано"} />
+            </Modal>
+            <Modal triggers={[Modals.ADDITIONAL_INFO]}>
+                <AdditionalInfoModal text={(payload) => payload.additionalInfo} />
             </Modal>
         </>
     );

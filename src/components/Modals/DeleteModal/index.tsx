@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { FC, ReactNode } from "react";
 import { useModalStore } from "@/store/modal.store";
 
-import styles from "./delete.module.scss";
+import styles from "./styles.module.scss";
 
 interface IDeleteModal {
     onConfirm: (payload: any) => Promise<unknown>;

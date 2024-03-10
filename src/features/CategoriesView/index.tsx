@@ -11,7 +11,7 @@ import routes from "@/constants/routes";
 import { useCategoryFilterStore } from "@/store/filter-category.store";
 import Modal from "@/components/Modals/Modal";
 import { Modals } from "@/components/Modals/data/modals";
-import DeleteModal from "@/components/Modals/DeleteModal/DeleteModal";
+import DeleteModal from "@/components/Modals/DeleteModal";
 import useMutationData from "@/hooks/useMutationData";
 
 const CategoriesView: FC = () => {

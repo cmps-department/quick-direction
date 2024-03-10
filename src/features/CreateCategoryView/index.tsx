@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import Frame from "../../components/Frame";
-import SuccessModal from "../../components/Modals/SuccessModal/SuccessModal";
+import SuccessModal from "../../components/Modals/SuccessModal";
 import Container from "../../components/Container";
 
 import { useRouter } from "next/router";
