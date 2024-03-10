@@ -1,5 +1,4 @@
-import { FC, useMemo } from "react";
-import { useFaq } from "../../hooks/useFaq";
+import { FC } from "react";
 import { Box, Stack, Text } from "@mantine/core";
 import FaqItem from "../FaqItem";
 
