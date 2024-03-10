@@ -4,8 +4,8 @@ import { Icon } from "@iconify/react";
 import Link from "next/link";
 
 interface MessageDocumentProps {
-    label: string;
-    documentLink: string;
+  label: string;
+  documentLink: string;
 }
 
 const MessageDocument: FC<MessageDocumentProps> = ({ label, documentLink }) => {

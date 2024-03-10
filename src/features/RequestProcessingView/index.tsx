@@ -11,14 +11,14 @@ import { useRequests } from "./hooks/useRequests";
 import Loading from "../../components/Loading";
 
 const RequestProcessingView = () => {
-    const { data: session } = useSession();
-    const [activeTab, setActiveTab] = useState<TabState>("active");
-    const [activeRequestId, setActiveRequestId] = useState<number | null>(null);
-    const { requests, isLoading } = useRequests();
+  const { data: session } = useSession();
+  const [activeTab, setActiveTab] = useState<TabState>('active');
+  const [activeRequestId, setActiveRequestId] = useState<number | null>(null);
+  const { requests, isLoading } = useRequests();
 
-    useEffect(() => {
-        setActiveRequestId(null);
-    }, [activeTab]);
+  useEffect(() => {
+    setActiveRequestId(null);
+  }, [activeTab]);
 
     const setRole = (roles: string[]) => {
         if (roles?.includes("ROLE_TEACHER")) {

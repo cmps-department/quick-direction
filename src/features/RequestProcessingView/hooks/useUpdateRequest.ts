@@ -1,10 +1,10 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import api from "../../../utils/api";
-import { RequestStatus } from "../../../constants/request-status";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import api from '../../../utils/api';
+import { RequestStatus } from '../../../constants/request-status';
 
 export type UpdateRequestPayload = {
-    id: number;
-    status: keyof typeof RequestStatus;
+  id: number;
+  status: keyof typeof RequestStatus;
 };
 
 export const useUpdateRequest = (requestId: number) => {

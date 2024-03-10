@@ -1,5 +1,5 @@
-import { Stack } from "@mantine/core";
-import { PropsWithChildren } from "react";
+import { Stack } from '@mantine/core';
+import { PropsWithChildren } from 'react';
 
 export default function CenteredLayout({ children }: PropsWithChildren) {
     return (

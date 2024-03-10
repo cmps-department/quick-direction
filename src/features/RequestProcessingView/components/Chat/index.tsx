@@ -1,6 +1,6 @@
-import { Dispatch, FC, SetStateAction, useEffect, useRef } from "react";
-import { Flex, Stack, Text, Button, FileButton, UnstyledButton, Paper, Box } from "@mantine/core";
-import { Controller } from "react-hook-form";
+import { Dispatch, FC, SetStateAction, useEffect, useRef } from 'react';
+import { Flex, Stack, Text, Button, FileButton, UnstyledButton, Paper, Box } from '@mantine/core';
+import { Controller } from 'react-hook-form';
 
 import styles from "./styles.module.scss";
 import TextInput from "../../../../components/TextInput/TextInput";
@@ -28,13 +28,13 @@ const Chat: FC<ChatProps> = ({ requestId, setActiveRequestId }) => {
     const { messages } = useMessages(requestId);
     const { request } = useRequest(requestId);
 
-    const chatRef = useRef<HTMLDivElement>(null);
+  const chatRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        if (!chatRef) return;
-        if (!chatRef.current) return;
-        chatRef.current.scrollTop = chatRef.current.scrollHeight;
-    }, [messages]);
+  useEffect(() => {
+    if (!chatRef) return;
+    if (!chatRef.current) return;
+    chatRef.current.scrollTop = chatRef.current.scrollHeight;
+  }, [messages]);
 
     return (
         <Stack pt={25} gap={24} className={`${styles.chat} ${request ? styles.active : null}`}>

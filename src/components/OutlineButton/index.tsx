@@ -3,7 +3,7 @@ import { Button, ButtonProps } from "@mantine/core";
 import classes from "./styles.module.scss";
 
 interface OutlineButtonProps extends ButtonProps {
-    onClick?: MouseEventHandler;
+  onClick?: MouseEventHandler;
 }
 
 const OutlineButton: FC<OutlineButtonProps> = ({ children, ...props }) => {

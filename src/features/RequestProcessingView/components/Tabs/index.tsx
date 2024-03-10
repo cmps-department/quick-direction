@@ -1,18 +1,18 @@
-import { Dispatch, FC, Fragment, SetStateAction } from "react";
-import { Box, Flex, UnstyledButton } from "@mantine/core";
+import { Dispatch, FC, Fragment, SetStateAction } from 'react';
+import { Box, Flex, UnstyledButton } from '@mantine/core';
 
-import styles from "./styles.module.scss";
+import styles from './styles.module.scss';
 
-export type TabState = "active" | "processed";
+export type TabState = 'active' | 'processed';
 
 interface ITab {
-    value: TabState;
-    label: string;
+  value: TabState;
+  label: string;
 }
 
 interface TabsProps {
-    activeTab: TabState;
-    setActiveTab: Dispatch<SetStateAction<TabState>>;
+  activeTab: TabState;
+  setActiveTab: Dispatch<SetStateAction<TabState>>;
 }
 
 const tabsData: ITab[] = [

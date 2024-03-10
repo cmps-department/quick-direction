@@ -14,25 +14,25 @@ interface ChatMenuProps {
 }
 
 const MenuAdminItems = [
-    { id: 1, label: "Надіслано", value: "Submitted", color: "#000" },
-    { id: 2, label: "В обробці", value: "Processing", color: "#000" },
-    { id: 3, label: "Потребує уточнення", value: "Clarify", color: "#000" },
-    { id: 4, label: "Уточнений", value: "Clarified", color: "#000" },
-    { id: 5, label: "Опрацьований", value: "Processed", color: "#02808F" },
-    { id: 6, label: "Скасований", value: "Canceled", color: "#A1001B" },
+  { id: 1, label: 'Надіслано', value: 'Submitted', color: '#000' },
+  { id: 2, label: 'В обробці', value: 'Processing', color: '#000' },
+  { id: 3, label: 'Потребує уточнення', value: 'Clarify', color: '#000' },
+  { id: 4, label: 'Уточнений', value: 'Clarified', color: '#000' },
+  { id: 5, label: 'Опрацьований', value: 'Processed', color: '#02808F' },
+  { id: 6, label: 'Скасований', value: 'Canceled', color: '#A1001B' },
 ];
 
 const MenuStudentItems = [{ id: 1, label: "Скасований", value: "Canceled", color: "#A1001B" }];
 
 const ChatMenu: FC<ChatMenuProps> = ({ currentStatus, requestId, setActiveRequestId }) => {
-    const [opened, setOpened] = useState(false);
-    const { data: session } = useSession();
-    const { updateRequest } = useUpdateRequest(requestId);
+  const [opened, setOpened] = useState(false);
+  const { data: session } = useSession();
+  const { updateRequest } = useUpdateRequest(requestId);
 
-    const menuItems = useMemo(() => {
-        if (session?.roles.includes("ROLE_TEACHER") || session?.roles.includes("ROLE_ADMIN")) return MenuAdminItems;
-        return MenuStudentItems;
-    }, [session]);
+  const menuItems = useMemo(() => {
+    if (session?.roles.includes('ROLE_TEACHER') || session?.roles.includes('ROLE_ADMIN')) return MenuAdminItems;
+    return MenuStudentItems;
+  }, [session]);
 
     const changeRequestStatus = (status: ChatMenuProps["currentStatus"]) => {
         updateRequest({ id: requestId, status });

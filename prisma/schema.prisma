@@ -66,6 +66,16 @@ model Message {
   updatedAt       DateTime        @updatedAt   
 }
 
+model Faq {
+  id              Int             @id @default(autoincrement())         
+  question        String
+  answer          String
+  questionType    QuestionType    @default(General)
+  documentLink    String
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt   
+}
+
 enum Status {
   Submitted
   Processing
@@ -73,4 +83,11 @@ enum Status {
   Clarified
   Processed
   Canceled
+}
+
+enum QuestionType {
+  General
+  Application
+  Administration
+  Technical
 }

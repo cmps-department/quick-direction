@@ -7,8 +7,8 @@ export const useRequests = () => {
     const { data: session } = useSession();
     const { data, ...options } = useQuery(["REQUESTS"], () => api.get<IRequest[]>("/api/requests"));
 
-    const requests = useMemo(() => {
-        if (!data) return [];
+  const requests = useMemo(() => {
+    if (!data) return [];
 
         if (session?.roles.includes("ROLE_ADMIN")) {
             return data.data;

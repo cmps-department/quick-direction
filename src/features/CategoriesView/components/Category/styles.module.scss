@@ -1,6 +1,6 @@
 .category {
-    background-color: var(--light-color);
-    border-radius: 71px;
+  background-color: var(--light-color);
+  border-radius: 71px;
 
     &:hover {
         background-color: var(--green-color);
@@ -16,15 +16,16 @@
             }
         }
     }
+  }
 }
 
 .deleteBtn {
-    width: fit-content;
-    height: fit-content;
-    background-color: var(--red-color);
-    padding: 10px;
-    position: absolute;
-    left: 2px;
+  width: fit-content;
+  height: fit-content;
+  background-color: var(--red-color);
+  padding: 10px;
+  position: absolute;
+  left: 2px;
 
     &:hover {
         opacity: 0.8;
