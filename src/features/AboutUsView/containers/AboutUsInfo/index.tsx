@@ -1,15 +1,15 @@
 import { FC } from "react";
-import { Container, List, Space, Text } from "@mantine/core";
+import { Box, Container, List, Space, Text } from "@mantine/core";
 import CustomDivider from "../../../../components/CustomDivider/CustomDivider";
 
 const AboutUsInfo: FC = () => {
     return (
-        <Container>
+        <Container mt={64}>
             <Text fz={28} fw={700} ta="center">
                 Про нас
             </Text>
             <CustomDivider mx={"auto"} />
-            <Text fz={16} fw={400} pt={48}>
+            <Box fz={16} fw={400} pt={48}>
                 Ласкаво запрошуємо до нашого інноваційного проекту, який перевертає уявлення про взаємодію між студентами та адміністрацією! Ми -
                 команда талановитих студентів, які об'єднали зусилля, щоб створити веб-додаток, який спростить ваш студентський досвід та зробить
                 комунікацію з університетською адміністрацією максимально ефективною.
@@ -54,7 +54,7 @@ const AboutUsInfo: FC = () => {
                 Наші технічна база включає передові технології, такі як Java, JavaScript та ReactJS та багато інших, щоб забезпечити стабільність та
                 зручність користування. Наші бази даних зберігають ваші дані безпечно та ефективно. Ми використовуємо GitHub для контролю версій та
                 трекінгу завдань.
-            </Text>
+            </Box>
         </Container>
     );
 };
