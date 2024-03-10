@@ -30,7 +30,7 @@ const ChatMenu: FC<ChatMenuProps> = ({ currentStatus, requestId, setActiveReques
     const { updateRequest } = useUpdateRequest(requestId);
 
     const menuItems = useMemo(() => {
-        if (session?.roles.includes("ROLE_TEACHER") || session?.roles.includes("ROLE_ADMIN")) return MenuAdminItems;
+        if (session?.roles.includes("ROLE_TEACHER") || session?.roles.includes("ROLE_SUPPORT_ADMIN")) return MenuAdminItems;
         return MenuStudentItems;
     }, [session]);
 

@@ -6,7 +6,7 @@ export default withAuth(
         if (
             req.nextUrl.pathname.startsWith("/admin") &&
             !(
-                req.nextauth.token?.decoded?.realm_access.roles.includes("ROLE_ADMIN") ||
+                req.nextauth.token?.decoded?.realm_access.roles.includes("ROLE_SUPPORT_ADMIN") ||
                 req.nextauth.token?.decoded?.realm_access.roles.includes("ROLE_TEACHER")
             )
         ) {

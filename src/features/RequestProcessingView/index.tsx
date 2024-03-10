@@ -23,7 +23,7 @@ const RequestProcessingView = () => {
     const setRole = (roles: string[]) => {
         if (roles?.includes("ROLE_TEACHER")) {
             return "Викладач";
-        } else if (roles?.includes("ROLE_ADMIN")) {
+        } else if (roles?.includes("ROLE_SUPPORT_ADMIN")) {
             return "Адміністратор";
         } else if (roles?.includes("ROLE_STUDENT")) {
             return "Студент";

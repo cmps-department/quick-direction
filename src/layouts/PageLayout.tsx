@@ -20,7 +20,7 @@ interface ILayout {
 const headers = {
     ROLE_STUDENT: StudentHeader,
     ROLE_TEACHER: TeacherHeader,
-    ROLE_ADMIN: AdminHeader,
+    ROLE_SUPPORT_ADMIN: AdminHeader,
 };
 
 const getTitle = (title: string | undefined) => (title ? `${title} | QuickDirection` : "QuickDirection");

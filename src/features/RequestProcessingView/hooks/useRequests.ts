@@ -10,7 +10,7 @@ export const useRequests = () => {
     const requests = useMemo(() => {
         if (!data) return [];
 
-        if (session?.roles.includes("ROLE_ADMIN")) {
+        if (session?.roles.includes("ROLE_SUPPORT_ADMIN")) {
             return data.data;
         } else if (session?.roles.includes("ROLE_TEACHER")) {
             return data.data.filter((request) => {
