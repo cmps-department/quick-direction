@@ -6,7 +6,7 @@ const BothTypesRequest = () => {
     return (
         <>
             <Text fz={20} fw={700}>
-                Напишіть звернення або завантажте лист (pdf){" "}
+                Напишіть звернення та завантажте лист (pdf){" "}
                 <Text fz={20} fw={700} span c="red">
                     *
                 </Text>

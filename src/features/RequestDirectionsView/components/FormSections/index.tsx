@@ -56,7 +56,7 @@ const FormSection: FC<FormSectionProps> = ({ categories }) => {
                 </Stack>
             );
         }
-    }, []);
+    }, [subDirectionId]);
 
     return FormSection;
 };

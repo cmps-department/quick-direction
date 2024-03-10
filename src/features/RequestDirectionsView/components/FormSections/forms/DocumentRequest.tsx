@@ -9,6 +9,8 @@ import { useFormContext } from "react-hook-form";
 const DocumentRequest: FC = () => {
     const form = useFormContext<RequestFormState>();
 
+    const document = form.watch("document");
+
     return (
         <Dropzone
             onDrop={(files) => form.setValue("document", files[0])}
@@ -34,7 +36,7 @@ const DocumentRequest: FC = () => {
                 </Dropzone.Idle>
                 <div>
                     <Text fw={500} size="sm" c={form.formState.errors.document ? "red" : "dimmed"} inline mt={7}>
-                        {form.formState.errors.document ? form.formState.errors.document.message : form.getValues("document")?.name || "Завантажити"}
+                        {form.formState.errors.document ? form.formState.errors.document.message : document?.name || "Завантажити"}
                     </Text>
                 </div>
             </Stack>
