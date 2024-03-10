@@ -1,3 +1,4 @@
+version: '3.7'
 services:
   db:
     image: postgres:16.0
@@ -8,3 +9,11 @@ services:
       POSTGRES_DB: gik
     ports:
       - '5432:5432'
+  frontend:
+    build:
+      context: ~/getinfo/
+      dockerfile: Dockerfile
+    container_name: frontend
+    command: npm start
+    ports:
+      - "3000:3000"
