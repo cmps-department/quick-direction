@@ -37,7 +37,7 @@ const AdminHeader = () => {
                             <ActionIcon p={20} color={"transparent"} component={Link} href={routes.CATEGORIES}>
                                 <Image width={36} height={36} src={"/icons/list.svg"} alt="categories-link" />
                             </ActionIcon>
-                            <ActionIcon p={20} color={"transparent"} component={Link} href={routes.FAQ}>
+                            <ActionIcon p={20} color={"transparent"} component={Link} href={routes.FAQ_LIST}>
                                 <Image width={36} height={36} src={"/icons/faq.svg"} alt="faq-link" />
                             </ActionIcon>
                             <ActionIcon p={20} color={"transparent"} component={Link} href={routes.REQUEST_PROCESSING}>

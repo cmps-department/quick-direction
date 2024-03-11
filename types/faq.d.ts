@@ -1,8 +1,8 @@
 interface IFaq {
-    question: String;
-    answer: String;
-    questionType: QuestionType;
-    documentLink: String;
+    question: string;
+    answer: string;
+    questionType: string;
+    documentLink: string;
 }
 
 interface IFaqResponse extends IFaq {
