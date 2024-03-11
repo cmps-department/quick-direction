@@ -9,19 +9,19 @@ services:
       POSTGRES_DB: gik
     ports:
       - '5432:5432'
-    healthcheck:
+    healthcheck: #Додаємо для перевірки чи база даних вже запустилась
       test: [ "CMD-SHELL", "pg_isready" ]
       interval: 5s
       timeout: 5s
       retries: 10
 
-  db_migration:
+  db_migration: # Контейнер для мігрування схеми бази даних. Просто виконує команду npx -y prisma migrate dev --skip-generate
     build: .
     container_name: db_migration
     environment:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/gik
     command: npx -y prisma migrate dev --skip-generate
-    depends_on:
+    depends_on: #Очікує запуску бази даних
       db:
         condition: service_healthy
 
@@ -29,7 +29,7 @@ services:
     build: .
     restart: always
     container_name: frontend
-    environment:
+    environment: # Додані значення змінних енвайромента
       API_URL: http://localhost:3000/api
       KEYCLOAK_ID: getinfokhpi
       KEYCLOAK_SECRET: WTrnnL4ds1zydIPIhilUPZRB2Z2id9Kc
@@ -40,6 +40,6 @@ services:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/gik
     ports:
       - "3000:3000"
-    depends_on:
+    depends_on: #Очікує завершення мігрування бази даних
       db_migration:
         condition: service_completed_successfully
