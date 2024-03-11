@@ -14,7 +14,7 @@ type TGroupedFAQs = {
     [key in KeysUnion]?: IFaqResponse[];
 };
 
-const QuestionTypes = {
+export const QuestionTypes = {
     General: "Загальна Інформація",
     Application: "Подача Заявок",
     Administration: "Взаємодія з Дирекцією",
@@ -23,7 +23,7 @@ const QuestionTypes = {
 
 const FaqList: FC = () => {
     const { data, isLoading } = useData<IFaqResponse[]>({
-        queryKey: ["FAQ_LIST"],
+        queryKey: ["FAQ"],
         path: `/api/faq`,
     });
 
