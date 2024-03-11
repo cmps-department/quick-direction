@@ -1,20 +1,20 @@
 .request {
-  width: 100%;
-  overflow: hidden;
-  text-wrap: nowrap;
-  background-color: #fafbfc;
-  border-radius: 71px;
-  transition: all 0.2s ease-in-out;
+    width: 100%;
+    overflow: hidden;
+    text-wrap: nowrap;
+    background-color: #fafbfc;
+    border-radius: 71px;
+    transition: all 0.2s ease-in-out;
 }
 
 .request:hover {
-  background-color: #e4fde0;
+    background-color: #e4fde0;
 }
 
 .active {
-  background-color: #e4fde0;
+    background-color: #e4fde0;
 }
 
 .hidden {
-  width: 150px;
+    width: 150px;
 }
