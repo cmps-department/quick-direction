@@ -1,0 +1,19 @@
+.deleteBtn {
+    border: 2px solid var(--red-color);
+    transition: all 0.2s linear;
+
+    &:hover {
+        color: var(--red-color);
+        background-color: transparent;
+    }
+}
+
+.createBtn {
+    border: 2px solid var(--accent-color);
+    transition: all 0.2s linear;
+
+    &:hover {
+        color: var(--accent-color);
+        background-color: transparent;
+    }
+}

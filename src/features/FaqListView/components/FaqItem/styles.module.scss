@@ -1,0 +1,38 @@
+.listItem {
+    background-color: var(--light-color);
+    border-radius: 71px;
+
+    &:hover {
+        background-color: var(--green-color);
+    }
+
+    @media (max-width: 500px) {
+        & {
+            padding: 20px !important;
+
+            > div {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    }
+}
+
+.deleteBtn {
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--red-color);
+    padding: 10px;
+    position: absolute;
+    left: 2px;
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    @media (max-width: 500px) {
+        & {
+            padding: 10px !important;
+        }
+    }
+}
