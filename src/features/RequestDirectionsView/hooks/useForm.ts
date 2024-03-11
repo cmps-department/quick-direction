@@ -56,6 +56,9 @@ export default function useCreateForm() {
     });
 
     useEffect(() => {
+        const [name, surname] = session?.user.name.split(" ") || [];
+        form.setValue("name", name || "");
+        form.setValue("surname", surname || "");
         form.setValue("email", session?.user.email!);
     }, [session]);
 
