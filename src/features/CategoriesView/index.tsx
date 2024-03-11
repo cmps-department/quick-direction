@@ -1,59 +1,63 @@
-import React, { FC, useEffect, useState } from 'react';
-import { Box, Button, Flex, Text } from '@mantine/core';
-import { useRouter } from 'next/router';
+import React, { FC } from "react";
+import { Button, Divider, Group, Paper, Stack, Text } from "@mantine/core";
 
-import Container from '../../components/Container/Container';
-import Frame from '../../components/Frame/Frame';
-import CategoriesList from './components/CategoriesList/CategoriesList';
-import { IGetCategory } from '../../interfaces/category.interface';
-import Loading from '../../components/Loading/Loading';
-import Sortings from './components/Sortings/Sortings';
-import useGetCategories from './hooks/useGetCategories';
-import CustomDivider from '../../components/CustomDivider/CustomDivider';
-
-import styles from './categories.module.scss';
+import Container from "../../components/Container";
+import Loading from "../../components/Loading";
+import Sortings from "./components/Sortings";
+import useData from "@/hooks/useData";
+import CategoriesList from "./components/CategoriesList";
+import Link from "next/link";
+import routes from "@/constants/routes";
+import { useCategoryFilterStore } from "@/store/filter-category.store";
+import Modal from "@/components/Modals/Modal";
+import { Modals } from "@/components/Modals/data/modals";
+import DeleteModal from "@/components/Modals/DeleteModal";
+import useMutationData from "@/hooks/useMutationData";
 
 const CategoriesView: FC = () => {
-  const { push } = useRouter();
-  const [categories, setCategories] = useState<IGetCategory[] | []>([]);
-  const { data, isLoading } = useGetCategories();
+    const filter = useCategoryFilterStore((state) => state.filter);
 
-  useEffect(() => {
-    if (data) {
-      setCategories(data);
-    }
-  }, [data]);
+    const { data, isLoading } = useData<IGetCategory[]>({
+        queryKey: ["CATEGORIES", { filter }],
+        params: {
+            filter,
+        },
+        path: `/api/directions`,
+    });
 
-  return (
-    <Container mih="60vh">
-      <Frame className={styles.frame}>
-        <Flex align={'center'} justify={'space-between'} wrap={'wrap'}>
-          <Box>
-            <Text fz={28} fw={700}>
-              Всі категорії
-            </Text>
-          </Box>
-          <Flex className={styles.groupBtn} gap={25} align="center" justify="flex-end">
-            <Sortings allCategories={data || []} setCategories={setCategories} />
-          </Flex>
-        </Flex>
-        <CustomDivider />
-        <Button
-          h={48}
-          w={193}
-          radius="xl"
-          color="#02808F"
-          onClick={() => {
-            push('/admin/categories/create');
-          }}
-        >
-          Створити категорію
-        </Button>
-        <Loading visible={isLoading} />
-        <CategoriesList categories={categories} />
-      </Frame>
-    </Container>
-  );
+    const deleteCategory = useMutationData({
+        url: (id) => `/api/direction/delete/${id}`,
+        type: "delete",
+        queryKeys: { invalidate: [{ queryKey: ["CATEGORIES"] }] },
+    });
+
+    return (
+        <Container mt={34} maw={1232}>
+            <Paper pos={"relative"} p={48} shadow="xl" radius="lg">
+                <Stack gap={24}>
+                    <Group align={"center"} justify={"space-between"} wrap={"wrap"}>
+                        <Text fz={28} fw={700}>
+                            Всі категорії
+                        </Text>
+                        <Sortings />
+                    </Group>
+                    <Divider style={{ borderTop: "4px solid #02808F" }} maw={608} w="100%" />
+                    <Button h={48} w={193} radius="xl" color="var(--accent-color)" component={Link} href={routes.CREATE_CATEGORY}>
+                        Створити категорію
+                    </Button>
+                    <CategoriesList categories={data || []} />
+                </Stack>
+                <Loading visible={isLoading} />
+            </Paper>
+            <Modal triggers={[Modals.DELETE]}>
+                <DeleteModal
+                    onConfirm={(payload) => deleteCategory.mutateAsync(payload.id)}
+                    text={(payload) => `Видалити категорію ${payload.name}?`}
+                    loading={deleteCategory.isLoading}
+                />
+            </Modal>
+        </Container>
+    );
 };
 
 export default CategoriesView;
