@@ -3,7 +3,7 @@ import { Container } from '@mantine/core';
 import { Montserrat } from 'next/font/google';
 import cx from 'clsx';
 
-import containerClasses from '../components/container/container.module.scss';
+import containerClasses from '../components/Container/container.module.scss';
 
 const montserrat = Montserrat({
   subsets: ['latin'],

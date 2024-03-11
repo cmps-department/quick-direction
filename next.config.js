@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
-  swcMinify: true,
+  output: 'standalone',
   env: {
     API_URL: process.env.NEXT_BACKEND_URL,
   },
