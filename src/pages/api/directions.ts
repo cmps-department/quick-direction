@@ -36,11 +36,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (session) {
         if (req.method === "POST") {
             try {
-                const validationResult = directionSchema.validate(req.body);
-                if (validationResult.error) {
-                    return res.status(400).json({ error: validationResult.error.details[0].message });
+                const { error, value } = directionSchema.validate(req.body, { abortEarly: false });
+                if (error) {
+                    return res.status(400).json({ error: error.details.map(detail => detail.message) });
                 }
-                const { name, description, professor, color, subDirections } = validationResult.value;
+                const { name, description, professor, color, subDirections } = value;
 
                 const newDirection = await prisma.directions.create({
                     data: {
@@ -121,11 +121,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         } else if (req.method === "PUT") {
             try {
-                const validationResult = directionSchema.validate(req.body);
-                if (validationResult.error) {
-                    return res.status(400).json({ error: validationResult.error.details[0].message });
+                const { error, value } = directionSchema.validate(req.body, { abortEarly: false });
+
+                if (error) {
+                    return res.status(400).json({ error: error.details.map(detail => detail.message) });
                 }
-                const { id, name, description, professor, color, subDirections } = validationResult.value;
+
+                const { id, name, description, professor, color, subDirections } = value;
 
                 if (isNaN(id)) {
                     res.status(400).json({ error: "Invalid ID format" });
