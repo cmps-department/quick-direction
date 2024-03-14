@@ -10,14 +10,14 @@ const directionSchema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
     professor: Joi.string().required(),
-    color: Joi.string().hex().required(),
+    color: Joi.string().required(),
     subDirections: Joi.array().items(Joi.object({
         name: Joi.string().required(),
         description: Joi.string().optional(),
         examplelink: Joi.string().uri().optional(),
         additionalInfo: Joi.string().optional(),
-        downloadFile: Joi.string().uri().optional(),
-        textField: Joi.string().optional(),
+        downloadFile: Joi.boolean().optional(),
+        textField: Joi.boolean().optional(),
     })).required(),
 });
 
