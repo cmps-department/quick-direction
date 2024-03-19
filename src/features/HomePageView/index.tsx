@@ -1,5 +1,5 @@
 import { FC } from "react";
-import AdvantagesSection from "@/features/HomePageView/containers/Advantages";
+import AdvantagesSection from "./containers/Advantages";
 import GuideSection from "./containers/Guide";
 import HelpSection from "./containers/Help";
 
