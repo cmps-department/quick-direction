@@ -35,7 +35,6 @@ interface SubDirection {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const session = await getServerSession(req, res, authConfig)
-    if (session) {
         if (req.method === "POST") {
             if (session?.roles.includes(roles.ROLE_SUPPORT_ADMIN)) {
                 try {
@@ -109,7 +108,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         } else {
             res.status(405).end(); // Method Not Allowed
         }
-    } else {
-        res.status(405).json({error: "User is not authorized"})
-    }
 }
