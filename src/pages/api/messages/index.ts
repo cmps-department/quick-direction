@@ -1,7 +1,7 @@
 import prisma from "../../../lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth/next"
-import authOptions from "../auth/[...nextauth]"
+import { authConfig } from "@/configs/auth"
 import Joi from "joi"
 
 const messageSchema = Joi.object({
@@ -15,7 +15,7 @@ const messageSchema = Joi.object({
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const session = await getServerSession(req, res, authOptions)
+    const session = await getServerSession(req, res, authConfig)
     if (session) {
         if (req.method === "POST") {
             const { error, value } = messageSchema.validate(req.body, { abortEarly: false });
@@ -38,6 +38,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.status(405).end();
         }
     } else {
-        res.status(405).json({error: "User is not authorized"})
+        res.status(405).json({error: "User is not authorized"});
     }
 }
