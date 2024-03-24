@@ -39,7 +39,7 @@ services:
       NEXTAUTH_URL: http://localhost:3000
       DATABASE_URL: postgresql://postgres:postgres@db:5432/gik
     ports:
-      - "3000:3000"
+      - "3000:3016"
     depends_on:
       db_migration:
         condition: service_completed_successfully
