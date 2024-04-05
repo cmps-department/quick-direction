@@ -44,7 +44,7 @@ export default function useEditForm() {
     const { id } = router.query;
 
     const updateCategory = useMutationData({
-        url: () => `/api/direction/put/${id}`,
+        url: () => `/api/directions/${id}`,
         type: "put",
         queryKeys: { invalidate: [{ queryKey: ["CATEGORIES"] }] },
     });
