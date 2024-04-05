@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
-import { getServerSession } from "next-auth/next"
-import { authConfig } from "@/configs/auth"
-import Joi from "joi"
+import { getServerSession } from "next-auth/next";
+import { authConfig } from "@/configs/auth";
+import Joi from "joi";
 import roles from "@/constants/roles";
 
 const requestValidationSchema = Joi.object({
@@ -12,14 +12,14 @@ const requestValidationSchema = Joi.object({
     studentGroup: Joi.string().required(),
     userId: Joi.string().required(),
     text: Joi.string().required(),
-    status: Joi.string().valid('Submitted', 'Processing', 'Clarify', 'Clarified', 'Processed', 'Canceled').required(),
+    status: Joi.string().valid("Submitted", "Processing", "Clarify", "Clarified", "Processed", "Canceled").required(),
     documentLink: Joi.string().required(),
     directionId: Joi.number().integer().required(),
     subDirectionId: Joi.number().integer().required(),
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const session = await getServerSession(req, res, authConfig)
+    const session = await getServerSession(req, res, authConfig);
     if (session) {
         if (req.method === "POST") {
             if (session?.roles.includes(roles.ROLE_STUDENT)) {
@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     }
 
                     const newRequest = await prisma.request.create({
-                        data: value
+                        data: value,
                     });
 
                     res.status(201).json(newRequest);
@@ -60,7 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             } else if (session?.roles.includes(roles.ROLE_STUDENT)) {
                 const allRequests = await prisma.request.findMany({
                     where: {
-                      userId: session?.user.userId
+                        userId: session?.user.userId,
                     },
                     include: {
                         direction: true,
@@ -77,9 +77,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             } else if (session?.roles.includes(roles.ROLE_TEACHER)) {
                 const allRequests = await prisma.request.findMany({
                     where: {
-                      direction: {
-                          professor: session.user.email,
-                      },
+                        direction: {
+                            professor: session.user.email,
+                        },
                     },
                     include: {
                         direction: true,
@@ -98,6 +98,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.status(405).end();
         }
     } else {
-        res.status(405).json({error: "User is not authorized"})
+        res.status(405).json({ error: "User is not authorized" });
     }
 }

@@ -1,17 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
-import { getServerSession } from "next-auth/next"
-import { authConfig } from "@/configs/auth"
-import Joi from 'joi';
+import { getServerSession } from "next-auth/next";
+import { authConfig } from "@/configs/auth";
+import Joi from "joi";
 import roles from "@/constants/roles";
 
 const patchRequestValidationSchema = Joi.object({
     id: Joi.number().integer().required(),
-    status: Joi.string().valid('Submitted', 'Processing', 'Clarify', 'Clarified', 'Processed', 'Canceled').required(),
+    status: Joi.string().valid("Submitted", "Processing", "Clarify", "Clarified", "Processed", "Canceled").required(),
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const session = await getServerSession(req, res, authConfig)
+    const session = await getServerSession(req, res, authConfig);
     if (session) {
         if (req.method === "GET") {
             const id = Number(req.query.id);
@@ -124,7 +124,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         res.status(405).json({ error: "You do not have permission to perform this operation" });
                     }
                 }
-
             } catch (error) {
                 console.log(error);
                 res.status(500).json({ error: error });
@@ -133,6 +132,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.status(405).end();
         }
     } else {
-        res.status(405).json({error: "User is not authorized"})
+        res.status(405).json({ error: "User is not authorized" });
     }
 }

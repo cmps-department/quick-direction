@@ -26,7 +26,7 @@ const CategoriesView: FC = () => {
     });
 
     const deleteCategory = useMutationData({
-        url: (id) => `/api/direction/delete/${id}`,
+        url: (id) => `/api/directions/${id}`,
         type: "delete",
         queryKeys: { invalidate: [{ queryKey: ["CATEGORIES"] }] },
     });

@@ -10,7 +10,7 @@ export type UpdateRequestPayload = {
 export const useUpdateRequest = (requestId: number) => {
     const queryClient = useQueryClient();
     const { mutate: updateRequest, ...options } = useMutation({
-        mutationFn: (payload: UpdateRequestPayload) => api.patch("/api/requests", payload),
+        mutationFn: (payload: UpdateRequestPayload) => api.patch(`/api/requests/${requestId}`, payload),
         mutationKey: ["REQUESTS", { requestId }],
         onSuccess: () => {
             queryClient.invalidateQueries(["REQUESTS", { requestId }]);

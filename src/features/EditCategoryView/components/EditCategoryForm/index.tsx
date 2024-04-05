@@ -19,7 +19,7 @@ const EditCategoryForm = () => {
 
     const { data, isLoading } = useData<IGetCategory>({
         queryKey: ["CATEGORIES", { id }],
-        path: `/api/direction/get/${id}`,
+        path: `/api/directions/${id}`,
     });
 
     useEffect(() => {

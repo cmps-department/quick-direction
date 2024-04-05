@@ -1,13 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth/next"
-import { authConfig } from "@/configs/auth"
+import { getServerSession } from "next-auth/next";
+import { authConfig } from "@/configs/auth";
 import roles from "@/constants/roles";
 
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const session = await getServerSession(req, res, authConfig)
+    const session = await getServerSession(req, res, authConfig);
     if (session) {
         if (req.method === "GET") {
             const id = Number(req.query.id);
@@ -48,8 +48,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         request: {
                             direction: {
                                 professor: session.user.email,
-                            }
-                        }
+                            },
+                        },
                     },
                 });
 
@@ -59,12 +59,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     res.status(500).json({ error: "There is no message" });
                 }
             } else {
-                res.status(405).json({error: "User doesn't have a role"});
+                res.status(405).json({ error: "User doesn't have a role" });
             }
         } else {
             res.status(500).json({ error: "There is no message" });
         }
     } else {
-        res.status(405).json({error: "User is not authorized"});
+        res.status(405).json({ error: "User is not authorized" });
     }
 }

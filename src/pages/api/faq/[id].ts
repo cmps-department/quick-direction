@@ -1,11 +1,11 @@
 import prisma from "@/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth/next"
-import { authConfig } from "@/configs/auth"
+import { getServerSession } from "next-auth/next";
+import { authConfig } from "@/configs/auth";
 import roles from "@/constants/roles";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const session = await getServerSession(req, res, authConfig)
+    const session = await getServerSession(req, res, authConfig);
     if (req.method === "GET") {
         const { id } = req.query;
         try {

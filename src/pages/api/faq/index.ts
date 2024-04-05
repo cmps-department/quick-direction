@@ -9,7 +9,7 @@ const faqSchema = Joi.object({
     question: Joi.string().required(),
     answer: Joi.string().required(),
     questionType: Joi.string().required(),
-    documentLink: Joi.string().uri().allow('', null),
+    documentLink: Joi.string().uri().allow("", null),
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const { error, value } = faqSchema.validate(req.body, { abortEarly: false });
 
                 if (error) {
-                    return res.status(400).json({ errors: error.details.map(detail => detail.message) });
+                    return res.status(400).json({ errors: error.details.map((detail) => detail.message) });
                 }
 
                 const createdFaq = await prisma.faq.create({
