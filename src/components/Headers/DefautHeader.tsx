@@ -13,9 +13,6 @@ const DefautHeader = () => {
         <header className={`${classes.header} ${classes.studentHeader}`}>
             <Group justify="space-between" align="center">
                 <Group w={"40%"} px={24} gap={60} align="center">
-                    <Link className={classes.link} href={routes.NEWS}>
-                        Новини
-                    </Link>
                     <Link className={classes.link} href={routes.INFORMATION}>
                         Інформація
                     </Link>

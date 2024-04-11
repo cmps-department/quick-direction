@@ -17,11 +17,14 @@ const Footer: FC = () => {
                 <ContainerL className={styles.footer_container}>
                     <Flex gap={96} justify="center" align="center">
                         <Flex justify="flex-end" gap={48} w="50%">
-                            <UnstyledButton onClick={() => router.push("/")} className={styles.link}>
+                            <UnstyledButton onClick={() => router.push(routes.MAIN)} className={styles.link}>
                                 Головна
                             </UnstyledButton>
-                            <UnstyledButton onClick={() => router.push(routes.NEWS)} className={styles.link}>
-                                Новини
+                            <UnstyledButton onClick={() => router.push(routes.REQUEST_PROCESSING)} className={styles.link}>
+                                Мої запити
+                            </UnstyledButton>
+                            <UnstyledButton onClick={() => router.push(routes.KHPI_NEWS)} className={styles.link}>
+                                Новини ХПІ
                             </UnstyledButton>
                         </Flex>
                         <Flex>
@@ -30,7 +33,7 @@ const Footer: FC = () => {
                             </div>
                         </Flex>
                         <Flex gap={48} w="50%">
-                            <UnstyledButton onClick={() => router.push(routes.FAQ)} className={styles.link}>
+                            <UnstyledButton onClick={() => router.push(routes.INFORMATION)} className={styles.link}>
                                 Питання та відповіді
                             </UnstyledButton>
                             <UnstyledButton onClick={() => router.push(routes.ABOUT_US)} className={styles.link}>
