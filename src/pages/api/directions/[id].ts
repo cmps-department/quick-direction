@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth/next"
-import { authConfig } from "@/configs/auth"
-import Joi from 'joi';
+import { getServerSession } from "next-auth/next";
+import { authConfig } from "@/configs/auth";
+import Joi from "joi";
 import roles from "@/constants/roles";
 
 const prisma = new PrismaClient();
@@ -12,18 +12,29 @@ const directionSchema = Joi.object({
     description: Joi.string().required(),
     professor: Joi.string().required(),
     color: Joi.string().required(),
-    subDirections: Joi.array().items(Joi.object({
-        name: Joi.string().required(),
-        description: Joi.string().optional(),
-        examplelink: Joi.string().uri().optional(),
-        additionalInfo: Joi.string().optional(),
-        downloadFile: Joi.boolean().optional(),
-        textField: Joi.boolean().optional(),
-    })).required(),
+    id: Joi.number().integer().required(),
+    createdAt: Joi.string().required(),
+    updatedAt: Joi.string().required(),
+    subDirections: Joi.array()
+        .items(
+            Joi.object({
+                name: Joi.string().required(),
+                description: Joi.string().optional(),
+                examplelink: Joi.string().uri().allow("").optional(),
+                additionalInfo: Joi.string().allow("").optional(),
+                downloadFile: Joi.boolean().optional(),
+                textField: Joi.boolean().optional(),
+                id: Joi.number().integer().optional(),
+                directionId: Joi.number().integer().optional(),
+                createdAt: Joi.string().optional(),
+                updatedAt: Joi.string().optional(),
+            }),
+        )
+        .required(),
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const session = await getServerSession(req, res, authConfig)
+    const session = await getServerSession(req, res, authConfig);
     if (session) {
         if (req.method === "DELETE") {
             if (session?.roles.includes(roles.ROLE_SUPPORT_ADMIN)) {
@@ -34,22 +45,43 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     return;
                 }
 
-                const deletedDirection = await prisma.directions.delete({
-                    where: {
-                        id: id,
-                    },
-                });
-
-                if (deletedDirection) {
-                    res.status(201).json({ message: "Successfully deleted" });
-                } else {
-                    res.status(500).json({ message: "Category not found or not deleted" });
+                try {
+                    await prisma.message.deleteMany({
+                        where: {
+                            requestId: {
+                                in: await prisma.request
+                                    .findMany({
+                                        where: { directionId: id },
+                                        select: { id: true },
+                                    })
+                                    .then((requests) => requests.map((request) => request.id)),
+                            },
+                        },
+                    });
+                    await prisma.request.deleteMany({
+                        where: {
+                            directionId: id,
+                        },
+                    });
+                    await prisma.subDirections.deleteMany({
+                        where: {
+                            directionId: id,
+                        },
+                    });
+                    await prisma.directions.delete({
+                        where: {
+                            id: id,
+                        },
+                    });
+                    res.status(200).json({ message: "Successfully deleted" });
+                } catch (error) {
+                    console.error("Error deleting category:", error);
+                    res.status(500).json({ message: "Failed to delete category" });
                 }
             } else {
-                return res.status(405).json({ error: "You do not have permission to perform this operation" })
+                return res.status(405).json({ error: "You do not have permission to perform this operation" });
             }
         } else if (req.method === "GET") {
-
             const id = Number(req.query.id);
 
             if (isNaN(id)) {
@@ -76,7 +108,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const { error, value } = directionSchema.validate(req.body, { abortEarly: false });
 
                 if (error) {
-                    return res.status(400).json({ error: error.details.map(detail => detail.message) });
+                    return res.status(400).json({ error: error.details.map((detail) => detail.message) });
                 }
 
                 const { name, description, professor, color, subDirections } = value;
@@ -144,12 +176,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     console.log(error);
                 }
             } else {
-                return res.status(405).json({ error: "You do not have permission to perform this operation" })
+                return res.status(405).json({ error: "You do not have permission to perform this operation" });
             }
         } else {
             res.status(405).json({ error: "Method Not Allowed" });
         }
     } else {
-        res.status(405).json({error: "User is not authorized"})
+        res.status(405).json({ error: "User is not authorized" });
     }
 }

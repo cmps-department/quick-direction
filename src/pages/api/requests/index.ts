@@ -11,9 +11,9 @@ const requestValidationSchema = Joi.object({
     email: Joi.string().email().required(),
     studentGroup: Joi.string().required(),
     userId: Joi.string().required(),
-    text: Joi.string().required(),
+    text: Joi.string().allow("").optional(),
     status: Joi.string().valid("Submitted", "Processing", "Clarify", "Clarified", "Processed", "Canceled").required(),
-    documentLink: Joi.string().required(),
+    documentLink: Joi.string().allow("").optional(),
     directionId: Joi.number().integer().required(),
     subDirectionId: Joi.number().integer().required(),
 });
@@ -30,8 +30,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         return res.status(400).json({ error: error.details[0].message });
                     }
 
+                    const { name, surname, email, studentGroup, userId, text, status, directionId, subDirectionId, documentLink } = value;
                     const newRequest = await prisma.request.create({
-                        data: value,
+                        data: {
+                            name,
+                            surname,
+                            email,
+                            studentGroup,
+                            userId,
+                            text,
+                            status,
+                            documentLink,
+                            directionId,
+                            subDirectionId,
+                            messages:
+                                text || documentLink
+                                    ? {
+                                          create: {
+                                              userId,
+                                              userName: name,
+                                              userSurname: surname,
+                                              text,
+                                              documentLinks: documentLink ? [documentLink] : [],
+                                          },
+                                      }
+                                    : undefined,
+                        },
+                        include: {
+                            messages: true,
+                        },
                     });
 
                     res.status(201).json(newRequest);
