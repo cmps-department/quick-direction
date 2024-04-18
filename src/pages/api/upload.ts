@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const uniqueId = uuidv4();
         const fileName = `${uniqueId}_${file[0].originalFilename}`;
-        const filePath = `./public/uploads/${fileName}`;
+        const filePath = `./uploads/${fileName}`;
 
         const readStream = fs.createReadStream(file[0].filepath);
         const writeStream = fs.createWriteStream(filePath);
@@ -45,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         writeStream.on("finish", () => {
             console.log("File uploaded:", filePath);
-            const fileLink = `${process.env.NEXTAUTH_URL}/uploads/${fileName}`;
+            const fileLink = `${process.env.NEXTAUTH_URL}/api/files/${fileName}`;
             console.log("File link: ", fileLink);
             res.status(200).json({ success: true, message: "File uploaded successfully", filePath, fileLink });
         });
