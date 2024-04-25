@@ -1,4 +1,4 @@
-import { Container, Flex, Stack, Text } from "@mantine/core";
+import { Flex, Stack, Text } from "@mantine/core";
 import Frame from "../../components/Frame";
 
 import styles from "./styles.module.scss";
@@ -9,6 +9,7 @@ import RequestItem from "./components/RequestItem";
 import Chat from "./components/Chat";
 import { useRequests } from "./hooks/useRequests";
 import Loading from "../../components/Loading";
+import Container from "@/components/Container";
 
 const RequestProcessingView = () => {
     const { data: session } = useSession();
@@ -59,7 +60,7 @@ const RequestProcessingView = () => {
     }, [activeTab, requests]);
 
     return (
-        <Container mt={64} size="lg" mih="60vh">
+        <Container mt={64} mih="60vh">
             <Stack gap={24} pl={35}>
                 <Text fw={700} fz={28}>
                     {session?.user.name}

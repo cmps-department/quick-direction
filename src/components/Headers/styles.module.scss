@@ -1,3 +1,5 @@
+@import "@/styles/variables.scss";
+
 .header {
     max-width: 1380px;
     margin: 30px auto 0px;
@@ -28,6 +30,7 @@
         background-color: #fff;
         color: #000;
     }
+
     height: 48px;
     width: 128px;
     border: 2px solid #fff;
@@ -35,8 +38,9 @@
 }
 
 .mainPageHeader {
-    max-width: 1380px;
-    margin: 0px auto;
+    max-width: 1402px;
+    padding-inline: $Gutter;
+    margin: 0 auto;
     height: 100dvh;
     max-height: 1000px;
     position: relative;

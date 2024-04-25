@@ -16,7 +16,7 @@ const Footer: FC = () => {
                 <div className={styles.footer_line}></div>
                 <ContainerL className={styles.footer_container}>
                     <Flex gap={96} justify="center" align="center">
-                        <Flex justify="flex-end" gap={48} w="50%">
+                        <Flex justify="space-between" gap={10} w="50%">
                             <UnstyledButton onClick={() => router.push(routes.MAIN)} className={styles.link}>
                                 Головна
                             </UnstyledButton>
@@ -32,7 +32,7 @@ const Footer: FC = () => {
                                 <Image width={192} height={192} src="/images/khpi-logo.webp" alt="Logo" />
                             </div>
                         </Flex>
-                        <Flex gap={48} w="50%">
+                        <Flex justify="space-between" gap={10} w="50%">
                             <UnstyledButton onClick={() => router.push(routes.INFORMATION)} className={styles.link}>
                                 Питання та відповіді
                             </UnstyledButton>

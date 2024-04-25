@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { Button, Divider, Group, Paper, Stack, Text } from "@mantine/core";
 
-import Container from "../../components/Container";
-import Loading from "../../components/Loading";
+import Container from "@/components/Container";
+import Loading from "@/components/Loading";
 import Sortings from "./components/Sortings";
 import useData from "@/hooks/useData";
 import CategoriesList from "./components/CategoriesList";
@@ -32,7 +32,7 @@ const CategoriesView: FC = () => {
     });
 
     return (
-        <Container mt={34} maw={1232}>
+        <Container mt={34}>
             <Paper pos={"relative"} p={48} shadow="xl" radius="lg">
                 <Stack gap={24}>
                     <Group align={"center"} justify={"space-between"} wrap={"wrap"}>

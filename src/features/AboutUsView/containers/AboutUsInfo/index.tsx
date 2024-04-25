@@ -1,10 +1,11 @@
 import { FC } from "react";
-import { Box, Container, List, Paper, Space, Stack, Text } from "@mantine/core";
-import CustomDivider from "../../../../components/CustomDivider/CustomDivider";
+import { Box, List, Paper, Stack, Text } from "@mantine/core";
+import CustomDivider from "@/components/CustomDivider/CustomDivider";
+import Container from "@/components/Container";
 
 const AboutUsInfo: FC = () => {
     return (
-        <Container maw={1232} mt={64}>
+        <Container mt={64}>
             <Text fz={28} fw={700} ta="center">
                 Про нас
             </Text>
