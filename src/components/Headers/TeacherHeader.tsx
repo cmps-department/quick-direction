@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import classes from "./styles.module.scss";
-
 import routes from "../../constants/routes";
 
 const TeacherHeader = () => {
@@ -18,10 +17,10 @@ const TeacherHeader = () => {
         <header className={`${classes.header} ${classes.teacherHeader}`}>
             <Group justify="space-between" align="center">
                 <Group w={"40%"} px={24} gap={60} align="center">
-                    <Link className={classes.link} href={routes.INFORMATION}>
+                    <Link className={`h3_font ${classes.link}`} href={routes.INFORMATION}>
                         Інформація
                     </Link>
-                    <Link className={classes.link} href={routes.ABOUT_US}>
+                    <Link className={`h3_font ${classes.link}`} href={routes.ABOUT_US}>
                         Про нас
                     </Link>
                 </Group>
@@ -33,7 +32,7 @@ const TeacherHeader = () => {
                 <Group w={"40%"} gap={32} align="center" justify="flex-end">
                     {session && !path?.startsWith(routes.REQUEST_PROCESSING) && (
                         <Indicator styles={{ indicator: { height: "10px", width: "10px", top: "3px", right: "-5px" } }} color="var(--green-color)">
-                            <Link className={classes.link} href="/request-processing">
+                            <Link className={`h3_font ${classes.link}`} href="/request-processing">
                                 Заявки
                             </Link>
                         </Indicator>

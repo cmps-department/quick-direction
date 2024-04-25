@@ -1,0 +1,5 @@
+$ScreenSize: 100vw;
+$goldenRatio: (1 + sqrt(5)) / 2;
+$Margin: $ScreenSize / pow($goldenRatio, 5);
+$Gutter: $ScreenSize / pow($goldenRatio, 9);
+$ContentSize: $ScreenSize - 2 * $Margin;

@@ -7,8 +7,8 @@ const AdvantageCard = ({ advantage }: { advantage: IAdvantage }) => {
         <div className={styles.advantageCard}>
             <Image width={90} height={90} src={advantage.image} alt="Icon" />
             <div>
-                <h4 className={styles.advantageCard_title}>{advantage.title}</h4>
-                <p className={styles.advantageCard_desc}>{advantage.description}</p>
+                <h4 className={`h3_font ${styles.advantageCard_title}`}>{advantage.title}</h4>
+                <p className={`main_font ${styles.advantageCard_desc}`}>{advantage.description}</p>
             </div>
         </div>
     );

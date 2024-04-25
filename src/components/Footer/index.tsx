@@ -16,14 +16,14 @@ const Footer: FC = () => {
                 <div className={styles.footer_line}></div>
                 <ContainerL className={styles.footer_container}>
                     <Flex gap={96} justify="center" align="center">
-                        <Flex justify="flex-end" gap={48} w="50%">
-                            <UnstyledButton onClick={() => router.push(routes.MAIN)} className={styles.link}>
+                        <Flex justify="space-between" gap={10} w="50%">
+                            <UnstyledButton onClick={() => router.push(routes.MAIN)} className={`h3_font ${styles.link}`}>
                                 Головна
                             </UnstyledButton>
-                            <UnstyledButton onClick={() => router.push(routes.REQUEST_PROCESSING)} className={styles.link}>
+                            <UnstyledButton onClick={() => router.push(routes.REQUEST_PROCESSING)} className={`h3_font ${styles.link}`}>
                                 Мої запити
                             </UnstyledButton>
-                            <UnstyledButton onClick={() => router.push(routes.KHPI_NEWS)} className={styles.link}>
+                            <UnstyledButton onClick={() => router.push(routes.KHPI_NEWS)} className={`h3_font ${styles.link}`}>
                                 Новини ХПІ
                             </UnstyledButton>
                         </Flex>
@@ -32,11 +32,11 @@ const Footer: FC = () => {
                                 <Image width={192} height={192} src="/images/khpi-logo.webp" alt="Logo" />
                             </div>
                         </Flex>
-                        <Flex gap={48} w="50%">
-                            <UnstyledButton onClick={() => router.push(routes.INFORMATION)} className={styles.link}>
+                        <Flex justify="space-between" gap={10} w="50%">
+                            <UnstyledButton onClick={() => router.push(routes.INFORMATION)} className={`h3_font ${styles.link}`}>
                                 Питання та відповіді
                             </UnstyledButton>
-                            <UnstyledButton onClick={() => router.push(routes.ABOUT_US)} className={styles.link}>
+                            <UnstyledButton onClick={() => router.push(routes.ABOUT_US)} className={`h3_font ${styles.link}`}>
                                 Про нас
                             </UnstyledButton>
                         </Flex>

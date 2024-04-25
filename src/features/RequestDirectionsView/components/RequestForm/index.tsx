@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import useCreateForm from "../../hooks/useForm";
 
-import { Container, Stack, Text, Group, Flex, Button, Box } from "@mantine/core";
+import { Stack, Text, Group, Flex, Button, Box } from "@mantine/core";
 import { Controller, FormProvider } from "react-hook-form";
 
 import Link from "next/link";
@@ -16,6 +16,7 @@ import Select from "@/components/Select";
 import routes from "@/constants/routes";
 import AdditionalInfoModal from "@/components/Modals/AdditionalInfoModal";
 import { useModalStore } from "@/store/modal.store";
+import Container from "@/components/Container";
 
 const RequestForm = () => {
     const { form, onSubmit } = useCreateForm();
@@ -50,7 +51,7 @@ const RequestForm = () => {
 
     return (
         <>
-            <Container maw={1012} w={"100%"} px={103} py={64}>
+            <Container py={64}>
                 <FormProvider {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <Stack gap={24}>

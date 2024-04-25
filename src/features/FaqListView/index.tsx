@@ -17,7 +17,7 @@ const FaqListView: FC = () => {
     });
 
     return (
-        <Container my={34} maw={1232}>
+        <Container my={34}>
             <Paper pos={"relative"} p={48} shadow="xl" radius="lg">
                 <Stack gap={24}>
                     <Group align={"center"} justify={"space-between"} wrap={"wrap"}>

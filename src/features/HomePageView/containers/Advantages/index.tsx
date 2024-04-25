@@ -9,7 +9,7 @@ const AdvantagesSection: FC = () => {
         <Container>
             <section>
                 <div className={styles.advantages}>
-                    <h2 className={styles.advantages_title}>Чому саме електронні довідки</h2>
+                    <h2 className={`h1_font ${styles.advantages_title}`}>Чому саме електронні довідки</h2>
                     <div className={styles.advantages_wrap}>
                         {advantages?.map((advantage) => <AdvantageCard advantage={advantage} key={advantage.id} />)}
                     </div>

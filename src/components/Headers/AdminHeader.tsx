@@ -16,10 +16,10 @@ const AdminHeader = () => {
         <header className={`${classes.header} ${classes.teacherHeader}`}>
             <Group justify="space-between" align="center">
                 <Group w={"40%"} px={24} gap={60} align="center">
-                    <Link className={classes.link} href={routes.INFORMATION}>
+                    <Link className={`h3_font ${classes.link}`} href={routes.INFORMATION}>
                         Інформація
                     </Link>
-                    <Link className={classes.link} href={routes.ABOUT_US}>
+                    <Link className={`h3_font ${classes.link}`} href={routes.ABOUT_US}>
                         Про нас
                     </Link>
                 </Group>

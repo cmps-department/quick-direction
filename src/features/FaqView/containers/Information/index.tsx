@@ -1,16 +1,16 @@
 import { FC } from "react";
 import { Box, List, Space, Text } from "@mantine/core";
-import CustomDivider from "../../../../components/CustomDivider/CustomDivider";
+import CustomDivider from "@/components/CustomDivider/CustomDivider";
 
 const Information: FC = () => {
     return (
         <Box>
-            <Text fz={28} fw={700} ta="center">
+            <Text className={"h1_font"} ta="center">
                 Інформація
             </Text>
             <CustomDivider mx={"auto"} />
-            <Box fz={16} fw={400} pt={24}>
-                <Text span fw={600} inherit>
+            <Box className={"main_font"} pt={24}>
+                <Text span className={"h3_font"}>
                     Quick Direction{" "}
                 </Text>
                 - це інноваційний сервіс для ефективного та зручного спілкування студентів із дирекцією. Наш сервіс вирішує актуальні проблеми, які
