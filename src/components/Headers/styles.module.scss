@@ -2,7 +2,7 @@
 
 .header {
     max-width: 1380px;
-    margin: 30px auto 0px;
+    margin: 30px auto 0;
     padding: 24px;
     border-radius: 68px;
 }
@@ -16,8 +16,6 @@
 }
 
 .link {
-    font-size: 18;
-    font-weight: 600;
     color: #fafbfc;
 }
 
@@ -79,31 +77,13 @@
 
         &_container {
             text-align: center;
-            padding: 64px 0px;
+            padding: 64px 0;
             background-color: var(--light-color);
         }
 
         &_title,
         &_text {
             color: var(--dark-color);
-        }
-
-        &_title {
-            font-size: 28px;
-            font-weight: 700;
-            line-height: 36px;
-            margin-top: 0;
-        }
-
-        &_text {
-            width: 85%;
-            margin: 24px auto;
-            font-size: 16px;
-            line-height: 24px;
-
-            span {
-                font-weight: 600;
-            }
         }
 
         &_btn {

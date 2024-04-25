@@ -3,8 +3,8 @@ import { FC } from "react";
 
 const SupportInfo: FC = () => {
     return (
-        <Text fz={20} fw={400} pt={50}>
-            <Text span fw={700} inherit>
+        <Text className={"main_font"} pt={50}>
+            <Text span className={"h2_font"}>
                 Не знайшли відповідь на своє питання?{" "}
             </Text>
             Звертайтеся до нашої служби підтримки за допомогою електронної пошти. Вам завжди раді допомогти.

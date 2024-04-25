@@ -12,8 +12,8 @@ const GuideBlock = ({ title, list }: IGuideBlock) => {
         <Container>
             <div className={styles.guideBlock}>
                 <div className={styles.guideBlock_info}>
-                    <h3 className={styles.guideBlock_title}>{title}</h3>
-                    <ul className={styles.guideBlock_list}>{list?.map((item, index) => <li key={index}>{item}</li>)}</ul>
+                    <h3 className={"h3_font"}>{title}</h3>
+                    <ul className={`main_font ${styles.guideBlock_list}`}>{list?.map((item, index) => <li key={index}>{item}</li>)}</ul>
                 </div>
                 <div className={styles.block}></div>
             </div>

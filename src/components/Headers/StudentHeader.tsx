@@ -17,10 +17,10 @@ const StudentHeader = () => {
         <header className={`${classes.header} ${classes.studentHeader}`}>
             <Group justify="space-between" align="center">
                 <Group w={"40%"} px={24} gap={60} align="center">
-                    <Link className={classes.link} href={routes.INFORMATION}>
+                    <Link className={`h3_font ${classes.link}`} href={routes.INFORMATION}>
                         Інформація
                     </Link>
-                    <Link className={classes.link} href={routes.ABOUT_US}>
+                    <Link className={`h3_font ${classes.link}`} href={routes.ABOUT_US}>
                         Про нас
                     </Link>
                 </Group>
@@ -33,12 +33,12 @@ const StudentHeader = () => {
                     {session && (
                         <>
                             {!path.startsWith(routes.REQUEST_PROCESSING) && (
-                                <Link className={classes.link} href="/request-processing">
+                                <Link className={`h3_font ${classes.link}`} href="/request-processing">
                                     Мої заявки
                                 </Link>
                             )}
                             {!path.startsWith(routes.REQUEST_DIRECTIONS) && (
-                                <Link className={classes.link} href="/request-directions">
+                                <Link className={`h3_font ${classes.link}`} href="/request-directions">
                                     Подати заявку
                                 </Link>
                             )}

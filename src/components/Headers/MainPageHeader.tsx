@@ -9,7 +9,6 @@ import CustomButton from "../CustomButton";
 import styles from "./styles.module.scss";
 import { Box, Text } from "@mantine/core";
 
-import classes from "./styles.module.scss";
 import HeroCarousel from "../HeroCarousel";
 import routes from "@/constants/routes";
 
@@ -22,23 +21,25 @@ const MainPageHeader: FC<MainPageHeaderProps> = ({ children }) => {
     const router = useRouter();
 
     return (
-        <Box className={classes.mainPageHeader}>
-            <Box className={classes.headerBg}>
-                <Box className={classes.headerNav}>{children}</Box>
+        <Box className={styles.mainPageHeader}>
+            <Box className={styles.headerBg}>
+                <Box className={styles.headerNav}>{children}</Box>
                 <HeroCarousel />
             </Box>
 
             <Box className={styles.hBanner}>
                 <Container>
                     <Frame className={styles.hBanner_container}>
-                        <Text mb={24} className={styles.hBanner_title}>
+                        <Text mb={24} className="h1_font">
                             Що це таке?
                         </Text>
                         <Box className={styles.hBanner_line}></Box>
-                        <Text className={styles.hBanner_text}>
-                            <Text span>Quick Direction</Text> - це сервіс для легкого спілкування студентів з дирекцією. З нами ваша заявка точно не
-                            загубиться: заповнену форму одразу буде скеровано до спеціальних відділів дирекції НТУ “ХПІ” відповідно до обраного вами
-                            запиту.
+                        <Text w={"85%"} m={"24px auto"} className="main_font">
+                            <Text className="h3_font" span>
+                                Quick Direction
+                            </Text>{" "}
+                            - це сервіс для легкого спілкування студентів з дирекцією. З нами ваша заявка точно не загубиться: заповнену форму одразу
+                            буде скеровано до спеціальних відділів дирекції НТУ “ХПІ” відповідно до обраного вами запиту.
                         </Text>
                         <CustomButton
                             className={styles.hBanner_btn}

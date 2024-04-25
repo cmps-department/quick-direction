@@ -62,10 +62,10 @@ const RequestProcessingView = () => {
     return (
         <Container mt={64} mih="60vh">
             <Stack gap={24} pl={35}>
-                <Text fw={700} fz={28}>
+                <Text className={"h1_font"}>
                     {session?.user.name}
                 </Text>
-                <Text fw={700} fz={20}>
+                <Text className={"h2_font"}>
                     {setRole(session?.roles!)}
                 </Text>
                 <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -79,7 +79,7 @@ const RequestProcessingView = () => {
                             requestsData
                         ) : (
                             <Flex mih={685} w={"100%"} align="center" justify="center">
-                                <Text fz={20} fw={700} c="gray">
+                                <Text className={"h3_font"} c="gray">
                                     Нічого не знайдено...
                                 </Text>
                             </Flex>
