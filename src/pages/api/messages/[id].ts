@@ -41,6 +41,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 } else {
                     res.status(500).json({ error: "There is no message" });
                 }
+
+                await prisma.message.updateMany({
+                    where: {
+                        requestId: id,
+                        userId: { not: session.user.userId },
+                        isChecked: false
+                    },
+                    data: { isChecked: true }
+                });
+
             } else if (session?.roles.includes(roles.ROLE_TEACHER)) {
                 const messages = await prisma.message.findMany({
                     where: {
@@ -58,17 +68,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 } else {
                     res.status(500).json({ error: "There is no message" });
                 }
+
+                await prisma.message.updateMany({
+                    where: {
+                        requestId: id,
+                        userId: { not: session.user.userId },
+                        isChecked: false
+                    },
+                    data: { isChecked: true }
+                });
+
             } else {
                 res.status(405).json({ error: "User doesn't have a role" });
             }
-
-            await prisma.message.updateMany({
-                where: {
-                    requestId: id,
-                    isChecked: false
-                },
-                data: { isChecked: true }
-            });
         } else {
             res.status(500).json({ error: "There is no message" });
         }
