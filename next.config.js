@@ -7,4 +7,5 @@ module.exports = {
     env: {
         API_URL: process.env.NEXT_BACKEND_URL,
     },
+    compress: true,
 };
