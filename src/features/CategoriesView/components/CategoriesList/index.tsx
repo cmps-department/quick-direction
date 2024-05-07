@@ -1,6 +1,7 @@
-import { Stack, Text } from "@mantine/core";
+import { Box, Text } from "@mantine/core";
 import Category from "../Category";
 import { FC } from "react";
+import { FixedSizeList as List } from "react-window";
 
 interface ICategoryList {
     categories: IGetCategory[];
@@ -15,12 +16,18 @@ const CategoriesList: FC<ICategoryList> = ({ categories }) => {
         );
     }
 
+    const Row: FC<{ index: number; style: any }> = ({ index, style }) => (
+        <Box style={{ ...style, top: `${parseFloat(style.top) + 24*index}px` }}>
+            <Category key={categories[index].id} category={categories[index]} />
+        </Box>
+    );
+
     return (
-        <Stack gap={24}>
-            {categories.map((category) => (
-                <Category key={category.id} category={category} />
-            ))}
-        </Stack>
+        <Box>
+            <List height={400} itemCount={categories.length} itemSize={79} width="100%">
+                {Row}
+            </List>
+        </Box>
     );
 };
 
