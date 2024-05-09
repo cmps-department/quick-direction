@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../../utils/api";
 
-export type MessagePayload = Omit<IMessage, "id" | "createdAt" | "updatedAt">;
+export type MessagePayload = Omit<IMessage, "id" | "createdAt" | "updatedAt" | "isChecked">;
 
 export const useSendMessage = (requestId: number) => {
     const queryClient = useQueryClient();
