@@ -32,7 +32,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const messages = await prisma.message.findMany({
                     where: {
                         requestId: id,
-                        userId: session.user.userId,
                     },
                 });
 
