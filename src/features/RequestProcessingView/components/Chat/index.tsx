@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import useChatForm from "../../hooks/useChat";
 import { useMessages } from "../../hooks/useMessages";
 import { useRequest } from "../../hooks/useRequest";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface ChatProps {
     requestId: number;
@@ -20,6 +21,7 @@ interface ChatProps {
 
 const Chat: FC<ChatProps> = ({ requestId, setActiveRequestId }) => {
     const { data: session } = useSession();
+    const queryClient = useQueryClient();
     const {
         form: { control, setValue, handleSubmit },
         onSubmit,
@@ -34,7 +36,11 @@ const Chat: FC<ChatProps> = ({ requestId, setActiveRequestId }) => {
         if (!chatRef) return;
         if (!chatRef.current) return;
         chatRef.current.scrollTop = chatRef.current.scrollHeight;
-    }, [messages]);
+        const isMessagesChecked = !messages.some(message => message.userId !== session?.user.userId && !message.isChecked);
+        if (!isMessagesChecked) {
+            queryClient.invalidateQueries(["MESSAGES", { requestId }]);
+        }
+    }, [messages, session]);
 
     return (
         <Stack pt={25} gap={24} className={`${styles.chat} ${request ? styles.active : null}`}>
