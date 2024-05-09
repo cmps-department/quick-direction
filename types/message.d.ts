@@ -5,6 +5,7 @@ interface IMessage {
     userName: string;
     userSurname: string;
     text: string;
+    isChecked: boolean;
     documentLinks: string[];
     createdAt: string;
     updatedAt: string;
