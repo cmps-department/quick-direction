@@ -58,7 +58,7 @@ export default function useCreateForm() {
                             name: yup.string().required("Обов'язкове поле"),
                             description: yup.string().min(10, "Мінімальна довжина опису - 10 символів").required("Обов'язкове поле"),
                             additionalInfo: yup.string(),
-                            examplelink: yup.string(),
+                            examplelink: yup.string().url("Поле має містити коректне посилання"),
                             downloadFile: yup.boolean().required(),
                             textField: yup.boolean().required(),
                         }),

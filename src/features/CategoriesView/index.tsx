@@ -32,8 +32,8 @@ const CategoriesView: FC = () => {
     });
 
     return (
-        <Container mt={34}>
-            <Paper pos={"relative"} p={48} shadow="xl" radius="lg">
+        <Container my={34}>
+            <Paper pos={"relative"} p={48} shadow="xl" radius="lg" mih={'500px'}>
                 <Stack gap={24}>
                     <Group align={"center"} justify={"space-between"} wrap={"wrap"}>
                         <Text fz={28} fw={700}>

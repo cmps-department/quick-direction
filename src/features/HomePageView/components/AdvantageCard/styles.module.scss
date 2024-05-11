@@ -1,5 +1,8 @@
 .advantageCard {
+    max-width: 604px;
+    min-width: 500px;
     display: flex;
+    flex: 1;
     gap: 24px;
     padding: 24px;
     width: 40%;

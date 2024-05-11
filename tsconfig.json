@@ -18,7 +18,8 @@
         "paths": {
             "@/*": ["src/*"]
         },
-        "moduleDetection": "force"
+        "moduleDetection": "force",
+        "types": ["react/next"]
     },
     "include": ["src/types/next-env.d.ts", "src/types/next-auth.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
     "exclude": ["node_modules"]
