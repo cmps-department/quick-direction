@@ -38,7 +38,7 @@ npm run dev
 
 ## Розробники проєкту
 #### Дизайнери
-- Литвинчук Данило (ІКМ-220в)
+- [Литвинчук Данило (ІКМ-220в)](https://www.instagram.com/dalitvi.studio?igsh=MzRlODBiNWFlZA==)
 - [Богданова Софія (ІКМ-220г)](https://www.linkedin.com/in/sofiia-bohdanova/)
 #### Розробникик програмного забезпечення
 - [Чаплін Артем (ІКМ-220а)](https://github.com/ArCheeq)
@@ -87,7 +87,7 @@ npm run dev
 
 ## Project developers
 #### Designers
-- Danylo Lytvynchuk
+- [Danylo Lytvynchuk](https://www.instagram.com/dalitvi.studio?igsh=MzRlODBiNWFlZA==)
 - [Sofiia Bohdanova](https://www.linkedin.com/in/sofiia-bohdanova/)
 #### Software Developers
 - [Artem Chaplin](https://github.com/ArCheeq)
