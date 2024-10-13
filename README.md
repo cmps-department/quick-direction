@@ -25,3 +25,10 @@ npx prisma migrate dev
 ```shell
 npm run dev
 ```
+
+### Тестові користувачі / Test users
+| Імʼя / Login | Пароль / Password | Опис / Description                                         |
+|--------------|-------------------|------------------------------------------------------------|
+| student      | student           | Тільки подає заявки. / Only create requests.               |
+| teacher      | teacher           | Опрацьовує призначені заявки. / Process assigned requests. |
+| admin        | admin             | Опрацьовує всі заявки. / Process all requests.             |
