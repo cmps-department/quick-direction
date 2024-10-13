@@ -39,7 +39,7 @@ npm run dev
 ## Розробники проєкту
 #### Дизайнери
 - Литвинчук Данило (ІКМ-220в)
-- Богданова Софія (ІКМ-220г)
+- [Богданова Софія (ІКМ-220г)](https://www.linkedin.com/in/sofiia-bohdanova/)
 #### Розробникик програмного забезпечення
 - [Чаплін Артем (ІКМ-220а)](https://github.com/ArCheeq)
 - [Лазарєва Яна (ІКМ-220в)](https://github.com/YanochkaLz)
@@ -88,10 +88,10 @@ npm run dev
 ## Project developers
 #### Designers
 - Danylo Lytvynchuk
-- Sofiya Bohdanova
+- [Sofiia Bohdanova](https://www.linkedin.com/in/sofiia-bohdanova/)
 #### Software Developers
 - [Artem Chaplin](https://github.com/ArCheeq)
-- [Yana Lazaryeva](https://github.com/YanochkaLz)
+- [Yana Lazarieva](https://github.com/YanochkaLz)
 - [Kilmichenko Anton](https://github.com/BroodCaster)
 #### Mentors
 - [Volodymyr Mietielov. Associate professor of the Department of Computer Modeling of Processes and Systems, NTU "KhPI"](https://web.kpi.kharkov.ua/cmps/en/magistral-staff/mietielov-volodymyr/)
