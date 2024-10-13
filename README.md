@@ -46,7 +46,7 @@ npm run dev
 - [Кільміченко Антон (ІКМ-220а)](https://github.com/BroodCaster)
 #### Ментори
 - [Мєтєльов Володимир. Доцент кафедри Комп’ютерного Моделювання Процесів та Систем, НТУ "ХПІ"](https://web.kpi.kharkov.ua/cmps/uk/myetyelov-volodimir-oleksandrovich/)
-- [Бородін Марія. Аспірантк кафедри Комп’ютерного Моделювання Процесів та Систем, НТУ "ХПІ"](https://web.kpi.kharkov.ua/cmps/uk/pro-kafedru/vikladatskij-sklad/borodin-mariya-anatoliyivna/)
+- [Бородін Марія. Аспірант кафедри Комп’ютерного Моделювання Процесів та Систем, НТУ "ХПІ"](https://web.kpi.kharkov.ua/cmps/uk/pro-kafedru/vikladatskij-sklad/borodin-mariya-anatoliyivna/)
 
 
 ## About
