@@ -1,12 +1,12 @@
 services:
-  db:
+  qd-db:
     image: postgres:16.0
     restart: always
     container_name: db
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: gik
+      POSTGRES_DB: quick-direction
     ports:
       - '5432:5432'
     healthcheck:
@@ -15,31 +15,16 @@ services:
       timeout: 5s
       retries: 10
 
-  db_migration:
-    build: .
-    container_name: db_migration
-    environment:
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/gik
-    command: npx -y prisma migrate dev --skip-generate
-    depends_on:
-      db:
-        condition: service_healthy
-
-  frontend:
-    build: .
+  qd-keycloak:
+    image: quay.io/keycloak/keycloak:20.0.5
+    container_name: keycloak
     restart: always
-    container_name: frontend
+    volumes:
+      - ./keycloak-config:/opt/keycloak/data/import
     environment:
-      API_URL: http://localhost:3000/api
-      KEYCLOAK_ID: getinfokhpi
-      KEYCLOAK_SECRET: WTrnnL4ds1zydIPIhilUPZRB2Z2id9Kc
-      KEYCLOAK_ISSUER: https://accounts.universitywithme.org.ua/realms/KhPI
-      END_SESSION_URL: https://accounts.universitywithme.org.ua/realms/KhPI/protocol/openid-connect/logout
-      NEXTAUTH_SECRET: supersecret
-      NEXTAUTH_URL: http://localhost:3000
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/gik
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command:
+      - start-dev --import-realm
     ports:
-      - "3000:3016"
-    depends_on:
-      db_migration:
-        condition: service_completed_successfully
+      - "8080:8080"

@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:16.0
+    restart: always
+    container_name: db
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: gik
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  db_migration:
+    build: .
+    container_name: db_migration
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/gik
+    command: npx -y prisma migrate dev --skip-generate
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: .
+    restart: always
+    container_name: frontend
+    environment:
+      API_URL: http://localhost:3000/api
+      KEYCLOAK_ID: getinfokhpi
+      KEYCLOAK_SECRET: ${{ secrets.QD_KEYCLOAK }}
+      KEYCLOAK_ISSUER: https://accounts.universitywithme.org.ua/realms/KhPI
+      END_SESSION_URL: https://accounts.universitywithme.org.ua/realms/KhPI/protocol/openid-connect/logout
+      NEXTAUTH_SECRET: supersecret
+      NEXTAUTH_URL: http://localhost:3000
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/gik
+    ports:
+      - "3000:3016"
+    depends_on:
+      db_migration:
+        condition: service_completed_successfully
