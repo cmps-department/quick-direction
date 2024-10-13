@@ -28,6 +28,6 @@ jobs:
         with:
           context: .
           platforms: linux/amd64,linux/arm64
-          tags: ghcr.io/getinfokhpi/getinfo/getinfo:latest
+          tags: ghcr.io/cmps-department/quick-direction/quick-direction:latest
           push: true
           provenance: false
